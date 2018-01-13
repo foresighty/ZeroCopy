@@ -11,12 +11,28 @@ import UIKit
 class HomeViewController: UIViewController {
     
     var tableView: UITableView!
+    var transitionManager: TransitionManager!
     
     override func viewDidLoad() {
+        setup()
+        setupTableView()
+        setupNavigationController()
+    }
+    
+    // MARK: Setup
+    
+    private func setup(){
+        transitionManager = TransitionManager()
+    }
+    
+    private func setupTableView(){
         tableView = UITableView()
         tableView.dataSource = self
         tableView.frame = view.bounds
         view.addSubview(tableView)
+    }
+    
+    private func setupNavigationController(){
         navigationController?.navigationBar.topItem?.title = "Zero"
         let leftButton = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(settingsPressed))
         let rightButton = UIBarButtonItem(title: "Science", style: .plain, target: self, action: #selector(sciencePressed))
@@ -24,24 +40,19 @@ class HomeViewController: UIViewController {
         navigationItem.rightBarButtonItem = rightButton
     }
     
+    
+    // MARK: Button Methods
+    
     @objc func settingsPressed(){
-        transitionUp()
+        let transition = transitionManager.transitionUp()
+        navigationController!.view.layer.add(transition, forKey: nil)
         navigationController?.pushViewController(SettingViewController(), animated: false)
     }
     
     @objc func sciencePressed(){
-        transitionUp()
-        navigationController?.pushViewController(ScienceViewController(), animated: false)
-    }
-    
-    // MARK: Transitions
-    private func transitionUp(){
-        let transition: CATransition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        transition.type = kCATransitionMoveIn
-        transition.subtype = kCATransitionFromTop
+        let transition = transitionManager.transitionUp()
         navigationController!.view.layer.add(transition, forKey: nil)
+        navigationController?.pushViewController(ScienceViewController(), animated: false)
     }
     
 }

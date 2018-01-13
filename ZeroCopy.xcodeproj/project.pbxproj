@@ -8,26 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		4D3772F3200934C800C5C554 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3772F2200934C800C5C554 /* AppDelegate.swift */; };
-		4D3772F5200934C800C5C554 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3772F4200934C800C5C554 /* ViewController.swift */; };
 		4D3772FA200934C800C5C554 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D3772F9200934C800C5C554 /* Assets.xcassets */; };
 		4D3772FD200934C800C5C554 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D3772FB200934C800C5C554 /* LaunchScreen.storyboard */; };
 		4D3773052009357B00C5C554 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3773042009357B00C5C554 /* SettingViewController.swift */; };
 		4D3773072009358A00C5C554 /* ScienceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3773062009358A00C5C554 /* ScienceViewController.swift */; };
 		4D3773092009359400C5C554 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3773082009359400C5C554 /* HomeViewController.swift */; };
-		4D37730B200A03FB00C5C554 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D37730A200A03FB00C5C554 /* NavigationController.swift */; };
+		4D377313200A35FD00C5C554 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D377312200A35FD00C5C554 /* TransitionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4D3772EF200934C800C5C554 /* ZeroCopy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroCopy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D3772F2200934C800C5C554 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4D3772F4200934C800C5C554 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4D3772F9200934C800C5C554 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D3772FC200934C800C5C554 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4D3772FE200934C800C5C554 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D3773042009357B00C5C554 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		4D3773062009358A00C5C554 /* ScienceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScienceViewController.swift; sourceTree = "<group>"; };
 		4D3773082009359400C5C554 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		4D37730A200A03FB00C5C554 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		4D377312200A35FD00C5C554 /* TransitionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,10 +59,9 @@
 			isa = PBXGroup;
 			children = (
 				4D3772F2200934C800C5C554 /* AppDelegate.swift */,
-				4D37730A200A03FB00C5C554 /* NavigationController.swift */,
-				4D3772F4200934C800C5C554 /* ViewController.swift */,
 				4D3773042009357B00C5C554 /* SettingViewController.swift */,
 				4D3773062009358A00C5C554 /* ScienceViewController.swift */,
+				4D377312200A35FD00C5C554 /* TransitionManager.swift */,
 				4D3773082009359400C5C554 /* HomeViewController.swift */,
 				4D3772F9200934C800C5C554 /* Assets.xcassets */,
 				4D3772FB200934C800C5C554 /* LaunchScreen.storyboard */,
@@ -145,8 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D3773092009359400C5C554 /* HomeViewController.swift in Sources */,
-				4D37730B200A03FB00C5C554 /* NavigationController.swift in Sources */,
-				4D3772F5200934C800C5C554 /* ViewController.swift in Sources */,
+				4D377313200A35FD00C5C554 /* TransitionManager.swift in Sources */,
 				4D3772F3200934C800C5C554 /* AppDelegate.swift in Sources */,
 				4D3773052009357B00C5C554 /* SettingViewController.swift in Sources */,
 				4D3773072009358A00C5C554 /* ScienceViewController.swift in Sources */,

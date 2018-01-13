@@ -11,31 +11,25 @@ import UIKit
 class SettingViewController: UIViewController {
     
     var tableView: UITableView!
+    var transitionManager: TransitionManager!
     
     override func viewDidLoad() {
         tableView = UITableView()
         tableView.dataSource = self
         tableView.frame = view.bounds
         view.addSubview(tableView)
+        transitionManager = TransitionManager()
         navigationController?.navigationBar.topItem?.title = "Settings"
         let leftButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donePressed))
         navigationItem.leftBarButtonItem = leftButton
     }
     
     @objc func donePressed(){
-        transitionDown()
+        let transition = transitionManager.transitionDown()
+        navigationController?.view.layer.add(transition, forKey: nil)
         navigationController?.popViewController(animated: true)
     }
     
-    // MARK: Transitions
-    private func transitionDown(){
-        let transition: CATransition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        transition.type = kCATransitionReveal
-        transition.subtype = kCATransitionFromBottom
-        navigationController!.view.layer.add(transition, forKey: nil)
-    }
 }
 
 extension SettingViewController: UITableViewDataSource {
