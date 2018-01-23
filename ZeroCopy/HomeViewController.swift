@@ -57,7 +57,6 @@ class HomeViewController: UIViewController {
         navigationController!.view.layer.add(transition, forKey: nil)
         navigationController?.pushViewController(ScienceViewController(), animated: false)
     }
-    
 }
 
 // MARK: TableViewDataSource
