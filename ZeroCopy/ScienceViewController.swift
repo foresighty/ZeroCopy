@@ -27,7 +27,7 @@ class ScienceViewController: UIViewController {
     @objc func donePressed(){
         let transition = transitionManager.transitionDown()
         navigationController?.view.layer.add(transition, forKey: nil)
-        navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: false)
     }
     
 }
