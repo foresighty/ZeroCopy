@@ -34,6 +34,9 @@ class HomeViewController: UIViewController {
     
     private func setupNavigationController(){
         navigationController?.navigationBar.topItem?.title = "Zero"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor  : UIColor.white]
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.barTintColor = UIColor(red: 248/255, green: 110/255, blue: 92/255, alpha: 1.0)
         let leftButton = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(settingsPressed))
         let rightButton = UIBarButtonItem(title: "Science", style: .plain, target: self, action: #selector(sciencePressed))
         navigationItem.leftBarButtonItem = leftButton
@@ -62,13 +65,15 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 30
     }
-    
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let label = UILabel(frame: CGRect(x: 30.0, y: 10.0, width: 100.0, height: 20.0))
+        label.text = String(indexPath.row)
+        let cell = UITableViewCell()
+        cell.addSubview(label)
+        return cell
     }
-    
 }
 
