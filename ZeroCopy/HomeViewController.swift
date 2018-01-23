@@ -100,4 +100,16 @@ extension HomeViewController: UITableViewDelegate {
         }
         return 44
     }
+    
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y >= -64.0 {
+            
+            scrollView.isScrollEnabled = true
+        } else {
+            scrollView.isScrollEnabled = false
+            scrollView.contentOffset.y = -64.0
+        }
+        print(abs(scrollView.contentOffset.y))
+    }
 }

@@ -49,7 +49,7 @@ class HeaderTableViewCell: UITableViewCell {
         addSubview(tagline)
 
         if goalLabel.superview != nil {
-            let views = [
+            let views : [String : Any] = [
                 "goalLabel" : goalLabel,
                 "tagline" : tagline
             ]
