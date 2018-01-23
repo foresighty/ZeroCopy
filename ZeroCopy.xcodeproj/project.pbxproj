@@ -14,6 +14,7 @@
 		4D3773072009358A00C5C554 /* ScienceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3773062009358A00C5C554 /* ScienceViewController.swift */; };
 		4D3773092009359400C5C554 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3773082009359400C5C554 /* HomeViewController.swift */; };
 		4D377313200A35FD00C5C554 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D377312200A35FD00C5C554 /* TransitionManager.swift */; };
+		D8DCCD6E201756B600CA4E80 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DCCD6D201756B600CA4E80 /* HeaderTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		4D3773062009358A00C5C554 /* ScienceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScienceViewController.swift; sourceTree = "<group>"; };
 		4D3773082009359400C5C554 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		4D377312200A35FD00C5C554 /* TransitionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
+		D8DCCD6D201756B600CA4E80 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				4D3773062009358A00C5C554 /* ScienceViewController.swift */,
 				4D377312200A35FD00C5C554 /* TransitionManager.swift */,
 				4D3773082009359400C5C554 /* HomeViewController.swift */,
+				D8DCCD6D201756B600CA4E80 /* HeaderTableViewCell.swift */,
 				4D3772F9200934C800C5C554 /* Assets.xcassets */,
 				4D3772FB200934C800C5C554 /* LaunchScreen.storyboard */,
 				4D3772FE200934C800C5C554 /* Info.plist */,
@@ -145,6 +148,7 @@
 				4D377313200A35FD00C5C554 /* TransitionManager.swift in Sources */,
 				4D3772F3200934C800C5C554 /* AppDelegate.swift in Sources */,
 				4D3773052009357B00C5C554 /* SettingViewController.swift in Sources */,
+				D8DCCD6E201756B600CA4E80 /* HeaderTableViewCell.swift in Sources */,
 				4D3773072009358A00C5C554 /* ScienceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

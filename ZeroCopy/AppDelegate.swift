@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navigationViewController
         window?.makeKeyAndVisible()
         
+        UILabel.appearance().font = UIFont(name: "Verdana", size: 12.0)
+                
         return true
     }
 
