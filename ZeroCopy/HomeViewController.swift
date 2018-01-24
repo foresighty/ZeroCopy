@@ -68,7 +68,24 @@ class HomeViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
+    }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        //applyGradient()
+    }
+    
+    private func applyGradient() {
+        let gradient = CAGradientLayer()
+        
+        gradient.frame = homeHeaderView.bounds
+        
+        let darkOrange = UIColor(red: 248/255, green: 110/255, blue: 92/255, alpha: 1.0)
+        let lightOrange = UIColor(red: 207/255, green: 103/255, blue: 113/255, alpha: 1.0)
+        
+        gradient.colors = [lightOrange.cgColor, darkOrange.cgColor]
+        
+        homeHeaderView.layer.insertSublayer(gradient, at: 0)
     }
     
     // MARK: Button Methods
@@ -128,4 +145,5 @@ extension HomeViewController: UITableViewDelegate {
         }
         oldContentOffset = scrollView.contentOffset
     }
+    
 }

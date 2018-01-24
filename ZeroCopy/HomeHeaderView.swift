@@ -30,9 +30,7 @@ class HomeHeaderView: UIView {
     
     private func setup(){
         
-        //translatesAutoresizingMaskIntoConstraints = false
-
-        backgroundColor = .orange
+        backgroundColor = .clear
         
         goalLabel = UILabel()
         goalLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -68,14 +66,5 @@ class HomeHeaderView: UIView {
             NSLayoutConstraint.activate(allConstraints)
         }
     }
-
-    // MARK: Fix position
-//
-//    func fixPosition() {
-//        let views : [String : Any] = ["content":content]
-//        let constraint = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[content]-|", options: .alignAllCenterX, metrics: nil, views: views)
-//        self.contentView.addConstraints(constraint)
-//    }
-
-
 }
+
