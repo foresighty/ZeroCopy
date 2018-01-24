@@ -129,21 +129,29 @@ extension HomeViewController: UITableViewDataSource {
 extension HomeViewController: UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let delta =  scrollView.contentOffset.y - oldContentOffset.y
+
         let constraint = homeHeaderView.constraints[4]
         
         // Compress the top view
-        if delta > 0 && constraint.constant > topConstraintRange.lowerBound && scrollView.contentOffset.y > 0 {
-            constraint.constant -= delta
-            scrollView.contentOffset.y -= delta
+        if constraint.constant > topConstraintRange.lowerBound && scrollView.contentOffset.y > 0 {
+            print("Constraint const = \(constraint.constant)")
+            print("Scroll view content offset = \(scrollView.contentOffset.y)")
+            constraint.constant -= scrollView.contentOffset.y
+            scrollView.contentOffset.y -= scrollView.contentOffset.y
         }
         
         // Expand the top view
-        if delta < 0 && constraint.constant < topConstraintRange.upperBound && scrollView.contentOffset.y < 0{
-            constraint.constant -= delta
-            scrollView.contentOffset.y -= delta
+        if constraint.constant < topConstraintRange.upperBound && scrollView.contentOffset.y < 0{
+            print("Constraint const = \(constraint.constant)")
+            print("Scroll view content offset = \(scrollView.contentOffset.y)")
+            constraint.constant -= scrollView.contentOffset.y
+            scrollView.contentOffset.y -= scrollView.contentOffset.y
         }
-        oldContentOffset = scrollView.contentOffset
+        
+        if constraint.constant > topConstraintRange.upperBound {
+            constraint.constant = topConstraintRange.upperBound
+        }
     }
+    
     
 }
