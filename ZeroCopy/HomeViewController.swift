@@ -10,13 +10,19 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    var homeHeaderView: HomeHeaderView!
     var tableView: UITableView!
     var transitionManager: TransitionManager!
+    
+    var oldContentOffset = CGPoint.zero
+    let topConstraintRange = (CGFloat(-130)..<CGFloat(70))
     
     override func viewDidLoad() {
         setup()
         setupTableView()
+        setupHeaderView()
         setupNavigationController()
+        setupConstraints()
     }
     
     // MARK: Setup
@@ -25,12 +31,19 @@ class HomeViewController: UIViewController {
         transitionManager = TransitionManager()
     }
     
+    private func setupHeaderView(){
+        homeHeaderView = HomeHeaderView()
+        homeHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(homeHeaderView)
+    }
+    
     private func setupTableView(){
         tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
         tableView.frame = view.bounds
         view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func setupNavigationController(){
@@ -42,6 +55,20 @@ class HomeViewController: UIViewController {
         let rightButton = UIBarButtonItem(title: "Science", style: .plain, target: self, action: #selector(sciencePressed))
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
+    }
+    
+    private func setupConstraints() {
+        let constraints:[NSLayoutConstraint] = [
+            homeHeaderView.topAnchor.constraint(equalTo: view.topAnchor, constant: 64.0),
+            homeHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            homeHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: homeHeaderView.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ]
+        NSLayoutConstraint.activate(constraints)
+    
     }
     
     // MARK: Button Methods
@@ -64,6 +91,9 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        if section == 0 {
+//            return 0
+//        }
         return 30
     }
     
@@ -74,7 +104,6 @@ extension HomeViewController: UITableViewDataSource {
             cell.addSubview(label)
             return cell
     }
-
 }
 
 
@@ -82,27 +111,21 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return TableViewHeader()
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let delta =  scrollView.contentOffset.y - oldContentOffset.y
+        let constraint = homeHeaderView.constraints[4]
+        
+        // Compress the top view
+        if delta > 0 && constraint.constant > topConstraintRange.lowerBound && scrollView.contentOffset.y > 0 {
+            constraint.constant -= delta
+            scrollView.contentOffset.y -= delta
+        }
+        
+        // Expand the top view
+        if delta < 0 && constraint.constant < topConstraintRange.upperBound && scrollView.contentOffset.y < 0{
+            constraint.constant -= delta
+            scrollView.contentOffset.y -= delta
+        }
+        oldContentOffset = scrollView.contentOffset
     }
-    
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if indexPath.section == 0 {
-//            return 200.0
-//        }
-//        return 44
-//    }
-    
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if scrollView.contentOffset.y >= -64.0 {
-//
-//            scrollView.isScrollEnabled = true
-//        } else {
-//            scrollView.isScrollEnabled = false
-//            scrollView.contentOffset.y = -64.0
-//        }
-//        print(abs(scrollView.contentOffset.y))
-//    }
 }

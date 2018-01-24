@@ -1,5 +1,5 @@
 //
-//  TableViewHeader.swift
+//  HomeHeaderView.swift
 //  ZeroCopy
 //
 //  Created by Mike Gopsill on 24/01/2018.
@@ -8,19 +8,20 @@
 
 import UIKit
 
-class TableViewHeader: UITableViewHeaderFooterView {
+class HomeHeaderView: UIView {
 
     var goalLabel: UILabel!
     var tagline: UILabel!
     
-    // TODO: State for cell - fasting vs not fasting
+    // TODO: State - fasting vs not fasting
     
     // MARK: Initialisers
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setup()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -29,7 +30,9 @@ class TableViewHeader: UITableViewHeaderFooterView {
     
     private func setup(){
         
-        contentView.backgroundColor = .orange
+        //translatesAutoresizingMaskIntoConstraints = false
+
+        backgroundColor = .orange
         
         goalLabel = UILabel()
         goalLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +48,7 @@ class TableViewHeader: UITableViewHeaderFooterView {
         tagline.textAlignment = .center
         addSubview(goalLabel)
         addSubview(tagline)
-        
+    
         if goalLabel.superview != nil {
             let views : [String : Any] = [
                 "goalLabel" : goalLabel,
@@ -65,13 +68,14 @@ class TableViewHeader: UITableViewHeaderFooterView {
             NSLayoutConstraint.activate(allConstraints)
         }
     }
-    
+
     // MARK: Fix position
-    
-    func fixPosition() {
-        let views : [String : Any] = ["content":contentView]
-        let constraint = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[content]-|", options: .alignAllCenterX, metrics: nil, views: views)
-        self.contentView.addConstraints(constraint)
-    }
+//
+//    func fixPosition() {
+//        let views : [String : Any] = ["content":content]
+//        let constraint = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[content]-|", options: .alignAllCenterX, metrics: nil, views: views)
+//        self.contentView.addConstraints(constraint)
+//    }
+
 
 }
