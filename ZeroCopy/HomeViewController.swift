@@ -63,29 +63,16 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        } else {
-            return 30
-        }
+        return 30
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = HeaderTableViewCell()
-            return cell
-        } else {
             let label = UILabel(frame: CGRect(x: 30.0, y: 10.0, width: 100.0, height: 20.0))
             label.text = String(indexPath.row)
             let cell = UITableViewCell()
             cell.addSubview(label)
             return cell
-        }
     }
 
 }
@@ -94,22 +81,28 @@ extension HomeViewController: UITableViewDataSource {
 // MARK: TableViewDelegate
 
 extension HomeViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 200.0
-        }
-        return 44
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return TableViewHeader()
     }
     
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y >= -64.0 {
-            
-            scrollView.isScrollEnabled = true
-        } else {
-            scrollView.isScrollEnabled = false
-            scrollView.contentOffset.y = -64.0
-        }
-        print(abs(scrollView.contentOffset.y))
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        if indexPath.section == 0 {
+//            return 200.0
+//        }
+//        return 44
+//    }
+    
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView.contentOffset.y >= -64.0 {
+//
+//            scrollView.isScrollEnabled = true
+//        } else {
+//            scrollView.isScrollEnabled = false
+//            scrollView.contentOffset.y = -64.0
+//        }
+//        print(abs(scrollView.contentOffset.y))
+//    }
 }
