@@ -15,7 +15,7 @@ class HomeViewController: UIViewController {
     var transitionManager: TransitionManager!
     
     var oldContentOffset = CGPoint.zero
-    let topConstraintRange = (CGFloat(-130)..<CGFloat(70))
+    let topConstraintRange = (CGFloat(-70)..<CGFloat(134))
     
     override func viewDidLoad() {
         setup()
@@ -59,7 +59,7 @@ class HomeViewController: UIViewController {
     
     private func setupConstraints() {
         let constraints:[NSLayoutConstraint] = [
-            homeHeaderView.topAnchor.constraint(equalTo: view.topAnchor, constant: 64.0),
+            homeHeaderView.topAnchor.constraint(equalTo: view.topAnchor),
             homeHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             homeHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: homeHeaderView.bottomAnchor),
@@ -72,20 +72,19 @@ class HomeViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        //applyGradient()
+        applyBackgroundImageToHeader()
     }
     
-    private func applyGradient() {
-        let gradient = CAGradientLayer()
-        
-        gradient.frame = homeHeaderView.bounds
-        
-        let darkOrange = UIColor(red: 248/255, green: 110/255, blue: 92/255, alpha: 1.0)
-        let lightOrange = UIColor(red: 207/255, green: 103/255, blue: 113/255, alpha: 1.0)
-        
-        gradient.colors = [lightOrange.cgColor, darkOrange.cgColor]
-        
-        homeHeaderView.layer.insertSublayer(gradient, at: 0)
+    private func applyBackgroundImageToHeader() {
+        UIGraphicsBeginImageContext(homeHeaderView.frame.size)
+        UIImage(named: "headerBackground.png")?.draw(in: homeHeaderView.bounds)
+        if let image = UIGraphicsGetImageFromCurrentImageContext(){
+            UIGraphicsEndImageContext()
+            homeHeaderView.backgroundColor = UIColor(patternImage: image)
+        }else{
+            UIGraphicsEndImageContext()
+            debugPrint("Image not available")
+        }
     }
     
     // MARK: Button Methods
@@ -130,7 +129,7 @@ extension HomeViewController: UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
-        let constraint = homeHeaderView.constraints[4]
+        let constraint = homeHeaderView.constraints[0]
         
         // Compress the top view
         if constraint.constant > topConstraintRange.lowerBound && scrollView.contentOffset.y > 0 {
@@ -150,6 +149,10 @@ extension HomeViewController: UITableViewDelegate {
         
         if constraint.constant > topConstraintRange.upperBound {
             constraint.constant = topConstraintRange.upperBound
+        }
+        
+        if constraint.constant < topConstraintRange.lowerBound {
+            constraint.constant = topConstraintRange.lowerBound
         }
     }
     

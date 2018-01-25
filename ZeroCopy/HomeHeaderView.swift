@@ -30,7 +30,8 @@ class HomeHeaderView: UIView {
     
     private func setup(){
         
-        backgroundColor = .clear
+
+        translatesAutoresizingMaskIntoConstraints = false
         
         goalLabel = UILabel()
         goalLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -47,24 +48,18 @@ class HomeHeaderView: UIView {
         addSubview(goalLabel)
         addSubview(tagline)
     
-        if goalLabel.superview != nil {
-            let views : [String : Any] = [
-                "goalLabel" : goalLabel,
-                "tagline" : tagline
+            let constraints:[NSLayoutConstraint] = [
+                goalLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 134.0),
+                goalLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+                goalLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+                tagline.topAnchor.constraint(equalTo: goalLabel.bottomAnchor, constant: 10.0),
+                tagline.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+                tagline.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+                tagline.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -70.0)
             ]
-            
-            var allConstraints : [NSLayoutConstraint] = []
-            
-            let horizontalGoalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-[goalLabel]-|", options: .alignAllTop, metrics: nil, views: views)
-            let horizontalTaglineConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-[tagline]-|", options: .alignAllTop, metrics: nil, views: views)
-            let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-70-[goalLabel]-5-[tagline]-70-|", options: .alignAllCenterX, metrics: nil, views: views)
-            
-            allConstraints += horizontalGoalConstraints
-            allConstraints += horizontalTaglineConstraints
-            allConstraints += verticalConstraints
-            
-            NSLayoutConstraint.activate(allConstraints)
-        }
+            NSLayoutConstraint.activate(constraints)
+        
+
     }
 }
 
