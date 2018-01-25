@@ -29,7 +29,6 @@ class SettingViewController: UIViewController {
         navigationController?.view.layer.add(transition, forKey: nil)
         navigationController?.popViewController(animated: false)
     }
-    
 }
 
 extension SettingViewController: UITableViewDataSource {
@@ -42,6 +41,4 @@ extension SettingViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return UITableViewCell()
     }
-    
-    
 }

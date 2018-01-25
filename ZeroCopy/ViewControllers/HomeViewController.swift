@@ -15,7 +15,7 @@ class HomeViewController: UIViewController {
     var tableViewDataSource: TableViewDataSource!
     var transitionManager: TransitionManager!
     
-    let constraintRangeForHeaderView = (CGFloat(-70)..<CGFloat(134))
+    let constraintRangeForHeaderView = (CGFloat(-190)..<CGFloat(0))
     
     // MARK: Override Methods
     
@@ -29,11 +29,6 @@ class HomeViewController: UIViewController {
         setupConstraints()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        applyBackgroundImageToHeader()
-    }
-    
     // MARK: Setup
     
     private func setupNavigationController(){
@@ -44,7 +39,12 @@ class HomeViewController: UIViewController {
         navigationController.navigationBar.topItem?.title = "Zero"
         navigationController.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor  : UIColor.white]
         navigationController.navigationBar.tintColor = .black
-        navigationController.navigationBar.barTintColor = UIColor(red: 248/255, green: 110/255, blue: 92/255, alpha: 1.0)
+        navigationController.navigationBar.barTintColor = UIColor(red: 248/255, green: 110/255, blue: 92/255, alpha: 0.1)
+        
+        navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController.navigationBar.shadowImage = UIImage()
+        navigationController.navigationBar.isTranslucent = true
+
         
         let leftButton = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(settingsPressed))
         let rightButton = UIBarButtonItem(title: "Science", style: .plain, target: self, action: #selector(sciencePressed))
@@ -63,7 +63,6 @@ class HomeViewController: UIViewController {
     
     private func setupHeaderView(){
         homeHeaderView = HomeHeaderView()
-        homeHeaderView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(homeHeaderView)
     }
     
@@ -78,17 +77,12 @@ class HomeViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
-    }
-    
-    private func applyBackgroundImageToHeader() {
-        UIGraphicsBeginImageContext(homeHeaderView.frame.size)
-        UIImage(named: "headerBackground.png")?.draw(in: homeHeaderView.bounds)
-        if let image = UIGraphicsGetImageFromCurrentImageContext(){
-            UIGraphicsEndImageContext()
-            homeHeaderView.backgroundColor = UIColor(patternImage: image)
-        } else {
-            UIGraphicsEndImageContext()
-            debugPrint("Image not available")
+        
+        var i = 0
+        for constraint in view.constraints {
+            print("\(i)")
+            print("\(constraint)")
+            i += 1
         }
     }
     
@@ -113,7 +107,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        let constraint = homeHeaderView.constraints[0]
+        let constraint = view.constraints[0]
         
         // TODO: Remove print statements
         // Compress the top view

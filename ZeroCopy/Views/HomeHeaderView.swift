@@ -10,6 +10,7 @@ import UIKit
 
 class HomeHeaderView: UIView {
 
+    var backgroundImageView: UIImageView!
     var goalLabel: UILabel!
     var tagline: UILabel!
     
@@ -31,9 +32,19 @@ class HomeHeaderView: UIView {
     
     private func setup(){
         translatesAutoresizingMaskIntoConstraints = false
+        setupBackgroundImageView()
         setupGoalLabel()
         setupTagLineLabel()
         setupConstraints()
+    }
+    
+    private func setupBackgroundImageView(){
+        let imageName = "headerBackground.png"
+        let image = UIImage(named: imageName)
+        backgroundImageView = UIImageView(image: image!)
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundImageView.contentMode = .scaleAspectFill
+        //backgroundImageView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 269)
     }
     
     private func setupGoalLabel(){
@@ -54,20 +65,28 @@ class HomeHeaderView: UIView {
     }
     
     private func setupConstraints() {
+        addSubview(backgroundImageView)
         addSubview(goalLabel)
         addSubview(tagline)
-        
+
+
         let constraints:[NSLayoutConstraint] = [
+            self.heightAnchor.constraint(equalToConstant: 254.0),
+            backgroundImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            backgroundImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             goalLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 134.0),
             goalLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             goalLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             tagline.topAnchor.constraint(equalTo: goalLabel.bottomAnchor, constant: 10.0),
             tagline.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             tagline.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            tagline.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -70.0)
+            //tagline.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -70.0)
         ]
         
         NSLayoutConstraint.activate(constraints)
+        
     }
 
 }
