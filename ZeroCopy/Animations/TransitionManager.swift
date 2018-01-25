@@ -10,8 +10,9 @@ import UIKit
 
 class TransitionManager {
     
+    var transition = CATransition()
+    
     public func transitionUp() -> CATransition {
-        let transition: CATransition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         transition.type = kCATransitionMoveIn
@@ -20,12 +21,10 @@ class TransitionManager {
     }
     
     public func transitionDown() -> CATransition {
-        let transition: CATransition = CATransition()
         transition.duration = 0.3
         transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         transition.type = kCATransitionReveal
         transition.subtype = kCATransitionFromBottom
         return transition
     }
-    
 }

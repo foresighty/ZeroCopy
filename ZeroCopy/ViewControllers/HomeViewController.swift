@@ -12,49 +12,59 @@ class HomeViewController: UIViewController {
     
     var homeHeaderView: HomeHeaderView!
     var tableView: UITableView!
+    var tableViewDataSource: TableViewDataSource!
     var transitionManager: TransitionManager!
     
-    var oldContentOffset = CGPoint.zero
-    let topConstraintRange = (CGFloat(-70)..<CGFloat(134))
+    let constraintRangeForHeaderView = (CGFloat(-70)..<CGFloat(134))
+    
+    // MARK: Override Methods
     
     override func viewDidLoad() {
-        setup()
+        super.viewDidLoad()
+        transitionManager = TransitionManager()
+        tableViewDataSource = TableViewDataSource()
+        setupNavigationController()
         setupTableView()
         setupHeaderView()
-        setupNavigationController()
         setupConstraints()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        applyBackgroundImageToHeader()
     }
     
     // MARK: Setup
     
-    private func setup(){
-        transitionManager = TransitionManager()
-    }
-    
-    private func setupHeaderView(){
-        homeHeaderView = HomeHeaderView()
-        homeHeaderView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(homeHeaderView)
+    private func setupNavigationController(){
+        guard let navigationController = navigationController  else {
+            fatalError("navigationController does not exist")
+        }
+        
+        navigationController.navigationBar.topItem?.title = "Zero"
+        navigationController.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor  : UIColor.white]
+        navigationController.navigationBar.tintColor = .black
+        navigationController.navigationBar.barTintColor = UIColor(red: 248/255, green: 110/255, blue: 92/255, alpha: 1.0)
+        
+        let leftButton = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(settingsPressed))
+        let rightButton = UIBarButtonItem(title: "Science", style: .plain, target: self, action: #selector(sciencePressed))
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.rightBarButtonItem = rightButton
     }
     
     private func setupTableView(){
         tableView = UITableView()
-        tableView.dataSource = self
+        tableView.dataSource = tableViewDataSource
         tableView.delegate = self
         tableView.frame = view.bounds
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    private func setupNavigationController(){
-        navigationController?.navigationBar.topItem?.title = "Zero"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor  : UIColor.white]
-        navigationController?.navigationBar.tintColor = .black
-        navigationController?.navigationBar.barTintColor = UIColor(red: 248/255, green: 110/255, blue: 92/255, alpha: 1.0)
-        let leftButton = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(settingsPressed))
-        let rightButton = UIBarButtonItem(title: "Science", style: .plain, target: self, action: #selector(sciencePressed))
-        navigationItem.leftBarButtonItem = leftButton
-        navigationItem.rightBarButtonItem = rightButton
+    private func setupHeaderView(){
+        homeHeaderView = HomeHeaderView()
+        homeHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(homeHeaderView)
     }
     
     private func setupConstraints() {
@@ -70,18 +80,13 @@ class HomeViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        applyBackgroundImageToHeader()
-    }
-    
     private func applyBackgroundImageToHeader() {
         UIGraphicsBeginImageContext(homeHeaderView.frame.size)
         UIImage(named: "headerBackground.png")?.draw(in: homeHeaderView.bounds)
         if let image = UIGraphicsGetImageFromCurrentImageContext(){
             UIGraphicsEndImageContext()
             homeHeaderView.backgroundColor = UIColor(patternImage: image)
-        }else{
+        } else {
             UIGraphicsEndImageContext()
             debugPrint("Image not available")
         }
@@ -102,37 +107,17 @@ class HomeViewController: UIViewController {
     }
 }
 
-// MARK: TableViewDataSource
 
-extension HomeViewController: UITableViewDataSource {
-    
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if section == 0 {
-//            return 0
-//        }
-        return 30
-    }
-    
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let label = UILabel(frame: CGRect(x: 30.0, y: 10.0, width: 100.0, height: 20.0))
-            label.text = String(indexPath.row)
-            let cell = UITableViewCell()
-            cell.addSubview(label)
-            return cell
-    }
-}
-
-
-// MARK: TableViewDelegate
+// MARK: TableViewDelegate Methods
 
 extension HomeViewController: UITableViewDelegate {
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
+        
         let constraint = homeHeaderView.constraints[0]
         
+        // TODO: Remove print statements
         // Compress the top view
-        if constraint.constant > topConstraintRange.lowerBound && scrollView.contentOffset.y > 0 {
+        if constraint.constant > constraintRangeForHeaderView.lowerBound && scrollView.contentOffset.y > 0 {
             print("Constraint const = \(constraint.constant)")
             print("Scroll view content offset = \(scrollView.contentOffset.y)")
             constraint.constant -= scrollView.contentOffset.y
@@ -140,21 +125,20 @@ extension HomeViewController: UITableViewDelegate {
         }
         
         // Expand the top view
-        if constraint.constant < topConstraintRange.upperBound && scrollView.contentOffset.y < 0{
+        if constraint.constant < constraintRangeForHeaderView.upperBound && scrollView.contentOffset.y < 0{
             print("Constraint const = \(constraint.constant)")
             print("Scroll view content offset = \(scrollView.contentOffset.y)")
             constraint.constant -= scrollView.contentOffset.y
             scrollView.contentOffset.y -= scrollView.contentOffset.y
         }
         
-        if constraint.constant > topConstraintRange.upperBound {
-            constraint.constant = topConstraintRange.upperBound
+        if constraint.constant > constraintRangeForHeaderView.upperBound {
+            constraint.constant = constraintRangeForHeaderView.upperBound
         }
         
-        if constraint.constant < topConstraintRange.lowerBound {
-            constraint.constant = topConstraintRange.lowerBound
+        if constraint.constant < constraintRangeForHeaderView.lowerBound {
+            constraint.constant = constraintRangeForHeaderView.lowerBound
         }
     }
-    
-    
 }
+
