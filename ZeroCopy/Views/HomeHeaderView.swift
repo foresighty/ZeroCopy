@@ -10,9 +10,9 @@ import UIKit
 
 class HomeHeaderView: UIView {
 
-    var backgroundImageView: UIImageView!
-    var goalLabel: UILabel!
-    var tagline: UILabel!
+    private var backgroundImageView: UIImageView!
+    private var goalLabel: UILabel!
+    private var tagline: UILabel!
     
     // TODO: State - fasting vs not fasting
     
@@ -87,6 +87,13 @@ class HomeHeaderView: UIView {
         
         NSLayoutConstraint.activate(constraints)
         
+    }
+    
+    // Public methods
+    
+    public func updateLabelsAlpha(with alpha: CGFloat){
+        goalLabel.textColor = goalLabel.textColor.withAlphaComponent(alpha)
+        tagline.textColor = tagline.textColor.withAlphaComponent(alpha)
     }
 
 }

@@ -16,7 +16,7 @@ class HomeViewController: UIViewController {
     var transitionManager: TransitionManager!
     
     let constraintRangeForHeaderView = (CGFloat(-190)..<CGFloat(0))
-    let constraintRangeForHeaderTransparency = (CGFloat(-175)..<CGFloat(-54))
+    let constraintRangeForHeaderTransparency = (CGFloat(-130)..<CGFloat(-30))
 
     // MARK: Override Methods
     
@@ -58,8 +58,8 @@ class HomeViewController: UIViewController {
         tableView.dataSource = tableViewDataSource
         tableView.delegate = self
         tableView.frame = view.bounds
-        view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tableView)
     }
     
     private func setupHeaderView(){
@@ -78,13 +78,6 @@ class HomeViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
-        
-        var i = 0
-        for constraint in view.constraints {
-            print("\(i)")
-            print("\(constraint)")
-            i += 1
-        }
     }
     
     // MARK: Button Methods
@@ -108,45 +101,32 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        let constraint = view.constraints[0]
-        var alpha: CGFloat = 1.0
-        // TODO: Set transparency
-        // Code to set transparency
-        //         goalLabel.textColor = goalLabel.textColor.withAlphaComponent(0.3)
-        //         tagline.textColor = goalLabel.textColor.withAlphaComponent(0.3)
-
+        let homeHeaderViewTopConstraint = view.constraints[0]
         
-        // TODO: Remove print statements
         // Compress the top view
-        if constraint.constant > constraintRangeForHeaderView.lowerBound && scrollView.contentOffset.y > 0 {
-            print("Constraint const = \(constraint.constant)")
-            print("Scroll view content offset = \(scrollView.contentOffset.y)")
-            if constraint.constant < constraintRangeForHeaderTransparency.upperBound {
-                // Below maths for alpha number
-                let result: CGFloat =  (constraint.constant + 175)*(1)/(-54+175)
-                print("\(result)")
-                homeHeaderView.goalLabel.textColor = homeHeaderView.goalLabel.textColor.withAlphaComponent(result)
-            }
-            constraint.constant -= scrollView.contentOffset.y
+        if homeHeaderViewTopConstraint.constant > constraintRangeForHeaderView.lowerBound && scrollView.contentOffset.y > 0 {
+            homeHeaderViewTopConstraint.constant -= scrollView.contentOffset.y
             scrollView.contentOffset.y -= scrollView.contentOffset.y
         }
         
-        if constraint.constant > constraintRangeForHeaderView.upperBound {
-            constraint.constant = constraintRangeForHeaderView.upperBound
+        if homeHeaderViewTopConstraint.constant > constraintRangeForHeaderView.upperBound {
+            homeHeaderViewTopConstraint.constant = constraintRangeForHeaderView.upperBound
         }
         
         // Expand the top view
-        if constraint.constant < constraintRangeForHeaderView.upperBound && scrollView.contentOffset.y < 0{
-            print("Constraint const = \(constraint.constant)")
-            print("Scroll view content offset = \(scrollView.contentOffset.y)")
-            constraint.constant -= scrollView.contentOffset.y
+        if homeHeaderViewTopConstraint.constant < constraintRangeForHeaderView.upperBound && scrollView.contentOffset.y < 0{
+            homeHeaderViewTopConstraint.constant -= scrollView.contentOffset.y
             scrollView.contentOffset.y -= scrollView.contentOffset.y
         }
         
-        if constraint.constant < constraintRangeForHeaderView.lowerBound {
-            constraint.constant = constraintRangeForHeaderView.lowerBound
+        if homeHeaderViewTopConstraint.constant < constraintRangeForHeaderView.lowerBound {
+            homeHeaderViewTopConstraint.constant = constraintRangeForHeaderView.lowerBound
         }
 
+        if homeHeaderViewTopConstraint.constant < constraintRangeForHeaderTransparency.upperBound && homeHeaderViewTopConstraint.constant > constraintRangeForHeaderTransparency.lowerBound {
+            let alpha: CGFloat =  (homeHeaderViewTopConstraint.constant + 130)*(1)/(-30+130)
+            homeHeaderView.updateLabelsAlpha(with: alpha)
+        }
     }
 }
 
