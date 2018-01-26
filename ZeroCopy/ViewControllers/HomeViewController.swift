@@ -18,16 +18,27 @@ class HomeViewController: UIViewController {
     let constraintRangeForHeaderView = (CGFloat(-190)..<CGFloat(0))
     let constraintRangeForHeaderTransparency = (CGFloat(-130)..<CGFloat(-30))
 
+    var defaultNavigationBarShadow: UIImage!
+    
     // MARK: Override Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         transitionManager = TransitionManager()
         tableViewDataSource = TableViewDataSource()
-        setupNavigationController()
         setupTableView()
         setupHeaderView()
         setupConstraints()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupNavigationController()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.navigationBar.shadowImage = defaultNavigationBarShadow
     }
     
     // MARK: Setup
@@ -37,16 +48,16 @@ class HomeViewController: UIViewController {
             fatalError("navigationController does not exist")
         }
         
+        defaultNavigationBarShadow = navigationController.navigationBar.shadowImage
+        
         navigationController.navigationBar.topItem?.title = "Zero"
         navigationController.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor  : UIColor.white]
         navigationController.navigationBar.tintColor = .black
-        navigationController.navigationBar.barTintColor = UIColor(red: 248/255, green: 110/255, blue: 92/255, alpha: 0.1)
         
         navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController.navigationBar.shadowImage = UIImage()
         navigationController.navigationBar.isTranslucent = true
-
-        
+    
         let leftButton = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(settingsPressed))
         let rightButton = UIBarButtonItem(title: "Science", style: .plain, target: self, action: #selector(sciencePressed))
         navigationItem.leftBarButtonItem = leftButton

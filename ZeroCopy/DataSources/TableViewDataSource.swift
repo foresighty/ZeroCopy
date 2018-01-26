@@ -14,6 +14,10 @@ class TableViewDataSource: NSObject, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            return StartStopCell()
+        }
+        
         let label = UILabel(frame: CGRect(x: 30.0, y: 10.0, width: 100.0, height: 20.0))
         label.text = String(indexPath.row)
         let cell = UITableViewCell()
