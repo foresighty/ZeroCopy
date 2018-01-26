@@ -138,6 +138,16 @@ extension HomeViewController: UITableViewDelegate {
             let alpha: CGFloat =  (homeHeaderViewTopConstraint.constant + 130)*(1)/(-30+130)
             homeHeaderView.updateLabelsAlpha(with: alpha)
         }
+        
+        if homeHeaderViewTopConstraint.constant > constraintRangeForHeaderTransparency.upperBound {
+            homeHeaderView.updateLabelsAlpha(with: CGFloat(1.0))
+        }
+        
+        if homeHeaderViewTopConstraint.constant < constraintRangeForHeaderTransparency.lowerBound {
+            homeHeaderView.updateLabelsAlpha(with: CGFloat(0.0))
+        }
+        
+        
     }
 }
 
