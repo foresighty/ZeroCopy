@@ -16,7 +16,8 @@ class HomeViewController: UIViewController {
     var transitionManager: TransitionManager!
     
     let constraintRangeForHeaderView = (CGFloat(-190)..<CGFloat(0))
-    
+    let constraintRangeForHeaderTransparency = (CGFloat(-175)..<CGFloat(-54))
+
     // MARK: Override Methods
     
     override func viewDidLoad() {
@@ -108,14 +109,30 @@ extension HomeViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         let constraint = view.constraints[0]
+        var alpha: CGFloat = 1.0
+        // TODO: Set transparency
+        // Code to set transparency
+        //         goalLabel.textColor = goalLabel.textColor.withAlphaComponent(0.3)
+        //         tagline.textColor = goalLabel.textColor.withAlphaComponent(0.3)
+
         
         // TODO: Remove print statements
         // Compress the top view
         if constraint.constant > constraintRangeForHeaderView.lowerBound && scrollView.contentOffset.y > 0 {
             print("Constraint const = \(constraint.constant)")
             print("Scroll view content offset = \(scrollView.contentOffset.y)")
+            if constraint.constant < constraintRangeForHeaderTransparency.upperBound {
+                // Below maths for alpha number
+                let result: CGFloat =  (constraint.constant + 175)*(1)/(-54+175)
+                print("\(result)")
+                homeHeaderView.goalLabel.textColor = homeHeaderView.goalLabel.textColor.withAlphaComponent(result)
+            }
             constraint.constant -= scrollView.contentOffset.y
             scrollView.contentOffset.y -= scrollView.contentOffset.y
+        }
+        
+        if constraint.constant > constraintRangeForHeaderView.upperBound {
+            constraint.constant = constraintRangeForHeaderView.upperBound
         }
         
         // Expand the top view
@@ -126,13 +143,10 @@ extension HomeViewController: UITableViewDelegate {
             scrollView.contentOffset.y -= scrollView.contentOffset.y
         }
         
-        if constraint.constant > constraintRangeForHeaderView.upperBound {
-            constraint.constant = constraintRangeForHeaderView.upperBound
-        }
-        
         if constraint.constant < constraintRangeForHeaderView.lowerBound {
             constraint.constant = constraintRangeForHeaderView.lowerBound
         }
+
     }
 }
 

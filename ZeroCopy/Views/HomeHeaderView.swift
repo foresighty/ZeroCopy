@@ -43,7 +43,7 @@ class HomeHeaderView: UIView {
         let image = UIImage(named: imageName)
         backgroundImageView = UIImageView(image: image!)
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundImageView.contentMode = .scaleAspectFill
+        //backgroundImageView.contentMode = .scaleAspectFill
         //backgroundImageView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 269)
     }
     
@@ -82,7 +82,7 @@ class HomeHeaderView: UIView {
             tagline.topAnchor.constraint(equalTo: goalLabel.bottomAnchor, constant: 10.0),
             tagline.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             tagline.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            //tagline.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -70.0)
+            //tagline.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50.0)
         ]
         
         NSLayoutConstraint.activate(constraints)
