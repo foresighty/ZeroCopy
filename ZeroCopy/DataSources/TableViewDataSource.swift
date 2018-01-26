@@ -10,7 +10,7 @@ import UIKit
 
 class TableViewDataSource: NSObject, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 30
+        return 13
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -18,10 +18,33 @@ class TableViewDataSource: NSObject, UITableViewDataSource {
             return StartStopCell()
         }
         
-        let label = UILabel(frame: CGRect(x: 30.0, y: 10.0, width: 100.0, height: 20.0))
-        label.text = String(indexPath.row)
-        let cell = UITableViewCell()
-        cell.addSubview(label)
+        if indexPath.row == 1 {
+            return SevenDayTitleCell()
+        }
+        
+        if indexPath.row == 2 {
+            return GraphTableViewCell()
+        }
+        
+        if indexPath.row == 3 {
+            let cell = ListCell()
+            cell.updateDisplayForHeader()
+            return cell
+        }
+        
+        if indexPath.row == 11 {
+            let cell = ListCell()
+            cell.updateDisplayForFooter()
+            return cell
+        }
+        
+        if indexPath.row == 12 {
+            return WarningCell()
+        }
+        
+        let cell = ListCell()
+        cell.addButton()
         return cell
+    
     }
 }
