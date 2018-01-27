@@ -34,11 +34,13 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupNavigationController()
+        UIApplication.shared.statusBarStyle = .lightContent
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
         navigationController?.navigationBar.shadowImage = defaultNavigationBarShadow
+        UIApplication.shared.statusBarStyle = .default
     }
     
     // MARK: Setup
