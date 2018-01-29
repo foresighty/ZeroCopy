@@ -7,13 +7,16 @@
 //
 
 import UIKit
+import CoreData
 
 class HomeViewController: UIViewController {
     
     var homeHeaderView: HomeHeaderView!
     var tableView: UITableView!
-    var tableViewDataSource: TableViewDataSource!
     var transitionManager: TransitionManager!
+    
+    var fasts: [FastModel]!
+    var tableLength: Int!
     
     let constraintRangeForHeaderView = (CGFloat(-190)..<CGFloat(0))
     let constraintRangeForHeaderTransparency = (CGFloat(-130)..<CGFloat(-30))
@@ -25,7 +28,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         transitionManager = TransitionManager()
-        tableViewDataSource = TableViewDataSource()
+        setupCoreData()
         setupTableView()
         setupHeaderView()
         setupConstraints()
@@ -69,8 +72,8 @@ class HomeViewController: UIViewController {
     
     private func setupTableView(){
         tableView = UITableView()
-        tableView.dataSource = tableViewDataSource
         tableView.delegate = self
+        tableView.dataSource = self
         tableView.frame = view.bounds
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
@@ -94,6 +97,11 @@ class HomeViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
     }
     
+    // MARK: CoreData
+    
+    private func setupCoreData() {
+    }
+    
     // MARK: Button Methods
     
     @objc func settingsPressed(){
@@ -109,6 +117,53 @@ class HomeViewController: UIViewController {
     }
 }
 
+
+// MARK: TableViewDataSource Methods:
+
+extension HomeViewController: UITableViewDataSource {
+        
+        public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return 12
+        }
+        
+        public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            if indexPath.row == 0 {
+                return StartStopCell()
+            }
+            
+            if indexPath.row == 1 {
+                return SevenDayTitleCell()
+            }
+            
+            if indexPath.row == 2 {
+                return GraphTableViewCell()
+            }
+            
+            if indexPath.row == 3 {
+                let cell = ListCell()
+                cell.updateDisplayForHeader()
+                return cell
+            }
+            
+            if indexPath.row == 10 {
+                let cell = ListCell()
+                cell.updateDisplayForFooter()
+                cell.leftLabel.text = "Average"
+                cell.rightLabel.text = "TBD"
+                return cell
+            }
+            
+            if indexPath.row == 11 {
+                return WarningCell()
+            }
+            
+            
+            let cell = ListCell()
+            cell.addButton()
+            return cell
+            
+        }
+    }
 
 // MARK: TableViewDelegate Methods
 
