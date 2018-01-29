@@ -29,26 +29,8 @@ class HomeViewController: UIViewController {
         setupTableView()
         setupHeaderView()
         setupConstraints()
-        
-        // Data
-        grabData()
     }
-    
-    private func grabData() {
-        let jsonString = """
-            {
-                "startTime": "2018-01-29 08:56:50 +0000",
-                "endTime": "2018-01-29 20:56:50 +0000"
-            }
-            """
-        let jsonData = jsonString.data(using: .utf8)!
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        let fastModel: FastModel = try! decoder.decode(FastModel.self, from: jsonData)
-        print(fastModel)
-    }
+
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

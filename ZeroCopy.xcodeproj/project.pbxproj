@@ -20,9 +20,9 @@
 		4DC6AD2C201B807700078A34 /* WarningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC6AD2B201B807700078A34 /* WarningCell.swift */; };
 		D825D7D1201F201900C9D48A /* fastModel.json in Resources */ = {isa = PBXBuildFile; fileRef = D825D7CD201F1D0E00C9D48A /* fastModel.json */; };
 		D8852E3C201F173000DAA366 /* FastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8852E3B201F173000DAA366 /* FastModel.swift */; };
+		D887B645201F42B400A50CB7 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AF5A3B2019D123004E1FD4 /* TableViewDataSource.swift */; };
 		D88AFCC4201B2EDE009EBF8D /* StartStopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88AFCC3201B2EDE009EBF8D /* StartStopCell.swift */; };
 		D8A2F842201895FB0015E3E9 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A2F841201895FB0015E3E9 /* HomeHeaderView.swift */; };
-		D8AF5A3C2019D123004E1FD4 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AF5A3B2019D123004E1FD4 /* TableViewDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -243,8 +243,8 @@
 				4DC6AD2A201B77D000078A34 /* ListCell.swift in Sources */,
 				4DC6AD28201B748D00078A34 /* GraphTableViewCell.swift in Sources */,
 				D8A2F842201895FB0015E3E9 /* HomeHeaderView.swift in Sources */,
+				D887B645201F42B400A50CB7 /* TableViewDataSource.swift in Sources */,
 				D8852E3C201F173000DAA366 /* FastModel.swift in Sources */,
-				D8AF5A3C2019D123004E1FD4 /* TableViewDataSource.swift in Sources */,
 				4D3773072009358A00C5C554 /* ScienceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

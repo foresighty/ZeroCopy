@@ -8,6 +8,10 @@
 
 import Foundation
 
+struct Fasts: Codable {
+    let fasts: [FastModel]
+}
+
 struct FastModel: Codable {
     var startTime: Date?
     var endTime: Date?
