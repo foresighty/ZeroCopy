@@ -34,11 +34,13 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupNavigationController()
+        UIApplication.shared.statusBarStyle = .lightContent
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
         navigationController?.navigationBar.shadowImage = defaultNavigationBarShadow
+        UIApplication.shared.statusBarStyle = .default
     }
     
     // MARK: Setup
@@ -138,6 +140,16 @@ extension HomeViewController: UITableViewDelegate {
             let alpha: CGFloat =  (homeHeaderViewTopConstraint.constant + 130)*(1)/(-30+130)
             homeHeaderView.updateLabelsAlpha(with: alpha)
         }
+        
+        if homeHeaderViewTopConstraint.constant > constraintRangeForHeaderTransparency.upperBound {
+            homeHeaderView.updateLabelsAlpha(with: CGFloat(1.0))
+        }
+        
+        if homeHeaderViewTopConstraint.constant < constraintRangeForHeaderTransparency.lowerBound {
+            homeHeaderView.updateLabelsAlpha(with: CGFloat(0.0))
+        }
+        
+        
     }
 }
 

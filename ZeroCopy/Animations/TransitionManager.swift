@@ -13,7 +13,7 @@ class TransitionManager {
     var transition = CATransition()
     
     public func transitionUp() -> CATransition {
-        transition.duration = 0.5
+        transition.duration = 0.3
         transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         transition.type = kCATransitionMoveIn
         transition.subtype = kCATransitionFromTop
@@ -21,7 +21,7 @@ class TransitionManager {
     }
     
     public func transitionDown() -> CATransition {
-        transition.duration = 0.3
+        transition.duration = 0.2
         transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         transition.type = kCATransitionReveal
         transition.subtype = kCATransitionFromBottom

@@ -14,6 +14,10 @@
 		4D3773072009358A00C5C554 /* ScienceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3773062009358A00C5C554 /* ScienceViewController.swift */; };
 		4D3773092009359400C5C554 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3773082009359400C5C554 /* HomeViewController.swift */; };
 		4D377313200A35FD00C5C554 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D377312200A35FD00C5C554 /* TransitionManager.swift */; };
+		4DC6AD26201B6C5F00078A34 /* SevenDayTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC6AD25201B6C5E00078A34 /* SevenDayTitleCell.swift */; };
+		4DC6AD28201B748D00078A34 /* GraphTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC6AD27201B748D00078A34 /* GraphTableViewCell.swift */; };
+		4DC6AD2A201B77D000078A34 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC6AD29201B77D000078A34 /* ListCell.swift */; };
+		4DC6AD2C201B807700078A34 /* WarningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC6AD2B201B807700078A34 /* WarningCell.swift */; };
 		D88AFCC4201B2EDE009EBF8D /* StartStopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88AFCC3201B2EDE009EBF8D /* StartStopCell.swift */; };
 		D8A2F842201895FB0015E3E9 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A2F841201895FB0015E3E9 /* HomeHeaderView.swift */; };
 		D8AF5A3C2019D123004E1FD4 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AF5A3B2019D123004E1FD4 /* TableViewDataSource.swift */; };
@@ -29,6 +33,10 @@
 		4D3773062009358A00C5C554 /* ScienceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScienceViewController.swift; sourceTree = "<group>"; };
 		4D3773082009359400C5C554 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		4D377312200A35FD00C5C554 /* TransitionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
+		4DC6AD25201B6C5E00078A34 /* SevenDayTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenDayTitleCell.swift; sourceTree = "<group>"; };
+		4DC6AD27201B748D00078A34 /* GraphTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphTableViewCell.swift; sourceTree = "<group>"; };
+		4DC6AD29201B77D000078A34 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		4DC6AD2B201B807700078A34 /* WarningCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningCell.swift; sourceTree = "<group>"; };
 		D88AFCC3201B2EDE009EBF8D /* StartStopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStopCell.swift; sourceTree = "<group>"; };
 		D8A2F841201895FB0015E3E9 /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
 		D8AF5A3B2019D123004E1FD4 /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
@@ -88,6 +96,10 @@
 			isa = PBXGroup;
 			children = (
 				D88AFCC3201B2EDE009EBF8D /* StartStopCell.swift */,
+				4DC6AD25201B6C5E00078A34 /* SevenDayTitleCell.swift */,
+				4DC6AD27201B748D00078A34 /* GraphTableViewCell.swift */,
+				4DC6AD2B201B807700078A34 /* WarningCell.swift */,
+				4DC6AD29201B77D000078A34 /* ListCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -201,8 +213,12 @@
 				4D3773092009359400C5C554 /* HomeViewController.swift in Sources */,
 				4D377313200A35FD00C5C554 /* TransitionManager.swift in Sources */,
 				D88AFCC4201B2EDE009EBF8D /* StartStopCell.swift in Sources */,
+				4DC6AD26201B6C5F00078A34 /* SevenDayTitleCell.swift in Sources */,
 				4D3772F3200934C800C5C554 /* AppDelegate.swift in Sources */,
 				4D3773052009357B00C5C554 /* SettingViewController.swift in Sources */,
+				4DC6AD2C201B807700078A34 /* WarningCell.swift in Sources */,
+				4DC6AD2A201B77D000078A34 /* ListCell.swift in Sources */,
+				4DC6AD28201B748D00078A34 /* GraphTableViewCell.swift in Sources */,
 				D8A2F842201895FB0015E3E9 /* HomeHeaderView.swift in Sources */,
 				D8AF5A3C2019D123004E1FD4 /* TableViewDataSource.swift in Sources */,
 				4D3773072009358A00C5C554 /* ScienceViewController.swift in Sources */,
@@ -342,7 +358,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mikegopsill.ZeroCopy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -358,7 +374,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mikegopsill.ZeroCopy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

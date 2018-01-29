@@ -40,13 +40,14 @@ class StartStopCell: UITableViewCell {
         contentView.addSubview(fastingButton)
         
         
-        lastSevenLabel = UILabel()
-        lastSevenLabel.text = "LAST 7 FASTS"
-        lastSevenLabel.backgroundColor = .white
-        lastSevenLabel.font = lastSevenLabel.font.withSize(10.0)
-        lastSevenLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(lastSevenLabel)
-        separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+//        lastSevenLabel = UILabel()
+//        lastSevenLabel.text = "LAST 7 FASTS"
+//        lastSevenLabel.backgroundColor = .white
+//        lastSevenLabel.font = lastSevenLabel.font.withSize(10.0)
+//        lastSevenLabel.translatesAutoresizingMaskIntoConstraints = false
+//        contentView.addSubview(lastSevenLabel)
+        separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
+        
         
 
         
@@ -63,8 +64,8 @@ class StartStopCell: UITableViewCell {
             fastingButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20.0),
             fastingButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20.0),
             fastingButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -25.0),
-            lastSevenLabel.topAnchor.constraint(equalTo: fastingButton.bottomAnchor, constant: 18.5),
-            lastSevenLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+//            lastSevenLabel.topAnchor.constraint(equalTo: fastingButton.bottomAnchor, constant: 18.5),
+//            lastSevenLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
         ]
         NSLayoutConstraint.activate(constraints)
         
