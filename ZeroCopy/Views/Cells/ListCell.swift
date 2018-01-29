@@ -92,9 +92,8 @@ class ListCell: UITableViewCell {
     
     public func addButton() {
         let editImage = UIImage(named: "editPencil")
-        
         editButton = UIButton()
-        editButton?.setImage(editImage, for: .normal)
+        editButton?.setImage(editImage, for: .normal)   
         editButton?.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(editButton!)
         let constraints: [NSLayoutConstraint] = [
