@@ -59,17 +59,18 @@ class StartStopCell: UITableViewCell {
     
     @objc private func pressed(){
         if !fastingButton.isSelected {
-            recordFast(started: true)
             fastTimer = FastTimer()
             fastTimer.runTimer()
+            print("Fast Started")
         }
         
         if fastingButton.isSelected {
-            recordFast(started: false)
             let (startDate, endDate, seconds) = fastTimer.stopTimer()
-            print(startDate)
-            print(endDate)
-            print(seconds)
+            print("Fast Ended with: ")
+            print("startDate: \(startDate)")
+            print("endDate: \(endDate)")
+            print("duration: \(seconds)")
+            recordFast(startDate: startDate, endDate: endDate, duration: seconds)
         }
         
         fastingButton.isSelected = fastingButton.isSelected ? false : true
@@ -78,49 +79,41 @@ class StartStopCell: UITableViewCell {
         
         fastingButton.backgroundColor = fastingButton.isSelected ? selectedColor : normalColor
         fastingButton.titleLabel?.textColor = fastingButton.isSelected ? .black : .white
-        
-
     }
     
+    private func recordFast(startDate: Date, endDate: Date, duration: Int){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fastEntity = NSEntityDescription.entity(forEntityName: "Fast", in: managedContext)
+        let fast = NSManagedObject(entity: fastEntity!, insertInto: managedContext)
 
-    
-    
-    
-    private func recordFast(started: Bool){
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        let fastEntity = NSEntityDescription.entity(forEntityName: "Fast", in: managedContext)
-//        let fast = NSManagedObject(entity: fastEntity!, insertInto: managedContext)
-//
-//        if started {
-//            fast.setValue(Date(), forKey: "startTime")
-//        } else {
-//            fast.setValue(Date(), forKey: "endTime")
-//        }
-//
-//        do {
-//            try managedContext.save()
-//        } catch let error as NSError {
-//            print("Could not save. \(error), \(error.userInfo)")
-//        }
-//
-//        // fetch the object
-//        let fastFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Fast")
-//        fastFetch.fetchLimit = 10
-//        let fastsFetched = try! managedContext.fetch(fastFetch)
-//        print(fastsFetched)
-//
-//        let result : Fast = fastsFetched[0] as! Fast
-//        print(result)
+        fast.setValue(startDate, forKey: "startTime")
+        fast.setValue(endDate, forKey: "endTime")
+        fast.setValue(duration, forKey: "duration")
+
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+
+        // fetch the object
+        let fastFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Fast")
+        fastFetch.fetchLimit = 10
+        fastFetch.returnsObjectsAsFaults = false
+        let fastsFetched = try! managedContext.fetch(fastFetch)
+        print("Full array of fasts: ")
+        print(fastsFetched)
+
+        let result = fastsFetched[fastsFetched.count-1]
+        print("Last Fast")
+        print(result)
     }
-   
-    
 }
 
 class FastTimer {
-    var seconds = 0 //This variable will hold a starting value of seconds. It could be any amount above 0.
+    var seconds = 0
     var timer = Timer()
-    var isTimerRunning = false //This will be used to make sure only one timer is created at a time.
     var startDate = Date()
     var endDate = Date()
     
