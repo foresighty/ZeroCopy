@@ -39,21 +39,7 @@ class StartStopCell: UITableViewCell {
         fastingButton.addTarget(self, action: #selector(pressed), for: .touchUpInside)
         contentView.addSubview(fastingButton)
         
-        
-//        lastSevenLabel = UILabel()
-//        lastSevenLabel.text = "LAST 7 FASTS"
-//        lastSevenLabel.backgroundColor = .white
-//        lastSevenLabel.font = lastSevenLabel.font.withSize(10.0)
-//        lastSevenLabel.translatesAutoresizingMaskIntoConstraints = false
-//        contentView.addSubview(lastSevenLabel)
         separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
-        
-        
-
-        
-        
-        
-        
         setupConstraints()
     }
     
@@ -63,9 +49,7 @@ class StartStopCell: UITableViewCell {
             fastingButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20.0),
             fastingButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20.0),
             fastingButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20.0),
-            fastingButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -25.0),
-//            lastSevenLabel.topAnchor.constraint(equalTo: fastingButton.bottomAnchor, constant: 18.5),
-//            lastSevenLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            fastingButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -25.0)
         ]
         NSLayoutConstraint.activate(constraints)
         
