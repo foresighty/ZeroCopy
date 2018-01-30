@@ -170,22 +170,26 @@ extension HomeViewController: UITableViewDataSource, StartStopCellUpdater {
                 return cell
             }
             
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM"
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell") as! ListCell
             cell.addButton()
-            let listOfFasts = CoreDataManager.sharedInstance.retrieveFasts()
-            let fast = listOfFasts![indexPath.row-4]
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd/MM"
-            let dateStringForCell = formatter.string(from: fast.startTime!)
-            cell.leftLabel.text = dateStringForCell
-            let duration = fast.duration
-            let (h,m) = secondsToHoursMinutes(seconds: Int(duration))
-            //cell.rightLabel.text = "\(h)hrs \(m)min"
-            cell.rightLabel.text = "\(duration)"
+            guard let listOfFasts = CoreDataManager.sharedInstance.retrieveFasts() else { return cell }
+            var fast = Fast()
+            if listOfFasts.count > 0 && indexPath.row-4 < listOfFasts.count {
+                fast = listOfFasts[indexPath.row-4]
+                
+                if let startTime = fast.startDate {
+                    let dateStringForCell = formatter.string(from: startTime)
+                    cell.leftLabel.text = dateStringForCell
+                    let duration = fast.duration
+                    let (h,m) = secondsToHoursMinutes(seconds: Int(duration))
+                    // Replace line below with this for hour to minutes: cell.rightLabel.text = "\(h)hrs \(m)min"
+                    cell.rightLabel.text = "\(duration)"
+                }
+            }
             return cell
-            
         }
     
     private func secondsToHoursMinutes(seconds : Int) -> (Int, Int) {

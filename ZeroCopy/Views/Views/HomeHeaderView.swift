@@ -27,7 +27,6 @@ class HomeHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: Setup
     
     private func setup(){
@@ -43,8 +42,6 @@ class HomeHeaderView: UIView {
         let image = UIImage(named: imageName)
         backgroundImageView = UIImageView(image: image!)
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
-        //backgroundImageView.contentMode = .scaleAspectFill
-        //backgroundImageView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 269)
     }
     
     private func setupGoalLabel(){
@@ -69,7 +66,6 @@ class HomeHeaderView: UIView {
         addSubview(goalLabel)
         addSubview(tagline)
 
-
         let constraints:[NSLayoutConstraint] = [
             self.heightAnchor.constraint(equalToConstant: 254.0),
             backgroundImageView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -82,7 +78,6 @@ class HomeHeaderView: UIView {
             tagline.topAnchor.constraint(equalTo: goalLabel.bottomAnchor, constant: 10.0),
             tagline.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             tagline.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            //tagline.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50.0)
         ]
         
         NSLayoutConstraint.activate(constraints)

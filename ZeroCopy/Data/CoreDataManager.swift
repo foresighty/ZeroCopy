@@ -24,8 +24,8 @@ class CoreDataManager {
         fastToSave.startDate = startDate
         fastToSave.endDate = endDate
         
-        fast.setValue(fastToSave.startDate, forKey: "startTime")
-        fast.setValue(fastToSave.endDate, forKey: "endTime")
+        fast.setValue(fastToSave.startDate, forKey: "startDate")
+        fast.setValue(fastToSave.endDate, forKey: "endDate")
         fast.setValue(fastToSave.duration, forKey: "duration")
         
         do {
@@ -33,9 +33,8 @@ class CoreDataManager {
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
-        
-        print("Saved Fast = \(fast)")
 
+        print("Saved Fast = \(fast)")
     }
     
     func retrieveFasts() -> [Fast]? {
@@ -44,12 +43,14 @@ class CoreDataManager {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Fast")
         fetchRequest.fetchLimit = 7
-        let sort = NSSortDescriptor(key: #keyPath(Fast.startTime), ascending: false)
+        let sort = NSSortDescriptor(key: #keyPath(Fast.startDate), ascending: false)
         fetchRequest.sortDescriptors = [sort]
         fetchRequest.returnsObjectsAsFaults = false
-        let listOfFasts : [Fast] = try! managedContext.fetch(fetchRequest) as! [Fast]
-
-        return listOfFasts
-    
+        if let listOfFasts : [Fast] = try? managedContext.fetch(fetchRequest) as! [Fast] {
+            print("---------------ALL FASTS------------------")
+            print(listOfFasts)
+            return listOfFasts
+        }
+        return [Fast]()
     }
 }
