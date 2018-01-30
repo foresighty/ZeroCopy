@@ -20,6 +20,8 @@ class HomeViewController: UIViewController {
 
     var defaultNavigationBarShadow: UIImage!
     
+    var listOfFasts: [Fast]?
+    
     // MARK: Override Methods
     
     override func viewDidLoad() {
@@ -79,7 +81,9 @@ class HomeViewController: UIViewController {
         tableView.register(GraphTableViewCell.self, forCellReuseIdentifier: "GraphTableViewCell")
         tableView.register(WarningCell.self, forCellReuseIdentifier: "WarningCell")
         tableView.register(ListCell.self, forCellReuseIdentifier: "ListCell")
-        
+        tableView.register(HeaderListCell.self, forCellReuseIdentifier: "HeaderListCell")
+        tableView.register(FooterListCell.self, forCellReuseIdentifier: "FooterListCell")
+
         view.addSubview(tableView)
     }
     
@@ -104,6 +108,7 @@ class HomeViewController: UIViewController {
     // MARK: CoreData
     
     private func setupCoreData() {
+        listOfFasts = CoreDataManager.sharedInstance.retrieveFasts()
     }
     
     // MARK: Button Methods
@@ -126,76 +131,60 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDataSource, StartStopCellUpdater {
     
-        func updateTableView() {
-            tableView.reloadData()
-        }
-        
-        public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return 12
-        }
-        
-        public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            if indexPath.row == 0 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "StartStopCell") as! StartStopCell
-                cell.delegate = self
-                return cell
-            }
-            
-            if indexPath.row == 1 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "SevenDayTitleCell") as! SevenDayTitleCell
-                return cell
-            }
-            
-            if indexPath.row == 2 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "GraphTableViewCell") as! GraphTableViewCell
-                return cell
-            }
-            
-            if indexPath.row == 3 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell") as! ListCell
-                cell.updateDisplayForHeader()
-                return cell
-            }
-            
-            if indexPath.row == 10 {
-                let cell = ListCell()
-                cell.updateDisplayForFooter()
-                cell.leftLabel.text = "Average"
-                cell.rightLabel.text = "TBD"
-                return cell
-            }
-            
-            if indexPath.row == 11 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "WarningCell") as! WarningCell
-                return cell
-            }
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd/MM"
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell") as! ListCell
-            cell.addButton()
-            guard let listOfFasts = CoreDataManager.sharedInstance.retrieveFasts() else { return cell }
-            var fast = Fast()
-            if listOfFasts.count > 0 && indexPath.row-4 < listOfFasts.count {
-                fast = listOfFasts[indexPath.row-4]
-                
-                if let startTime = fast.startDate {
-                    let dateStringForCell = formatter.string(from: startTime)
-                    cell.leftLabel.text = dateStringForCell
-                    let duration = fast.duration
-                    let (h,m) = secondsToHoursMinutes(seconds: Int(duration))
-                    // Replace line below with this for hour to minutes: cell.rightLabel.text = "\(h)hrs \(m)min"
-                    cell.rightLabel.text = "\(duration)"
-                }
-            }
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 13
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "StartStopCell") as! StartStopCell
+            cell.delegate = self
             return cell
         }
-    
-    private func secondsToHoursMinutes(seconds : Int) -> (Int, Int) {
-                return (seconds / 3600, (seconds % 3600) / 60)
+        
+        if indexPath.row == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SevenDayTitleCell") as! SevenDayTitleCell
+            return cell
+        }
+        
+        if indexPath.row == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "GraphTableViewCell") as! GraphTableViewCell
+            return cell
+        }
+        
+        if indexPath.row == 3 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderListCell") as! HeaderListCell
+            return cell
+        }
+        
+        if indexPath.row == 11 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FooterListCell") as! FooterListCell
+            return cell
+        }
+        
+        if indexPath.row == 12 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "WarningCell") as! WarningCell
+            return cell
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell") as! ListCell
+        guard let listOfFasts = listOfFasts else { return cell }
+
+        
+        // TODO: Some way of refreshing UI when cell data updates.
+        var fast = Fast()
+        if listOfFasts.count > 0 && indexPath.row-4 < listOfFasts.count {
+            fast = listOfFasts[indexPath.row-4]
+            cell.updateDisplay(with: fast)
             }
+        return cell
     }
+    
+    func updateTableView() {
+        tableView.reloadData()
+    }
+    
+}
 
 // MARK: TableViewDelegate Methods
 

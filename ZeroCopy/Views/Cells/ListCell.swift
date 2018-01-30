@@ -9,16 +9,11 @@
 import UIKit
 
 class ListCell: UITableViewCell {
-
+    
     // Labels
     var leftLabel: UILabel!
     var rightLabel: UILabel!
     var editButton: UIButton?
-
-    // States
-    var isHeader = false
-    var isFooter = false
-    var hasButton = false
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -39,29 +34,18 @@ class ListCell: UITableViewCell {
         leftLabel.text = "Left Label"
         leftLabel.translatesAutoresizingMaskIntoConstraints = false
         leftLabel.font = leftLabel.font.withSize(12.0)
-
+        
         rightLabel = UILabel()
         rightLabel.text = "Right Label"
         rightLabel.translatesAutoresizingMaskIntoConstraints = false
         rightLabel.font = rightLabel.font.withSize(12.0)
-
+        
         
         contentView.addSubview(leftLabel)
         contentView.addSubview(rightLabel)
         
         setupConstraints()
-        
-        if hasButton {
-            addButton()
-        }
-        
-        if isHeader {
-            updateDisplayForHeader()
-        }
-        
-        if isFooter {
-            updateDisplayForFooter()
-        }
+        addButton()
     }
     
     private func setupConstraints() {
@@ -71,24 +55,11 @@ class ListCell: UITableViewCell {
             leftLabel.widthAnchor.constraint(equalToConstant: 150.0),
             rightLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             rightLabel.leadingAnchor.constraint(equalTo: leftLabel.trailingAnchor, constant: 10.0),
-        ]
+            ]
         NSLayoutConstraint.activate(constraints)
     }
     
-    public func updateDisplayForHeader() {
-        leftLabel.text = "Started"
-        rightLabel.text = "Duration"
-        leftLabel.text = leftLabel.text?.uppercased()
-        rightLabel.text = rightLabel.text?.uppercased()
-        leftLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
-        rightLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
-    }
-    
-    public func updateDisplayForFooter() {
-        contentView.backgroundColor = UIColor(red:0.82, green:0.81, blue:0.82, alpha:1.0)
-    }
-    
-    public func addButton() {
+    private func addButton() {
         let editImage = UIImage(named: "editPencil")
         editButton = UIButton()
         editButton?.setImage(editImage, for: .normal)   
@@ -103,4 +74,21 @@ class ListCell: UITableViewCell {
         NSLayoutConstraint.activate(constraints)
     }
     
+    public func updateDisplay(with fast: Fast){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM"
+        
+        if let startTime = fast.startDate {
+            let dateStringForCell = formatter.string(from: startTime)
+            leftLabel.text = dateStringForCell
+            let duration = fast.duration
+            let (h,m) = secondsToHoursMinutes(seconds: Int(duration))
+            // Replace line below with this for hour to minutes: cell.rightLabel.text = "\(h)hrs \(m)min"
+            rightLabel.text = "\(duration)"
+        }
+    }
+    
+    private func secondsToHoursMinutes(seconds : Int) -> (Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60)
+    }
 }

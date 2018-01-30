@@ -29,7 +29,7 @@ class SevenDayTitleCell: UITableViewCell {
         lastSevenLabel = UILabel()
         lastSevenLabel.text = "  LAST 7 FASTS  "
         lastSevenLabel.backgroundColor = .white
-        lastSevenLabel.font = lastSevenLabel.font.withSize(10.0)
+        lastSevenLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
         lastSevenLabel.translatesAutoresizingMaskIntoConstraints = false
         lineView = UIView()
         lineView.backgroundColor = UIColor(red:0.82, green:0.81, blue:0.82, alpha:1.0)
@@ -39,7 +39,6 @@ class SevenDayTitleCell: UITableViewCell {
         contentView.addSubview(lastSevenLabel)
         
         separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
-
         
         setupConstraints()
     }
@@ -56,6 +55,4 @@ class SevenDayTitleCell: UITableViewCell {
         ]
         NSLayoutConstraint.activate(constraints)
     }
-    
-
 }
