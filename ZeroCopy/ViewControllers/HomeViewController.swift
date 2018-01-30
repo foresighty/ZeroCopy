@@ -27,7 +27,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         transitionManager = TransitionManager()
-        setupCoreData()
+        updateCoreData()
         setupTableView()
         setupHeaderView()
         setupConstraints()
@@ -107,7 +107,7 @@ class HomeViewController: UIViewController {
     
     // MARK: CoreData
     
-    private func setupCoreData() {
+    private func updateCoreData() {
         listOfFasts = CoreDataManager.sharedInstance.retrieveFasts()
     }
     
@@ -170,8 +170,6 @@ extension HomeViewController: UITableViewDataSource, StartStopCellUpdater {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell") as! ListCell
         guard let listOfFasts = listOfFasts else { return cell }
 
-        
-        // TODO: Some way of refreshing UI when cell data updates.
         var fast = Fast()
         if listOfFasts.count > 0 && indexPath.row-4 < listOfFasts.count {
             fast = listOfFasts[indexPath.row-4]
@@ -181,6 +179,7 @@ extension HomeViewController: UITableViewDataSource, StartStopCellUpdater {
     }
     
     func updateTableView() {
+        updateCoreData()
         tableView.reloadData()
     }
     
