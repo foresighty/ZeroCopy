@@ -17,7 +17,6 @@ class StartStopCell: UITableViewCell {
     private var fastingButton: UIButton!
     private var lastSevenLabel: UILabel!
     private var fastTimer = FastTimer()
-    private let normalBackgroundColor = UIColor(red: 0.59, green: 0.78, blue: 0.82, alpha: 1.0)
     weak var delegate: StartStopCellUpdater?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -42,7 +41,7 @@ class StartStopCell: UITableViewCell {
         fastingButton.setTitle("Stop Fasting", for: .selected)
         fastingButton.setTitleColor(selectedTextColor, for: .selected)
         fastingButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18.0)
-        fastingButton.backgroundColor = normalBackgroundColor
+        fastingButton.backgroundColor = UIColor(red: 0.59, green: 0.78, blue: 0.82, alpha: 1.0)
         fastingButton.translatesAutoresizingMaskIntoConstraints = false
         fastingButton.addTarget(self, action: #selector(pressed), for: .touchUpInside)
         contentView.addSubview(fastingButton)
@@ -68,18 +67,15 @@ class StartStopCell: UITableViewCell {
         if !fastingButton.isSelected {
             // TODO: Change timer to count time since start date and display
             fastTimer.runTimer()
-        }
-        
-        if fastingButton.isSelected {
+            fastingButton.isSelected = true
+            fastingButton.backgroundColor = UIColor(red:0.90, green:0.89, blue:0.60, alpha:1.0)
+        } else if fastingButton.isSelected {
             let (startDate, endDate, seconds) = fastTimer.stopTimer()
             recordFast(startDate: startDate, endDate: endDate, duration: seconds)
             delegate?.updateTableView()
+            fastingButton.isSelected = false
+            fastingButton.backgroundColor = UIColor(red: 0.59, green: 0.78, blue: 0.82, alpha: 1.0)
         }
-        
-        fastingButton.isSelected = fastingButton.isSelected ? false : true
-        
-        let selectedColor = UIColor(red:0.90, green:0.89, blue:0.60, alpha:1.0)
-        fastingButton.backgroundColor = fastingButton.isSelected ? selectedColor : normalBackgroundColor
     }
     
     private func recordFast(startDate: Date, endDate: Date, duration: Int){
