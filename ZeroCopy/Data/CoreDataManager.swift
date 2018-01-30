@@ -20,9 +20,13 @@ class CoreDataManager {
         let fastEntity = NSEntityDescription.entity(forEntityName: "Fast", in: managedContext)
         let fast = NSManagedObject(entity: fastEntity!, insertInto: managedContext)
         
-        fast.setValue(startDate, forKey: "startTime")
-        fast.setValue(endDate, forKey: "endTime")
-        fast.setValue(duration, forKey: "duration")
+        var fastToSave = FastDataModel()
+        fastToSave.startDate = startDate
+        fastToSave.endDate = endDate
+        
+        fast.setValue(fastToSave.startDate, forKey: "startTime")
+        fast.setValue(fastToSave.endDate, forKey: "endTime")
+        fast.setValue(fastToSave.duration, forKey: "duration")
         
         do {
             try managedContext.save()
@@ -44,9 +48,7 @@ class CoreDataManager {
         fetchRequest.sortDescriptors = [sort]
         fetchRequest.returnsObjectsAsFaults = false
         let listOfFasts : [Fast] = try! managedContext.fetch(fetchRequest) as! [Fast]
-        print("Full array of fasts: ")
-        print(listOfFasts)
-        
+
         return listOfFasts
     
     }

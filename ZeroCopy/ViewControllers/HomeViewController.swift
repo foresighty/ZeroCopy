@@ -15,9 +15,6 @@ class HomeViewController: UIViewController {
     var tableView: UITableView!
     var transitionManager: TransitionManager!
     
-    var fasts: [FastModel]!
-    var tableLength: Int!
-    
     let constraintRangeForHeaderView = (CGFloat(-190)..<CGFloat(0))
     let constraintRangeForHeaderTransparency = (CGFloat(-130)..<CGFloat(-30))
 
@@ -76,6 +73,13 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         tableView.frame = view.bounds
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        tableView.register(StartStopCell.self, forCellReuseIdentifier: "StartStopCell")
+        tableView.register(SevenDayTitleCell.self, forCellReuseIdentifier: "SevenDayTitleCell")
+        tableView.register(GraphTableViewCell.self, forCellReuseIdentifier: "GraphTableViewCell")
+        tableView.register(WarningCell.self, forCellReuseIdentifier: "WarningCell")
+        tableView.register(ListCell.self, forCellReuseIdentifier: "ListCell")
+        
         view.addSubview(tableView)
     }
     
@@ -120,7 +124,11 @@ class HomeViewController: UIViewController {
 
 // MARK: TableViewDataSource Methods:
 
-extension HomeViewController: UITableViewDataSource {
+extension HomeViewController: UITableViewDataSource, StartStopCellUpdater {
+    
+        func updateTableView() {
+            tableView.reloadData()
+        }
         
         public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return 12
@@ -128,19 +136,23 @@ extension HomeViewController: UITableViewDataSource {
         
         public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             if indexPath.row == 0 {
-                return StartStopCell()
+                let cell = tableView.dequeueReusableCell(withIdentifier: "StartStopCell") as! StartStopCell
+                cell.delegate = self
+                return cell
             }
             
             if indexPath.row == 1 {
-                return SevenDayTitleCell()
+                let cell = tableView.dequeueReusableCell(withIdentifier: "SevenDayTitleCell") as! SevenDayTitleCell
+                return cell
             }
             
             if indexPath.row == 2 {
-                return GraphTableViewCell()
+                let cell = tableView.dequeueReusableCell(withIdentifier: "GraphTableViewCell") as! GraphTableViewCell
+                return cell
             }
             
             if indexPath.row == 3 {
-                let cell = ListCell()
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell") as! ListCell
                 cell.updateDisplayForHeader()
                 return cell
             }
@@ -154,11 +166,12 @@ extension HomeViewController: UITableViewDataSource {
             }
             
             if indexPath.row == 11 {
-                return WarningCell()
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarningCell") as! WarningCell
+                return cell
             }
             
             
-            let cell = ListCell()
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell") as! ListCell
             cell.addButton()
             let listOfFasts = CoreDataManager.sharedInstance.retrieveFasts()
             let fast = listOfFasts![indexPath.row-4]
@@ -169,7 +182,8 @@ extension HomeViewController: UITableViewDataSource {
             cell.leftLabel.text = dateStringForCell
             let duration = fast.duration
             let (h,m) = secondsToHoursMinutes(seconds: Int(duration))
-            cell.rightLabel.text = "\(h)hrs \(m)min"
+            //cell.rightLabel.text = "\(h)hrs \(m)min"
+            cell.rightLabel.text = "\(duration)"
             return cell
             
         }

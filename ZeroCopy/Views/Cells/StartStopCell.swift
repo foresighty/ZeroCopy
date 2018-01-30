@@ -9,11 +9,16 @@
 import UIKit
 import CoreData
 
+protocol StartStopCellUpdater: class {
+    func updateTableView()
+}
+
 class StartStopCell: UITableViewCell {
 
     var fastingButton: UIButton!
     var lastSevenLabel: UILabel!
     var fastTimer = FastTimer()
+    weak var delegate: StartStopCellUpdater?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -71,6 +76,7 @@ class StartStopCell: UITableViewCell {
             print("endDate: \(endDate)")
             print("duration: \(seconds)")
             recordFast(startDate: startDate, endDate: endDate, duration: seconds)
+            delegate?.updateTableView()
         }
         
         fastingButton.isSelected = fastingButton.isSelected ? false : true
@@ -86,6 +92,7 @@ class StartStopCell: UITableViewCell {
     }
 }
 
+// TODO: Change timer to count time since start date and display 
 class FastTimer {
     var seconds = 0
     var timer = Timer()
