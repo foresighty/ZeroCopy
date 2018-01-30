@@ -82,32 +82,8 @@ class StartStopCell: UITableViewCell {
     }
     
     private func recordFast(startDate: Date, endDate: Date, duration: Int){
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fastEntity = NSEntityDescription.entity(forEntityName: "Fast", in: managedContext)
-        let fast = NSManagedObject(entity: fastEntity!, insertInto: managedContext)
-
-        fast.setValue(startDate, forKey: "startTime")
-        fast.setValue(endDate, forKey: "endTime")
-        fast.setValue(duration, forKey: "duration")
-
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-        }
-
-        // fetch the object
-        let fastFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Fast")
-        fastFetch.fetchLimit = 10
-        fastFetch.returnsObjectsAsFaults = false
-        let fastsFetched = try! managedContext.fetch(fastFetch)
-        print("Full array of fasts: ")
-        print(fastsFetched)
-
-        let result = fastsFetched[fastsFetched.count-1]
-        print("Last Fast")
-        print(result)
+        CoreDataManager.sharedInstance.recordFast(startDate: startDate, endDate: endDate, duration: duration)
+        CoreDataManager.sharedInstance.retrieveFast()
     }
 }
 

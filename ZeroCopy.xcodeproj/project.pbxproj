@@ -19,6 +19,7 @@
 		4DC6AD2A201B77D000078A34 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC6AD29201B77D000078A34 /* ListCell.swift */; };
 		4DC6AD2C201B807700078A34 /* WarningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC6AD2B201B807700078A34 /* WarningCell.swift */; };
 		D825D7D1201F201900C9D48A /* fastModel.json in Resources */ = {isa = PBXBuildFile; fileRef = D825D7CD201F1D0E00C9D48A /* fastModel.json */; };
+		D84DE51B202060F9005944D0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84DE51A202060F9005944D0 /* CoreDataManager.swift */; };
 		D8852E3C201F173000DAA366 /* FastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8852E3B201F173000DAA366 /* FastModel.swift */; };
 		D887B669201F56A600A50CB7 /* ZeroCopy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D887B667201F56A600A50CB7 /* ZeroCopy.xcdatamodeld */; };
 		D88AFCC4201B2EDE009EBF8D /* StartStopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88AFCC3201B2EDE009EBF8D /* StartStopCell.swift */; };
@@ -40,6 +41,7 @@
 		4DC6AD29201B77D000078A34 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		4DC6AD2B201B807700078A34 /* WarningCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningCell.swift; sourceTree = "<group>"; };
 		D825D7CD201F1D0E00C9D48A /* fastModel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = fastModel.json; sourceTree = "<group>"; };
+		D84DE51A202060F9005944D0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D8852E3B201F173000DAA366 /* FastModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastModel.swift; sourceTree = "<group>"; };
 		D887B668201F56A600A50CB7 /* ZeroCopy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ZeroCopy.xcdatamodel; sourceTree = "<group>"; };
 		D88AFCC3201B2EDE009EBF8D /* StartStopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStopCell.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 		D8AF5A402019D408004E1FD4 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				D84DE51A202060F9005944D0 /* CoreDataManager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				D8A2F842201895FB0015E3E9 /* HomeHeaderView.swift in Sources */,
 				D8852E3C201F173000DAA366 /* FastModel.swift in Sources */,
 				D887B669201F56A600A50CB7 /* ZeroCopy.xcdatamodeld in Sources */,
+				D84DE51B202060F9005944D0 /* CoreDataManager.swift in Sources */,
 				4D3773072009358A00C5C554 /* ScienceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
