@@ -23,6 +23,7 @@
 		D887B669201F56A600A50CB7 /* ZeroCopy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D887B667201F56A600A50CB7 /* ZeroCopy.xcdatamodeld */; };
 		D88AFCC4201B2EDE009EBF8D /* StartStopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88AFCC3201B2EDE009EBF8D /* StartStopCell.swift */; };
 		D8A2F842201895FB0015E3E9 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A2F841201895FB0015E3E9 /* HomeHeaderView.swift */; };
+		D8C49E4C2020C1800091E7B3 /* FastTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C49E4B2020C1800091E7B3 /* FastTimer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		D887B668201F56A600A50CB7 /* ZeroCopy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ZeroCopy.xcdatamodel; sourceTree = "<group>"; };
 		D88AFCC3201B2EDE009EBF8D /* StartStopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStopCell.swift; sourceTree = "<group>"; };
 		D8A2F841201895FB0015E3E9 /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
+		D8C49E4B2020C1800091E7B3 /* FastTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastTimer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				D8AF5A402019D408004E1FD4 /* Data */,
 				D8AF5A3F2019D3C8004E1FD4 /* ViewControllers */,
 				D8AF5A412019D427004E1FD4 /* Views */,
+				D8C49E4A2020C1660091E7B3 /* Utilities */,
 				D8852E39201F170A00DAA366 /* Model */,
 				4D3772F9200934C800C5C554 /* Assets.xcassets */,
 				4D3772FB200934C800C5C554 /* LaunchScreen.storyboard */,
@@ -151,6 +154,14 @@
 				4D377312200A35FD00C5C554 /* TransitionManager.swift */,
 			);
 			path = Animations;
+			sourceTree = "<group>";
+		};
+		D8C49E4A2020C1660091E7B3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D8C49E4B2020C1800091E7B3 /* FastTimer.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,6 +238,7 @@
 				4D3773092009359400C5C554 /* HomeViewController.swift in Sources */,
 				4D377313200A35FD00C5C554 /* TransitionManager.swift in Sources */,
 				D88AFCC4201B2EDE009EBF8D /* StartStopCell.swift in Sources */,
+				D8C49E4C2020C1800091E7B3 /* FastTimer.swift in Sources */,
 				4DC6AD26201B6C5F00078A34 /* SevenDayTitleCell.swift in Sources */,
 				4D3772F3200934C800C5C554 /* AppDelegate.swift in Sources */,
 				D847D02220209BA600639CEA /* FastDataModel.swift in Sources */,
