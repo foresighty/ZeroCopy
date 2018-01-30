@@ -7,12 +7,12 @@
 //
 
 import UIKit
+import CoreData
 
 class HomeViewController: UIViewController {
     
     var homeHeaderView: HomeHeaderView!
     var tableView: UITableView!
-    var tableViewDataSource: TableViewDataSource!
     var transitionManager: TransitionManager!
     
     let constraintRangeForHeaderView = (CGFloat(-190)..<CGFloat(0))
@@ -25,7 +25,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         transitionManager = TransitionManager()
-        tableViewDataSource = TableViewDataSource()
+        setupCoreData()
         setupTableView()
         setupHeaderView()
         setupConstraints()
@@ -69,10 +69,17 @@ class HomeViewController: UIViewController {
     
     private func setupTableView(){
         tableView = UITableView()
-        tableView.dataSource = tableViewDataSource
         tableView.delegate = self
+        tableView.dataSource = self
         tableView.frame = view.bounds
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        tableView.register(StartStopCell.self, forCellReuseIdentifier: "StartStopCell")
+        tableView.register(SevenDayTitleCell.self, forCellReuseIdentifier: "SevenDayTitleCell")
+        tableView.register(GraphTableViewCell.self, forCellReuseIdentifier: "GraphTableViewCell")
+        tableView.register(WarningCell.self, forCellReuseIdentifier: "WarningCell")
+        tableView.register(ListCell.self, forCellReuseIdentifier: "ListCell")
+        
         view.addSubview(tableView)
     }
     
@@ -94,6 +101,11 @@ class HomeViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
     }
     
+    // MARK: CoreData
+    
+    private func setupCoreData() {
+    }
+    
     // MARK: Button Methods
     
     @objc func settingsPressed(){
@@ -109,6 +121,81 @@ class HomeViewController: UIViewController {
     }
 }
 
+
+// MARK: TableViewDataSource Methods:
+
+extension HomeViewController: UITableViewDataSource, StartStopCellUpdater {
+    
+        func updateTableView() {
+            tableView.reloadData()
+        }
+        
+        public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return 12
+        }
+        
+        public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "StartStopCell") as! StartStopCell
+                cell.delegate = self
+                return cell
+            }
+            
+            if indexPath.row == 1 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "SevenDayTitleCell") as! SevenDayTitleCell
+                return cell
+            }
+            
+            if indexPath.row == 2 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "GraphTableViewCell") as! GraphTableViewCell
+                return cell
+            }
+            
+            if indexPath.row == 3 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell") as! ListCell
+                cell.updateDisplayForHeader()
+                return cell
+            }
+            
+            if indexPath.row == 10 {
+                let cell = ListCell()
+                cell.updateDisplayForFooter()
+                cell.leftLabel.text = "Average"
+                cell.rightLabel.text = "TBD"
+                return cell
+            }
+            
+            if indexPath.row == 11 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "WarningCell") as! WarningCell
+                return cell
+            }
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM"
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell") as! ListCell
+            cell.addButton()
+            guard let listOfFasts = CoreDataManager.sharedInstance.retrieveFasts() else { return cell }
+            var fast = Fast()
+            if listOfFasts.count > 0 && indexPath.row-4 < listOfFasts.count {
+                fast = listOfFasts[indexPath.row-4]
+                
+                if let startTime = fast.startDate {
+                    let dateStringForCell = formatter.string(from: startTime)
+                    cell.leftLabel.text = dateStringForCell
+                    let duration = fast.duration
+                    let (h,m) = secondsToHoursMinutes(seconds: Int(duration))
+                    // Replace line below with this for hour to minutes: cell.rightLabel.text = "\(h)hrs \(m)min"
+                    cell.rightLabel.text = "\(duration)"
+                }
+            }
+            return cell
+        }
+    
+    private func secondsToHoursMinutes(seconds : Int) -> (Int, Int) {
+                return (seconds / 3600, (seconds % 3600) / 60)
+            }
+    }
 
 // MARK: TableViewDelegate Methods
 

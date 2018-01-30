@@ -62,8 +62,6 @@ class ListCell: UITableViewCell {
         if isFooter {
             updateDisplayForFooter()
         }
-        
-        
     }
     
     private func setupConstraints() {
@@ -103,8 +101,6 @@ class ListCell: UITableViewCell {
             editButton!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30.0)
         ]
         NSLayoutConstraint.activate(constraints)
-
     }
-    
     
 }
