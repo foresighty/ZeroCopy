@@ -160,9 +160,23 @@ extension HomeViewController: UITableViewDataSource {
             
             let cell = ListCell()
             cell.addButton()
+            let listOfFasts = CoreDataManager.sharedInstance.retrieveFasts()
+            let fast = listOfFasts![indexPath.row-4]
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM"
+            let dateStringForCell = formatter.string(from: fast.startTime!)
+            cell.leftLabel.text = dateStringForCell
+            let duration = fast.duration
+            let (h,m) = secondsToHoursMinutes(seconds: Int(duration))
+            cell.rightLabel.text = "\(h)hrs \(m)min"
             return cell
             
         }
+    
+    private func secondsToHoursMinutes(seconds : Int) -> (Int, Int) {
+                return (seconds / 3600, (seconds % 3600) / 60)
+            }
     }
 
 // MARK: TableViewDelegate Methods

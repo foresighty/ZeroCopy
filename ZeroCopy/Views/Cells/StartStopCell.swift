@@ -83,7 +83,6 @@ class StartStopCell: UITableViewCell {
     
     private func recordFast(startDate: Date, endDate: Date, duration: Int){
         CoreDataManager.sharedInstance.recordFast(startDate: startDate, endDate: endDate, duration: duration)
-        CoreDataManager.sharedInstance.retrieveFast()
     }
 }
 

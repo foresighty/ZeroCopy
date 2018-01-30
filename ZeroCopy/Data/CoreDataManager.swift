@@ -29,22 +29,25 @@ class CoreDataManager {
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
+        
+        print("Saved Fast = \(fast)")
 
     }
     
-    func retrieveFast(){
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    func retrieveFasts() -> [Fast]? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        let fastFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Fast")
-        fastFetch.fetchLimit = 10
-        fastFetch.returnsObjectsAsFaults = false
-        let fastsFetched = try! managedContext.fetch(fastFetch)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Fast")
+        fetchRequest.fetchLimit = 7
+        let sort = NSSortDescriptor(key: #keyPath(Fast.startTime), ascending: false)
+        fetchRequest.sortDescriptors = [sort]
+        fetchRequest.returnsObjectsAsFaults = false
+        let listOfFasts : [Fast] = try! managedContext.fetch(fetchRequest) as! [Fast]
         print("Full array of fasts: ")
-        print(fastsFetched)
+        print(listOfFasts)
+        
+        return listOfFasts
     
-        let result = fastsFetched[fastsFetched.count-1] as! Fast
-        print("Last Fast")
-        print(result)
     }
 }
