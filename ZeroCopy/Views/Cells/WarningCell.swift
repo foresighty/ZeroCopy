@@ -41,8 +41,6 @@ class WarningCell: UITableViewCell {
             warningLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             warningLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ]
-        
         NSLayoutConstraint.activate(constraints)
     }
-    
 }

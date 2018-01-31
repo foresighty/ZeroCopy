@@ -44,6 +44,5 @@ class GraphTableViewCell: UITableViewCell {
             graphView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20.0)
         ]
         NSLayoutConstraint.activate(constraints)
-        
     }
 }

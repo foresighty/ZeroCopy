@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 protocol StartStopCellUpdater: class {
     func updateTableView()
@@ -15,9 +14,9 @@ protocol StartStopCellUpdater: class {
 
 class StartStopCell: UITableViewCell {
 
-    var fastingButton: UIButton!
-    var lastSevenLabel: UILabel!
-    var fastTimer = FastTimer()
+    private var fastingButton: UIButton!
+    private var lastSevenLabel: UILabel!
+    private var fastTimer = FastTimer()
     weak var delegate: StartStopCellUpdater?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -29,6 +28,7 @@ class StartStopCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Setup
     
     private func setup(){
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -38,8 +38,8 @@ class StartStopCell: UITableViewCell {
 
         fastingButton = UIButton()
         fastingButton.setTitle("Start Fasting", for: .normal)
-        fastingButton.setTitleColor(selectedTextColor, for: .selected)
         fastingButton.setTitle("Stop Fasting", for: .selected)
+        fastingButton.setTitleColor(selectedTextColor, for: .selected)
         fastingButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18.0)
         fastingButton.backgroundColor = UIColor(red: 0.59, green: 0.78, blue: 0.82, alpha: 1.0)
         fastingButton.translatesAutoresizingMaskIntoConstraints = false
@@ -59,62 +59,26 @@ class StartStopCell: UITableViewCell {
             fastingButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -25.0)
         ]
         NSLayoutConstraint.activate(constraints)
-        
     }
     
+    // MARK: Button Methods
+
     @objc private func pressed(){
         if !fastingButton.isSelected {
-            fastTimer = FastTimer()
+            // TODO: Change timer to count time since start date and display
             fastTimer.runTimer()
-            print("Fast Started")
-        }
-        
-        if fastingButton.isSelected {
+            fastingButton.isSelected = true
+            fastingButton.backgroundColor = UIColor(red:0.90, green:0.89, blue:0.60, alpha:1.0)
+        } else if fastingButton.isSelected {
             let (startDate, endDate, seconds) = fastTimer.stopTimer()
-            print("Fast Ended with: ")
-            print("startDate: \(startDate)")
-            print("endDate: \(endDate)")
-            print("duration: \(seconds)")
             recordFast(startDate: startDate, endDate: endDate, duration: seconds)
             delegate?.updateTableView()
+            fastingButton.isSelected = false
+            fastingButton.backgroundColor = UIColor(red: 0.59, green: 0.78, blue: 0.82, alpha: 1.0)
         }
-        
-        fastingButton.isSelected = fastingButton.isSelected ? false : true
-        let normalColor = UIColor(red: 0.59, green: 0.78, blue: 0.82, alpha: 1.0)
-        let selectedColor = UIColor(red:0.90, green:0.89, blue:0.60, alpha:1.0)
-        
-        fastingButton.backgroundColor = fastingButton.isSelected ? selectedColor : normalColor
-        fastingButton.titleLabel?.textColor = fastingButton.isSelected ? .black : .white
     }
     
     private func recordFast(startDate: Date, endDate: Date, duration: Int){
         CoreDataManager.sharedInstance.recordFast(startDate: startDate, endDate: endDate, duration: duration)
     }
 }
-
-// TODO: Change timer to count time since start date and display 
-class FastTimer {
-    var seconds = 0
-    var timer = Timer()
-    var startDate = Date()
-    var endDate = Date()
-    
-    public func runTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
-        startDate = Date()
-    }
-    
-    @objc private func updateTimer(){
-        seconds += 1
-    }
-    
-    public func stopTimer() -> (Date, Date, Int){
-        timer.invalidate()
-        let secondsToSend = seconds
-        seconds = 0
-        endDate = Date()
-        return (startDate, endDate, secondsToSend)
-    }
-}
-
-
