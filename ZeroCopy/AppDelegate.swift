@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         UILabel.appearance().font = UIFont(name: "Verdana", size: 12.0)
-                        
+        
         return true
     }
 

@@ -79,8 +79,8 @@ class HomeViewController: UIViewController {
         tableView.register(StartStopCell.self, forCellReuseIdentifier: "StartStopCell")
         tableView.register(SevenDayTitleCell.self, forCellReuseIdentifier: "SevenDayTitleCell")
         tableView.register(GraphTableViewCell.self, forCellReuseIdentifier: "GraphTableViewCell")
-        tableView.register(WarningCell.self, forCellReuseIdentifier: "WarningCell")
         tableView.register(ListCell.self, forCellReuseIdentifier: "ListCell")
+        tableView.register(WarningCell.self, forCellReuseIdentifier: "WarningCell")
         tableView.register(HeaderListCell.self, forCellReuseIdentifier: "HeaderListCell")
         tableView.register(FooterListCell.self, forCellReuseIdentifier: "FooterListCell")
 
@@ -169,12 +169,14 @@ extension HomeViewController: UITableViewDataSource, StartStopCellUpdater {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell") as! ListCell
         guard let listOfFasts = listOfFasts else { return cell }
-
-        var fast = Fast()
-        if listOfFasts.count > 0 && indexPath.row-4 < listOfFasts.count {
-            fast = listOfFasts[indexPath.row-4]
+        let numberOfCellsBeforeFasts = 4
+        
+        if indexPath.row - numberOfCellsBeforeFasts < listOfFasts.count {
+            let fast = listOfFasts[indexPath.row - numberOfCellsBeforeFasts]
             cell.updateDisplay(with: fast)
-            }
+        } else {
+            cell.isDefault()
+        }
         return cell
     }
     
@@ -182,7 +184,6 @@ extension HomeViewController: UITableViewDataSource, StartStopCellUpdater {
         updateCoreData()
         tableView.reloadData()
     }
-    
 }
 
 // MARK: TableViewDelegate Methods

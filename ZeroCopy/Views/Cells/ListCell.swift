@@ -88,6 +88,11 @@ class ListCell: UITableViewCell {
         }
     }
     
+    public func isDefault(){
+        leftLabel.text = "Left Label"
+        rightLabel.text = "Right Label"
+    }
+    
     private func secondsToHoursMinutes(seconds : Int) -> (Int, Int) {
         return (seconds / 3600, (seconds % 3600) / 60)
     }
