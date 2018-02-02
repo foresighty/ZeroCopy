@@ -23,6 +23,8 @@
 		D887B669201F56A600A50CB7 /* ZeroCopy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D887B667201F56A600A50CB7 /* ZeroCopy.xcdatamodeld */; };
 		D88AFCC4201B2EDE009EBF8D /* StartStopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88AFCC3201B2EDE009EBF8D /* StartStopCell.swift */; };
 		D8A2F842201895FB0015E3E9 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A2F841201895FB0015E3E9 /* HomeHeaderView.swift */; };
+		D8BE1FD52023097500EF629E /* SaveFastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BE1FD42023097500EF629E /* SaveFastViewController.swift */; };
+		D8BE1FD720245E0000EF629E /* LabelAndTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BE1FD620245E0000EF629E /* LabelAndTimeCell.swift */; };
 		D8C49E4C2020C1800091E7B3 /* FastTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C49E4B2020C1800091E7B3 /* FastTimer.swift */; };
 		D8C49E4E2020C8A30091E7B3 /* HeaderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C49E4D2020C8A30091E7B3 /* HeaderListCell.swift */; };
 		D8C49E502020C96A0091E7B3 /* FooterListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C49E4F2020C96A0091E7B3 /* FooterListCell.swift */; };
@@ -47,6 +49,8 @@
 		D887B668201F56A600A50CB7 /* ZeroCopy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ZeroCopy.xcdatamodel; sourceTree = "<group>"; };
 		D88AFCC3201B2EDE009EBF8D /* StartStopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStopCell.swift; sourceTree = "<group>"; };
 		D8A2F841201895FB0015E3E9 /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
+		D8BE1FD42023097500EF629E /* SaveFastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFastViewController.swift; sourceTree = "<group>"; };
+		D8BE1FD620245E0000EF629E /* LabelAndTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelAndTimeCell.swift; sourceTree = "<group>"; };
 		D8C49E4B2020C1800091E7B3 /* FastTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastTimer.swift; sourceTree = "<group>"; };
 		D8C49E4D2020C8A30091E7B3 /* HeaderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderListCell.swift; sourceTree = "<group>"; };
 		D8C49E4F2020C96A0091E7B3 /* FooterListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterListCell.swift; sourceTree = "<group>"; };
@@ -123,6 +127,7 @@
 				4DC6AD29201B77D000078A34 /* ListCell.swift */,
 				D8C49E4D2020C8A30091E7B3 /* HeaderListCell.swift */,
 				D8C49E4F2020C96A0091E7B3 /* FooterListCell.swift */,
+				D8BE1FD620245E0000EF629E /* LabelAndTimeCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -133,6 +138,7 @@
 				4D3773082009359400C5C554 /* HomeViewController.swift */,
 				4D3773042009357B00C5C554 /* SettingViewController.swift */,
 				4D3773062009358A00C5C554 /* ScienceViewController.swift */,
+				D8BE1FD42023097500EF629E /* SaveFastViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -241,6 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8BE1FD720245E0000EF629E /* LabelAndTimeCell.swift in Sources */,
 				4D3773092009359400C5C554 /* HomeViewController.swift in Sources */,
 				4D377313200A35FD00C5C554 /* TransitionManager.swift in Sources */,
 				D88AFCC4201B2EDE009EBF8D /* StartStopCell.swift in Sources */,
@@ -250,6 +257,7 @@
 				4D3772F3200934C800C5C554 /* AppDelegate.swift in Sources */,
 				D847D02220209BA600639CEA /* FastDataModel.swift in Sources */,
 				4D3773052009357B00C5C554 /* SettingViewController.swift in Sources */,
+				D8BE1FD52023097500EF629E /* SaveFastViewController.swift in Sources */,
 				4DC6AD2C201B807700078A34 /* WarningCell.swift in Sources */,
 				4DC6AD2A201B77D000078A34 /* ListCell.swift in Sources */,
 				D8C49E502020C96A0091E7B3 /* FooterListCell.swift in Sources */,

@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
     var homeHeaderView: HomeHeaderView!
     var tableView: UITableView!
     var transitionManager: TransitionManager!
+    var fastTimer = FastTimer()
     
     let constraintRangeForHeaderView = (CGFloat(-190)..<CGFloat(0))
     let constraintRangeForHeaderTransparency = (CGFloat(-130)..<CGFloat(-30))
@@ -180,9 +181,33 @@ extension HomeViewController: UITableViewDataSource, StartStopCellUpdater {
         return cell
     }
     
+    // StartStopCell Delegate Methods
+    
     func updateTableView() {
         updateCoreData()
         tableView.reloadData()
+    }
+    
+    func runTimer() {
+        // TODO: Change timer to count time since start date and display
+        fastTimer.runTimer()
+    }
+    
+    func stopTimer() {
+        let (startDate, endDate, duration) = fastTimer.stopTimer()
+        CoreDataManager.sharedInstance.recordFast(startDate: startDate, endDate: endDate, duration: duration)
+    }
+    
+    func presentSaveFastViewContoller() {
+        updateCoreData()
+        guard let listOfFasts = listOfFasts else { return }
+        let fast = listOfFasts[0]
+        let saveFastViewController = SaveFastViewController()
+        saveFastViewController.fast = fast
+        
+        let transition = transitionManager.transitionUp()
+        navigationController?.view.layer.add(transition, forKey: nil)
+        navigationController?.pushViewController(saveFastViewController, animated: false)
     }
 }
 
