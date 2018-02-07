@@ -10,7 +10,7 @@ import UIKit
 
 class TransitionManager {
     
-    var transition = CATransition()
+    private var transition = CATransition()
     
     public func transitionUp() -> CATransition {
         transition.duration = 0.3
