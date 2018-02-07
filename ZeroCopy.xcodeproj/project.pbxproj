@@ -26,7 +26,36 @@
 		D8C49E4C2020C1800091E7B3 /* FastTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C49E4B2020C1800091E7B3 /* FastTimer.swift */; };
 		D8C49E4E2020C8A30091E7B3 /* HeaderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C49E4D2020C8A30091E7B3 /* HeaderListCell.swift */; };
 		D8C49E502020C96A0091E7B3 /* FooterListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C49E4F2020C96A0091E7B3 /* FooterListCell.swift */; };
+		D8EE8770202B476D00F53983 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8EE876E202B476D00F53983 /* Nimble.framework */; };
+		D8EE8771202B476D00F53983 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8EE876F202B476D00F53983 /* Quick.framework */; };
+		D8EE8773202B478200F53983 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D8EE876E202B476D00F53983 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D8EE8774202B478200F53983 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D8EE876F202B476D00F53983 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D8EE8777202B487D00F53983 /* TransitionManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EE8776202B487D00F53983 /* TransitionManagerSpec.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D8EE8768202B468E00F53983 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D3772E7200934C800C5C554 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D3772EE200934C800C5C554;
+			remoteInfo = ZeroCopy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D8EE8772202B477600F53983 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D8EE8773202B478200F53983 /* Nimble.framework in CopyFiles */,
+				D8EE8774202B478200F53983 /* Quick.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4D3772EF200934C800C5C554 /* ZeroCopy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroCopy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,6 +79,11 @@
 		D8C49E4B2020C1800091E7B3 /* FastTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastTimer.swift; sourceTree = "<group>"; };
 		D8C49E4D2020C8A30091E7B3 /* HeaderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderListCell.swift; sourceTree = "<group>"; };
 		D8C49E4F2020C96A0091E7B3 /* FooterListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterListCell.swift; sourceTree = "<group>"; };
+		D8EE8763202B468E00F53983 /* ZeroCopyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZeroCopyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8EE8767202B468E00F53983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D8EE876E202B476D00F53983 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		D8EE876F202B476D00F53983 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		D8EE8776202B487D00F53983 /* TransitionManagerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionManagerSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +94,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D8EE8760202B468E00F53983 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8EE8770202B476D00F53983 /* Nimble.framework in Frameworks */,
+				D8EE8771202B476D00F53983 /* Quick.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -67,7 +110,9 @@
 			isa = PBXGroup;
 			children = (
 				4D3772F1200934C800C5C554 /* ZeroCopy */,
+				D8EE8764202B468E00F53983 /* ZeroCopyTests */,
 				4D3772F0200934C800C5C554 /* Products */,
+				D8EE876D202B476D00F53983 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				4D3772EF200934C800C5C554 /* ZeroCopy.app */,
+				D8EE8763202B468E00F53983 /* ZeroCopyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -170,6 +216,32 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		D8EE8764202B468E00F53983 /* ZeroCopyTests */ = {
+			isa = PBXGroup;
+			children = (
+				D8EE8775202B486E00F53983 /* AnimationsTests */,
+				D8EE8767202B468E00F53983 /* Info.plist */,
+			);
+			path = ZeroCopyTests;
+			sourceTree = "<group>";
+		};
+		D8EE876D202B476D00F53983 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D8EE876E202B476D00F53983 /* Nimble.framework */,
+				D8EE876F202B476D00F53983 /* Quick.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D8EE8775202B486E00F53983 /* AnimationsTests */ = {
+			isa = PBXGroup;
+			children = (
+				D8EE8776202B487D00F53983 /* TransitionManagerSpec.swift */,
+			);
+			path = AnimationsTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -190,19 +262,43 @@
 			productReference = 4D3772EF200934C800C5C554 /* ZeroCopy.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D8EE8762202B468E00F53983 /* ZeroCopyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D8EE876C202B468E00F53983 /* Build configuration list for PBXNativeTarget "ZeroCopyTests" */;
+			buildPhases = (
+				D8EE875F202B468E00F53983 /* Sources */,
+				D8EE8760202B468E00F53983 /* Frameworks */,
+				D8EE8761202B468E00F53983 /* Resources */,
+				D8EE8772202B477600F53983 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D8EE8769202B468E00F53983 /* PBXTargetDependency */,
+			);
+			name = ZeroCopyTests;
+			productName = ZeroCopyTests;
+			productReference = D8EE8763202B468E00F53983 /* ZeroCopyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		4D3772E7200934C800C5C554 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 0900;
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Mike Gopsill";
 				TargetAttributes = {
 					4D3772EE200934C800C5C554 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+					};
+					D8EE8762202B468E00F53983 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 4D3772EE200934C800C5C554;
 					};
 				};
 			};
@@ -220,6 +316,7 @@
 			projectRoot = "";
 			targets = (
 				4D3772EE200934C800C5C554 /* ZeroCopy */,
+				D8EE8762202B468E00F53983 /* ZeroCopyTests */,
 			);
 		};
 /* End PBXProject section */
@@ -231,6 +328,13 @@
 			files = (
 				4D3772FD200934C800C5C554 /* LaunchScreen.storyboard in Resources */,
 				4D3772FA200934C800C5C554 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D8EE8761202B468E00F53983 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,7 +365,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D8EE875F202B468E00F53983 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8EE8777202B487D00F53983 /* TransitionManagerSpec.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D8EE8769202B468E00F53983 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D3772EE200934C800C5C554 /* ZeroCopy */;
+			targetProxy = D8EE8768202B468E00F53983 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4D3772FB200934C800C5C554 /* LaunchScreen.storyboard */ = {
@@ -414,6 +534,48 @@
 			};
 			name = Release;
 		};
+		D8EE876A202B468E00F53983 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EYT7Q6838H;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = ZeroCopyTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Mike.ZeroCopyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZeroCopy.app/ZeroCopy";
+			};
+			name = Debug;
+		};
+		D8EE876B202B468E00F53983 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EYT7Q6838H;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = ZeroCopyTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Mike.ZeroCopyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZeroCopy.app/ZeroCopy";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -431,6 +593,15 @@
 			buildConfigurations = (
 				4D377302200934C800C5C554 /* Debug */,
 				4D377303200934C800C5C554 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D8EE876C202B468E00F53983 /* Build configuration list for PBXNativeTarget "ZeroCopyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D8EE876A202B468E00F53983 /* Debug */,
+				D8EE876B202B468E00F53983 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
