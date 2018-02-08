@@ -9,7 +9,7 @@
 import CoreData
 
 class CoreDataHelpers {
-    // This function is to create a Mock Managed Object Context
+    // This function is to create a mock Managed Object Context
     // and creates in-memory persistent store for testing CoreData
     func setUpInMemoryManagedObjectContext() -> NSManagedObjectContext {
         

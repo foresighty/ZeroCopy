@@ -31,7 +31,6 @@
 		D8EE8773202B478200F53983 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D8EE876E202B476D00F53983 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D8EE8774202B478200F53983 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D8EE876F202B476D00F53983 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D8EE8777202B487D00F53983 /* TransitionManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EE8776202B487D00F53983 /* TransitionManagerSpec.swift */; };
-		D8EE87D0202C3F8100F53983 /* CoreDataManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EE87CF202C3F8100F53983 /* CoreDataManagerSpec.swift */; };
 		D8EE87D3202C57FD00F53983 /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EE87D2202C57FD00F53983 /* CoreDataHelpers.swift */; };
 /* End PBXBuildFile section */
 
@@ -86,7 +85,6 @@
 		D8EE876E202B476D00F53983 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		D8EE876F202B476D00F53983 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		D8EE8776202B487D00F53983 /* TransitionManagerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionManagerSpec.swift; sourceTree = "<group>"; };
-		D8EE87CF202C3F8100F53983 /* CoreDataManagerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerSpec.swift; sourceTree = "<group>"; };
 		D8EE87D2202C57FD00F53983 /* CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -225,7 +223,6 @@
 			children = (
 				D8EE87D1202C57D500F53983 /* TestsHelpers */,
 				D8EE8775202B486E00F53983 /* AnimationsTests */,
-				D8EE87CE202C3F6C00F53983 /* DataTests */,
 				D8EE8767202B468E00F53983 /* Info.plist */,
 			);
 			path = ZeroCopyTests;
@@ -246,14 +243,6 @@
 				D8EE8776202B487D00F53983 /* TransitionManagerSpec.swift */,
 			);
 			path = AnimationsTests;
-			sourceTree = "<group>";
-		};
-		D8EE87CE202C3F6C00F53983 /* DataTests */ = {
-			isa = PBXGroup;
-			children = (
-				D8EE87CF202C3F8100F53983 /* CoreDataManagerSpec.swift */,
-			);
-			path = DataTests;
 			sourceTree = "<group>";
 		};
 		D8EE87D1202C57D500F53983 /* TestsHelpers */ = {
@@ -393,7 +382,6 @@
 			files = (
 				D8EE87D3202C57FD00F53983 /* CoreDataHelpers.swift in Sources */,
 				D8EE8777202B487D00F53983 /* TransitionManagerSpec.swift in Sources */,
-				D8EE87D0202C3F8100F53983 /* CoreDataManagerSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
