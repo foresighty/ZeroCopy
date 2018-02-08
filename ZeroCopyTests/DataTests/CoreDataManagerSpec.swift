@@ -27,6 +27,11 @@ class CoreDataManagerSpec: QuickSpec {
                     fast.startDate = startDate
                     fast.endDate = endDate
                     subject.recordFast(startDate: startDate, endDate: endDate)
+                    
+                    let coreDataHelpers = CoreDataHelpers()
+                    let managedContext = coreDataHelpers.setUpInMemoryManagedObjectContext()
+                    
+                    
                 }
                 
                 it("should save a fast in CoreData"){
