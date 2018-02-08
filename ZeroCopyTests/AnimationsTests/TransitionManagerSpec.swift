@@ -27,11 +27,7 @@ class TransitionManagerSpec: QuickSpec {
                     transition = subject.transitionUp()
                 }
                 
-<<<<<<< HEAD
                 it("returned transition should not be nil"){
-=======
-                it("should return a transition"){
->>>>>>> 2f0c7ed25df33588ef929b36ad249d88b6d3e7b0
                     expect(transition).toNot(beNil())
                 }
             }
@@ -43,11 +39,7 @@ class TransitionManagerSpec: QuickSpec {
                     transition = subject.transitionDown()
                 }
                 
-<<<<<<< HEAD
                 it("returned transition should not be nil"){
-=======
-                it("should return a transition"){
->>>>>>> 2f0c7ed25df33588ef929b36ad249d88b6d3e7b0
                     expect(transition).toNot(beNil())
                 }
             }
