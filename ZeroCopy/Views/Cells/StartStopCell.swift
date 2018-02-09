@@ -8,11 +8,12 @@
 
 import UIKit
 
-protocol StartStopCellUpdater: class {
+protocol CellDelegate {
     func updateTableView()
     func runTimer()
     func stopTimer()
     func presentSaveFastViewContoller()
+    func presentFastDetailViewControllerForFast(at index: Int) 
 }
 
 class StartStopCell: UITableViewCell {
@@ -20,7 +21,7 @@ class StartStopCell: UITableViewCell {
     private var fastingButton: UIButton!
     private var lastSevenLabel: UILabel!
     private var fastTimer = FastTimer()
-    weak var delegate: StartStopCellUpdater?
+    var delegate: CellDelegate?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -42,6 +43,7 @@ class StartStopCell: UITableViewCell {
         fastingButton = UIButton()
         fastingButton.setTitle("Start Fasting", for: .normal)
         fastingButton.setTitle("Stop Fasting", for: .selected)
+        fastingButton.setTitleColor(.white, for: .normal)
         fastingButton.setTitleColor(selectedTextColor, for: .selected)
         fastingButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18.0)
         fastingButton.backgroundColor = UIColor(red: 0.59, green: 0.78, blue: 0.82, alpha: 1.0)

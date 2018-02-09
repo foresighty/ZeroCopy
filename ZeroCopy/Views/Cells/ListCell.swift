@@ -13,7 +13,9 @@ class ListCell: UITableViewCell {
     // Labels
     var leftLabel: UILabel!
     var rightLabel: UILabel!
-    var editButton: UIButton?
+    var editButton: UIButton!
+    var index: Int?
+    var delegate: CellDelegate?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -40,7 +42,6 @@ class ListCell: UITableViewCell {
         rightLabel.translatesAutoresizingMaskIntoConstraints = false
         rightLabel.font = rightLabel.font.withSize(12.0)
         
-        
         contentView.addSubview(leftLabel)
         contentView.addSubview(rightLabel)
         
@@ -62,16 +63,24 @@ class ListCell: UITableViewCell {
     private func addButton() {
         let editImage = UIImage(named: "editPencil")
         editButton = UIButton()
-        editButton?.setImage(editImage, for: .normal)   
-        editButton?.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(editButton!)
+        editButton.setImage(editImage, for: .normal)
+        editButton.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(editButton)
         let constraints: [NSLayoutConstraint] = [
-            editButton!.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            editButton!.heightAnchor.constraint(equalToConstant: 12.0),
-            editButton!.widthAnchor.constraint(equalToConstant: 12.0),
-            editButton!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30.0)
+            editButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            editButton.heightAnchor.constraint(equalToConstant: 12.0),
+            editButton.widthAnchor.constraint(equalToConstant: 12.0),
+            editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30.0)
         ]
         NSLayoutConstraint.activate(constraints)
+        
+        editButton.addTarget(self, action: #selector(editPressed), for: .touchUpInside)
+    
+    }
+    
+    @objc private func editPressed(){
+        print("got pressed")
+        delegate?.presentFastDetailViewControllerForFast(at: index!)
     }
     
     public func updateDisplay(with fast: Fast){
