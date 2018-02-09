@@ -195,7 +195,7 @@ extension HomeViewController: UITableViewDataSource, StartStopCellUpdater {
     
     func stopTimer() {
         let (startDate, endDate) = fastTimer.stopTimer()
-        CoreDataManager.sharedInstance.recordFast(startDate: startDate, endDate: endDate, duration: duration)
+        CoreDataManager.sharedInstance.recordFast(startDate: startDate, endDate: endDate)
     }
     
     func presentSaveFastViewContoller() {
