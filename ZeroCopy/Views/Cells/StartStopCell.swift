@@ -10,6 +10,9 @@ import UIKit
 
 protocol StartStopCellUpdater: class {
     func updateTableView()
+    func runTimer()
+    func stopTimer()
+    func presentSaveFastViewContoller()
 }
 
 class StartStopCell: UITableViewCell {
@@ -65,20 +68,16 @@ class StartStopCell: UITableViewCell {
 
     @objc private func pressed(){
         if !fastingButton.isSelected {
-            // TODO: Change timer to count time since start date and display
-            fastTimer.runTimer()
+            delegate?.runTimer()
             fastingButton.isSelected = true
             fastingButton.backgroundColor = UIColor(red:0.90, green:0.89, blue:0.60, alpha:1.0)
         } else if fastingButton.isSelected {
-            let (startDate, endDate) = fastTimer.stopTimer()
-            recordFast(startDate: startDate, endDate: endDate)
+            delegate?.stopTimer()
+            delegate?.presentSaveFastViewContoller()
             delegate?.updateTableView()
             fastingButton.isSelected = false
             fastingButton.backgroundColor = UIColor(red: 0.59, green: 0.78, blue: 0.82, alpha: 1.0)
         }
     }
-    
-    private func recordFast(startDate: Date, endDate: Date){
-        CoreDataManager.sharedInstance.recordFast(startDate: startDate, endDate: endDate)
-    }
 }   
+
