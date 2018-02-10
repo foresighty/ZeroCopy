@@ -39,6 +39,8 @@ class HomeViewController: UIViewController {
         super.viewDidAppear(animated)
         setupNavigationController()
         UIApplication.shared.statusBarStyle = .lightContent
+        updateCoreData()
+        tableView.reloadData()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -130,7 +132,7 @@ class HomeViewController: UIViewController {
 
 // MARK: TableViewDataSource Methods:
 
-extension HomeViewController: UITableViewDataSource, StartStopCellUpdater {
+extension HomeViewController: UITableViewDataSource, CellDelegate {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 13
@@ -175,13 +177,15 @@ extension HomeViewController: UITableViewDataSource, StartStopCellUpdater {
         if indexPath.row - numberOfCellsBeforeFasts < listOfFasts.count {
             let fast = listOfFasts[indexPath.row - numberOfCellsBeforeFasts]
             cell.updateDisplay(with: fast)
+            cell.delegate = self
+            cell.index = indexPath.row
         } else {
             cell.isDefault()
         }
         return cell
     }
     
-    // StartStopCell Delegate Methods
+    // MARK: CellDelegate Methods
     
     func updateTableView() {
         updateCoreData()
@@ -202,7 +206,19 @@ extension HomeViewController: UITableViewDataSource, StartStopCellUpdater {
         updateCoreData()
         guard let listOfFasts = listOfFasts else { return }
         let fast = listOfFasts[0]
-        let saveFastViewController = SaveFastViewController()
+        let saveFastViewController = SaveFastViewController(with: .create)
+        saveFastViewController.fast = fast
+        
+        let transition = transitionManager.transitionUp()
+        navigationController?.view.layer.add(transition, forKey: nil)
+        navigationController?.pushViewController(saveFastViewController, animated: false)
+    }
+    
+    func presentFastDetailViewControllerForFast(at index: Int) {
+        updateCoreData()
+        guard let listOfFasts = listOfFasts else { return }
+        let fast = listOfFasts[index-4]
+        let saveFastViewController = SaveFastViewController(with: .edit)
         saveFastViewController.fast = fast
         
         let transition = transitionManager.transitionUp()

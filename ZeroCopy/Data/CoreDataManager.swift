@@ -54,4 +54,16 @@ class CoreDataManager {
         }
         return [Fast]()
     }
+    
+    func deleteFasts(fast: Fast) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Fast")
+        fetchRequest.fetchLimit = 1
+        fetchRequest.predicate = NSPredicate(format: "startDate = %@", fast.startDate! as NSDate)
+        
+        if let listOfFasts : [Fast] = try? managedContext.fetch(fetchRequest) as! [Fast] {
+            print("--------------FAST to DELETE------------------")
+            print(listOfFasts)
+            managedContext.delete(listOfFasts[0])
+        }
+    }
 }
