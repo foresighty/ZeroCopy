@@ -135,7 +135,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDataSource, CellDelegate {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 13
+        return 14
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -162,10 +162,19 @@ extension HomeViewController: UITableViewDataSource, CellDelegate {
         
         if indexPath.row == 11 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "FooterListCell") as! FooterListCell
+            guard let listOfFasts = listOfFasts else { return cell }
+            cell.configForAverage(with: listOfFasts)
             return cell
         }
         
         if indexPath.row == 12 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FooterListCell") as! FooterListCell
+            guard let listOfFasts = listOfFasts else { return cell }
+            cell.configForTotal(with: listOfFasts)
+            return cell
+        }
+        
+        if indexPath.row == 13 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "WarningCell") as! WarningCell
             return cell
         }
