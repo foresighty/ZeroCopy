@@ -24,14 +24,9 @@ class CoreDataManager {
         let fastEntity = NSEntityDescription.entity(forEntityName: "Fast", in: managedContext)
         let fast = NSManagedObject(entity: fastEntity!, insertInto: managedContext)
         
-        var fastToSave = FastDataModel()
-        fastToSave.startDate = startDate
-        fastToSave.endDate = endDate
+        fast.setValue(startDate, forKey: "startDate")
+        fast.setValue(endDate, forKey: "endDate")
         
-        fast.setValue(fastToSave.startDate, forKey: "startDate")
-        fast.setValue(fastToSave.endDate, forKey: "endDate")
-        fast.setValue(fastToSave.duration, forKey: "duration")
-                
         do {
             try managedContext.save()
         } catch let error as NSError {

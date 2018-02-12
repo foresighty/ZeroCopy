@@ -26,13 +26,13 @@ class FooterListCell: ListCell {
     public func configForAverage(with fasts: [Fast]) {
         leftLabel.text = "Average"
 
-        var total: Int32 = 0
+        var total: Int = 0
         
         for fast in fasts {
             total += fast.duration
         }
         
-        let average = total / Int32(fasts.count)
+        let average = total / Int(fasts.count)
         
         rightLabel.text = "\(average)"
     }
@@ -40,7 +40,7 @@ class FooterListCell: ListCell {
     public func configForTotal(with fasts: [Fast]) {
         leftLabel.text = "Total"
 
-        var total: Int32 = 0
+        var total: Int = 0
         
         for fast in fasts {
             total += fast.duration

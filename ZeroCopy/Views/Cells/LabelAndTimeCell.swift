@@ -8,10 +8,23 @@
 
 import UIKit
 
+protocol DatePickerProtocol {
+    func datePicker(state: LabelTimeCellState)
+}
+
+enum LabelTimeCellState: Int {
+    case start
+    case end
+    case total
+}
+
 class LabelAndTimeCell: UITableViewCell {
     
     var topLabel: UILabel!
     var bottomLabel: UILabel!
+    var editButton: UIButton?
+    var delegate: DatePickerProtocol?
+    var state: LabelTimeCellState = .total
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -50,5 +63,38 @@ class LabelAndTimeCell: UITableViewCell {
             bottomLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
+    }
+    
+    public func isStart() {
+        topLabel.text = "STARTED"
+        enableEditButton()
+        state = .start
+    }
+    
+    public func isEnd() {
+        topLabel.text = "ENDED"
+        enableEditButton()
+        state = .end
+    }
+    
+    private func enableEditButton() {
+        editButton = UIButton()
+        guard let editButton = editButton else { return }
+        editButton.setTitle("Edit", for: .normal)
+        editButton.setTitleColor(.purple, for: .normal)
+        editButton.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
+        editButton.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(editButton)
+        let constraints:[NSLayoutConstraint] = [
+            editButton.centerYAnchor.constraint(equalTo: bottomLabel.centerYAnchor),
+            editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30.0)
+        ]
+        NSLayoutConstraint.activate(constraints)
+        
+        editButton.addTarget(self, action: #selector(displayDatePicker), for: .touchUpInside)
+    }
+    
+    @objc private func displayDatePicker() {
+        delegate?.datePicker(state: state)
     }
 }
