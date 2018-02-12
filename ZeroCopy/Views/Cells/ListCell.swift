@@ -66,13 +66,19 @@ class ListCell: UITableViewCell {
         editButton.setImage(editImage, for: .normal)
         editButton.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(editButton)
-        let constraints: [NSLayoutConstraint] = [
-            editButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            editButton.heightAnchor.constraint(equalToConstant: 12.0),
-            editButton.widthAnchor.constraint(equalToConstant: 12.0),
-            editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30.0)
-        ]
-        NSLayoutConstraint.activate(constraints)
+        
+        if let imageView = editButton.imageView {
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            let constraints: [NSLayoutConstraint] = [
+                imageView.heightAnchor.constraint(equalToConstant: 14.0),
+                imageView.widthAnchor.constraint(equalToConstant: 14.0),
+                editButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                editButton.heightAnchor.constraint(equalToConstant: 30.0),
+                editButton.widthAnchor.constraint(equalToConstant: 30.0),
+                editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30.0)
+            ]
+            NSLayoutConstraint.activate(constraints)
+        }
         
         editButton.addTarget(self, action: #selector(editPressed), for: .touchUpInside)
     
