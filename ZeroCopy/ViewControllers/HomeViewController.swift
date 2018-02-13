@@ -21,6 +21,7 @@ class HomeViewController: UIViewController {
 
     var defaultNavigationBarShadow: UIImage!
     
+    var currentFast: Fast?
     var listOfFasts: [Fast]?
     
     // MARK: Override Methods
@@ -196,23 +197,16 @@ extension HomeViewController: UITableViewDataSource, CellDelegate {
     
     // MARK: CellDelegate Methods
     
-    func updateTableView() {
-        updateCoreData()
-        tableView.reloadData()
-    }
-    
     func runTimer() {
         // TODO: Change timer to count time since start date and display
         fastTimer.runTimer()
     }
     
-    func stopTimer() {
+    func presentSaveFastViewContoller() {
         let (startDate, endDate) = fastTimer.stopTimer()
         CoreDataManager.sharedInstance.recordFast(startDate: startDate, endDate: endDate)
-    }
-    
-    func presentSaveFastViewContoller() {
         updateCoreData()
+        tableView.reloadData()
         guard let listOfFasts = listOfFasts else { return }
         let fast = listOfFasts[0]
         let saveFastViewController = SaveFastViewController(with: .create)

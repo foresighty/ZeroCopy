@@ -9,9 +9,7 @@
 import UIKit
 
 protocol CellDelegate {
-    func updateTableView()
     func runTimer()
-    func stopTimer()
     func presentSaveFastViewContoller()
     func presentFastDetailViewControllerForFast(at index: Int) 
 }
@@ -74,9 +72,7 @@ class StartStopCell: UITableViewCell {
             fastingButton.isSelected = true
             fastingButton.backgroundColor = UIColor(red:0.90, green:0.89, blue:0.60, alpha:1.0)
         } else if fastingButton.isSelected {
-            delegate?.stopTimer()
             delegate?.presentSaveFastViewContoller()
-            delegate?.updateTableView()
             fastingButton.isSelected = false
             fastingButton.backgroundColor = UIColor(red: 0.59, green: 0.78, blue: 0.82, alpha: 1.0)
         }
