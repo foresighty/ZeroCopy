@@ -8,11 +8,6 @@
 
 import UIKit
 
-enum State {
-    case create
-    case edit
-}
-
 class SaveFastViewController: UIViewController, DatePickerProtocol {
 
     var tableView: UITableView!
@@ -20,14 +15,27 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
     var fast: Fast?
     var transitionManager: TransitionManager!
     var dateFormatter: DateFormatter!
-    var state: State!
     let datePicker = UIDatePicker()
     let backgroundView = UIView()
     let triangleView = TriangleView()
+    var completeButtonPress: (() -> Void)?
+    var stopTimer: (())?
+    var startDate: Date!
+    var endDate: Date!
     
-    init(with state: State){
+    public var duration: Int {
+        var durationDouble : Double = 0
+        if let startDate = startDate, let endDate = endDate {
+            durationDouble = endDate.timeIntervalSince(startDate)
+        }
+        let duration: Int = Int(durationDouble)
+        return duration
+    }
+    
+    init(startDate: Date, endDate: Date){
         super.init(nibName: nil, bundle: nil)
-        self.state = state
+        self.startDate = startDate
+        self.endDate = endDate
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -78,9 +86,6 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
     }
     
     @objc func cancelPressed(){
-        if state! == .create {
-            CoreDataManager.sharedInstance.deleteFasts(fast: fast!)
-        }
         let transition = transitionManager.transitionDown()
         navigationController?.view.layer.add(transition, forKey: nil)
         navigationController?.popViewController(animated: false)
@@ -89,27 +94,42 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
     @objc func deletePressed(){
         let deleteAlert = UIAlertController(title: nil, message: "Are you sure you want to delete this fast?", preferredStyle: .actionSheet)
         deleteAlert.addAction(UIAlertAction(title: "Delete Fast", style: .destructive, handler: { (action: UIAlertAction!) in
-            CoreDataManager.sharedInstance.deleteFasts(fast: self.fast!)
+            if let fast = self.fast {
+                CoreDataManager.sharedInstance.deleteFasts(fast: fast)
+            }
+            
+            if let completeButtonPress = self.completeButtonPress, let stopTimer = self.stopTimer {
+                completeButtonPress()
+                stopTimer
+            }
+            
             let transition = self.transitionManager.transitionDown()
             self.navigationController?.view.layer.add(transition, forKey: nil)
             self.navigationController?.popViewController(animated: false)
         }))
-        
-        deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-            print("Handle Cancel Logic here")
-        }))
-        
+        deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(deleteAlert, animated: true, completion: nil)
     }
     
     @objc func savePressed(){
-        guard let fast = fast else { return }
-        if fast.startDate! > fast.endDate! {
+        if startDate > endDate {
             let alert = UIAlertController(title: "Cannot Save Fast", message: "Start time must be before end time", preferredStyle: .alert)
             alert.addAction(UIAlertAction.init(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
                 alert.dismiss(animated: true, completion: nil)}))
             present(alert, animated: true, completion: nil)
         } else {
+            if let fast = fast {
+                fast.startDate = startDate
+                fast.endDate = endDate
+                CoreDataManager.sharedInstance.updateFast(fast: fast)
+            } else {
+                CoreDataManager.sharedInstance.recordFast(startDate: startDate, endDate: endDate)
+            }
+            
+            if let completeButtonPress = completeButtonPress, let stopTimer = stopTimer {
+                completeButtonPress()
+                stopTimer
+            }
             let transition = transitionManager.transitionDown()
             navigationController?.view.layer.add(transition, forKey: nil)
             navigationController?.popViewController(animated: false)
@@ -131,12 +151,12 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
     }
     
     @objc func datePickerForStartDate() {
-        fast?.startDate = datePicker.date
+        startDate = datePicker.date
         tableView.reloadData()
     }
     
     @objc func datePickerForEndDate() {
-        fast?.endDate = datePicker.date 
+        endDate = datePicker.date
         tableView.reloadData()
     }
     
@@ -177,7 +197,7 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
                 triangleView.widthAnchor.constraint(equalToConstant: 25.0)
             ]
             NSLayoutConstraint.activate(constraints)
-            datePicker.setDate(fast!.startDate!, animated: false)
+            datePicker.setDate(startDate, animated: false)
             datePicker.removeTarget(self, action: #selector(datePickerForEndDate), for: .valueChanged)
             datePicker.addTarget(self, action: #selector(datePickerForStartDate), for: .valueChanged)
         } else if state == .end {
@@ -194,7 +214,7 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
                 triangleView.widthAnchor.constraint(equalToConstant: 25.0)
             ]
             NSLayoutConstraint.activate(constraints)
-            datePicker.setDate(fast!.endDate!, animated: false)
+            datePicker.setDate(endDate, animated: false)
             datePicker.removeTarget(self, action: #selector(datePickerForStartDate), for: .valueChanged)
             datePicker.addTarget(self, action: #selector(datePickerForEndDate), for: .valueChanged)
         }
@@ -209,7 +229,7 @@ extension SaveFastViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LabelAndTimeCell") as! LabelAndTimeCell
-            cell.bottomLabel.text = dateFormatter.string(from: fast!.startDate!)
+            cell.bottomLabel.text = dateFormatter.string(from: startDate)
             cell.delegate = self
             cell.isStart()
             return cell
@@ -217,7 +237,7 @@ extension SaveFastViewController: UITableViewDataSource {
         
         if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LabelAndTimeCell") as! LabelAndTimeCell
-            cell.bottomLabel.text = dateFormatter.string(from: fast!.endDate!)
+            cell.bottomLabel.text = dateFormatter.string(from: endDate)
             cell.delegate = self
             cell.isEnd()
             return cell
@@ -226,7 +246,7 @@ extension SaveFastViewController: UITableViewDataSource {
         if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LabelAndTimeCell") as! LabelAndTimeCell
             cell.topLabel.text = "TOTAL FASTING TIME"
-            cell.bottomLabel.text = "\(fast!.duration) seconds"
+            cell.bottomLabel.text = "\(duration) seconds"
             return cell
         }
         

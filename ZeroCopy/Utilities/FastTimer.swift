@@ -25,12 +25,17 @@ class FastTimer {
         seconds += 1
     }
     
-    public func stopTimer() -> (Date, Date){
+    public func stopTimer(){
         timer.invalidate()
         //let secondsToSend = seconds
         seconds = 0
+        //endDate = Date()
+        //return (startDate, endDate)
+        //return (startDate, endDate, secondsToSend)
+    }
+    
+    public func getTimerDates() -> (Date, Date) {
         endDate = Date()
         return (startDate, endDate)
-        //return (startDate, endDate, secondsToSend)
     }
 }

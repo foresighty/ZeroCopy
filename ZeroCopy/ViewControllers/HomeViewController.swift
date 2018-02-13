@@ -21,6 +21,7 @@ class HomeViewController: UIViewController {
 
     var defaultNavigationBarShadow: UIImage!
     
+    var currentFast: Fast?
     var listOfFasts: [Fast]?
     
     // MARK: Override Methods
@@ -196,27 +197,19 @@ extension HomeViewController: UITableViewDataSource, CellDelegate {
     
     // MARK: CellDelegate Methods
     
-    func updateTableView() {
-        updateCoreData()
-        tableView.reloadData()
-    }
-    
     func runTimer() {
         // TODO: Change timer to count time since start date and display
         fastTimer.runTimer()
     }
     
-    func stopTimer() {
-        let (startDate, endDate) = fastTimer.stopTimer()
-        CoreDataManager.sharedInstance.recordFast(startDate: startDate, endDate: endDate)
-    }
-    
-    func presentSaveFastViewContoller() {
-        updateCoreData()
-        guard let listOfFasts = listOfFasts else { return }
-        let fast = listOfFasts[0]
-        let saveFastViewController = SaveFastViewController(with: .create)
-        saveFastViewController.fast = fast
+    func presentSaveFastViewContoller(closure: @escaping () -> Void) {
+        let completeButtonPress = closure
+        let (startDate, endDate) = fastTimer.getTimerDates()
+        let saveFastViewController = SaveFastViewController(startDate: startDate, endDate: endDate)
+        saveFastViewController.startDate = startDate
+        saveFastViewController.endDate = endDate
+        saveFastViewController.completeButtonPress = completeButtonPress
+        saveFastViewController.stopTimer = self.fastTimer.stopTimer()
         
         let transition = transitionManager.transitionUp()
         navigationController?.view.layer.add(transition, forKey: nil)
@@ -227,7 +220,9 @@ extension HomeViewController: UITableViewDataSource, CellDelegate {
         updateCoreData()
         guard let listOfFasts = listOfFasts else { return }
         let fast = listOfFasts[index-4]
-        let saveFastViewController = SaveFastViewController(with: .edit)
+        let startDate = fast.startDate!
+        let endDate = fast.endDate!
+        let saveFastViewController = SaveFastViewController(startDate: startDate, endDate: endDate)
         saveFastViewController.fast = fast
         
         let transition = transitionManager.transitionUp()
