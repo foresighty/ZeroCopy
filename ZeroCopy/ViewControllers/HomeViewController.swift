@@ -202,15 +202,14 @@ extension HomeViewController: UITableViewDataSource, CellDelegate {
         fastTimer.runTimer()
     }
     
-    func presentSaveFastViewContoller() {
-        let (startDate, endDate) = fastTimer.stopTimer()
-        CoreDataManager.sharedInstance.recordFast(startDate: startDate, endDate: endDate)
-        updateCoreData()
-        tableView.reloadData()
-        guard let listOfFasts = listOfFasts else { return }
-        let fast = listOfFasts[0]
-        let saveFastViewController = SaveFastViewController(with: .create)
-        saveFastViewController.fast = fast
+    func presentSaveFastViewContoller(closure: @escaping () -> Void) {
+        let completeButtonPress = closure
+        let (startDate, endDate) = fastTimer.getTimerDates()
+        let saveFastViewController = SaveFastViewController(startDate: startDate, endDate: endDate)
+        saveFastViewController.startDate = startDate
+        saveFastViewController.endDate = endDate
+        saveFastViewController.completeButtonPress = completeButtonPress
+        saveFastViewController.stopTimer = self.fastTimer.stopTimer()
         
         let transition = transitionManager.transitionUp()
         navigationController?.view.layer.add(transition, forKey: nil)
@@ -221,7 +220,9 @@ extension HomeViewController: UITableViewDataSource, CellDelegate {
         updateCoreData()
         guard let listOfFasts = listOfFasts else { return }
         let fast = listOfFasts[index-4]
-        let saveFastViewController = SaveFastViewController(with: .edit)
+        let startDate = fast.startDate!
+        let endDate = fast.endDate!
+        let saveFastViewController = SaveFastViewController(startDate: startDate, endDate: endDate)
         saveFastViewController.fast = fast
         
         let transition = transitionManager.transitionUp()

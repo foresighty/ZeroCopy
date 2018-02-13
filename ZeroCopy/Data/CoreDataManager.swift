@@ -20,7 +20,7 @@ class CoreDataManager {
         managedContext = appDelegate?.persistentContainer.viewContext
     }
     
-    func recordFast(startDate: Date, endDate: Date){
+    func recordFast(startDate: Date, endDate: Date) {
         let fastEntity = NSEntityDescription.entity(forEntityName: "Fast", in: managedContext)
         let fast = NSManagedObject(entity: fastEntity!, insertInto: managedContext)
         
@@ -33,6 +33,18 @@ class CoreDataManager {
             print("Could not save. \(error), \(error.userInfo)")
         }
 
+        print("Saved Fast = \(fast)")
+    }
+    
+    func updateFast(fast: Fast) {
+        let fast = fast
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+        
         print("Saved Fast = \(fast)")
     }
     
@@ -61,4 +73,5 @@ class CoreDataManager {
             managedContext.delete(listOfFasts[0])
         }
     }
+
 }
