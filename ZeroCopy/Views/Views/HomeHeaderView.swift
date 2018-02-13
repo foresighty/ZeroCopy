@@ -8,13 +8,23 @@
 
 import UIKit
 
+enum HomeHeaderState {
+    case normal
+    case fasting
+}
+
 class HomeHeaderView: UIView {
 
     private var backgroundImageView: UIImageView!
     private var goalLabel: UILabel!
     private var tagline: UILabel!
+    var timerDescription: UILabel?
+    var timerText: UILabel?
+    var state: HomeHeaderState?
+    var dateFormatter = DateFormatter()
     
-    // TODO: State - fasting vs not fasting
+    var timer = Timer()
+    var seconds = 0
     
     // MARK: Initialisers
 
@@ -31,6 +41,7 @@ class HomeHeaderView: UIView {
     
     private func setup(){
         translatesAutoresizingMaskIntoConstraints = false
+        dateFormatter.dateFormat = "HH:mm:ss"
         setupBackgroundImageView()
         setupGoalLabel()
         setupTagLineLabel()
@@ -84,12 +95,73 @@ class HomeHeaderView: UIView {
         
     }
     
-    // Public methods
-    
-    public func updateLabelsAlpha(with alpha: CGFloat){
-        goalLabel.textColor = goalLabel.textColor.withAlphaComponent(alpha)
-        tagline.textColor = tagline.textColor.withAlphaComponent(alpha)
+    private func setupTimingView() {
+        timerDescription = UILabel()
+        timerText = UILabel()
+        
+        guard let timerDescription = timerDescription else { return }
+        guard let timerText = timerText else { return }
+        
+        timerDescription.translatesAutoresizingMaskIntoConstraints = false
+        timerDescription.text = "ELAPSED TIME"
+        timerDescription.font = UIFont(name: goalLabel.font.fontName, size: 14)
+        timerDescription.textAlignment = .center
+        timerText.translatesAutoresizingMaskIntoConstraints = false
+        timerText.text = "00:00:00"
+        timerText.font = UIFont.systemFont(ofSize: 36, weight: UIFont.Weight.thin)
+        timerText.textColor = .white
+        timerText.textAlignment = .center
+
+        addSubview(timerDescription)
+        addSubview(timerText)
+        
+        let constraints:[NSLayoutConstraint] = [
+            timerDescription.topAnchor.constraint(equalTo: self.topAnchor, constant: 124.0),
+            timerDescription.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            timerDescription.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            timerText.topAnchor.constraint(equalTo: timerDescription.bottomAnchor, constant: 15.0),
+            timerText.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            timerText.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            ]
+        
+        NSLayoutConstraint.activate(constraints)
     }
 
+    @objc private func updateTimer(){
+        seconds += 1
+        timerText?.text = stringFromTimeInterval(total: seconds)
+    }
+    
+    private func stringFromTimeInterval(total: Int) -> String {
+        let seconds = total % 60
+        let minutes = (total / 60) % 60
+        let hours = (total / 3600)
+        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    }
+    
+    // Public methods
+    
+    public func updateLabelsAlpha(with alpha: CGFloat) {
+        goalLabel.textColor = goalLabel.textColor.withAlphaComponent(alpha)
+        tagline.textColor = tagline.textColor.withAlphaComponent(alpha)
+        timerText?.textColor = timerText?.textColor.withAlphaComponent(alpha)
+        timerDescription?.textColor = timerDescription?.textColor.withAlphaComponent(alpha)
+    }
+    
+    public func startTiming() {
+        goalLabel.removeFromSuperview()
+        tagline.removeFromSuperview()
+        setupTimingView()
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
+    }
+    
+    public func stopTiming() {
+        setupGoalLabel()
+        setupTagLineLabel()
+        setupConstraints()
+        timer.invalidate()
+        seconds = 0
+    }
 }
 

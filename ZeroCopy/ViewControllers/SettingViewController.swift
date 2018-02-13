@@ -62,7 +62,6 @@ extension SettingViewController: UITableViewDataSource {
         
         if indexPath.row == 1 {
             normalCell.textLabel?.text = "Notifications"
-            normalCell.separatorInset = .zero
             return normalCell
         }
         
@@ -73,13 +72,11 @@ extension SettingViewController: UITableViewDataSource {
         
         if indexPath.row == 4 {
             normalCell.textLabel?.text = "Erase All Data"
-            normalCell.separatorInset = .zero
             return normalCell
         }
         
         if indexPath.row == 7 {
             normalCell.textLabel?.text = "Oak"
-            normalCell.separatorInset = .zero
             return normalCell
         }
         
@@ -99,7 +96,6 @@ extension SettingViewController: UITableViewDataSource {
             cell.accessoryType = .none
             cell.detailTextLabel?.text = "2.0.0"
             cell.detailTextLabel?.textColor = UIColor(red: (200/255), green: (200/255), blue: (200/255), alpha: 1)
-            cell.separatorInset = .zero
             return cell
         }
         

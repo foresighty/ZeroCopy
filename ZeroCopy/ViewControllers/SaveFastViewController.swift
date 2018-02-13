@@ -19,7 +19,7 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
     let backgroundView = UIView()
     let triangleView = TriangleView()
     var completeButtonPress: (() -> Void)?
-    var stopTimer: (())?
+    var stopTimer: (() -> Void)?
     var startDate: Date!
     var endDate: Date!
     
@@ -32,10 +32,11 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
         return duration
     }
     
-    init(startDate: Date, endDate: Date){
+    init(startDate: Date, endDate: Date, completion: (()-> Void)?){
         super.init(nibName: nil, bundle: nil)
         self.startDate = startDate
         self.endDate = endDate
+        self.stopTimer = completion
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -100,7 +101,7 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
             
             if let completeButtonPress = self.completeButtonPress, let stopTimer = self.stopTimer {
                 completeButtonPress()
-                stopTimer
+                stopTimer()
             }
             
             let transition = self.transitionManager.transitionDown()
@@ -128,7 +129,7 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
             
             if let completeButtonPress = completeButtonPress, let stopTimer = stopTimer {
                 completeButtonPress()
-                stopTimer
+                stopTimer()
             }
             let transition = transitionManager.transitionDown()
             navigationController?.view.layer.add(transition, forKey: nil)
@@ -246,10 +247,19 @@ extension SaveFastViewController: UITableViewDataSource {
         if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LabelAndTimeCell") as! LabelAndTimeCell
             cell.topLabel.text = "TOTAL FASTING TIME"
-            cell.bottomLabel.text = "\(duration) seconds"
+            if duration < 0 {
+                cell.bottomLabel.text = "0 minutes"
+            } else {
+                let (h,m) = secondsToHoursMinutes(seconds: duration)
+                cell.bottomLabel.text = "\(h)hrs \(m)min"
+            }
             return cell
         }
         
         return UITableViewCell()
+    }
+    
+    private func secondsToHoursMinutes(seconds : Int) -> (Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60)
     }
 }
