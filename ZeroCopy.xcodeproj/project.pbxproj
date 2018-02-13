@@ -36,6 +36,7 @@
 		D8EE8774202B478200F53983 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D8EE876F202B476D00F53983 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D8EE8777202B487D00F53983 /* TransitionManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EE8776202B487D00F53983 /* TransitionManagerSpec.swift */; };
 		D8EE87D3202C57FD00F53983 /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EE87D2202C57FD00F53983 /* CoreDataHelpers.swift */; };
+		D8EE8D8720331B430037E092 /* ClearCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EE8D8620331B430037E092 /* ClearCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,7 @@
 		D8EE876F202B476D00F53983 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		D8EE8776202B487D00F53983 /* TransitionManagerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionManagerSpec.swift; sourceTree = "<group>"; };
 		D8EE87D2202C57FD00F53983 /* CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelpers.swift; sourceTree = "<group>"; };
+		D8EE8D8620331B430037E092 /* ClearCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 				D8C49E4D2020C8A30091E7B3 /* HeaderListCell.swift */,
 				D8C49E4F2020C96A0091E7B3 /* FooterListCell.swift */,
 				D8BE1FD620245E0000EF629E /* LabelAndTimeCell.swift */,
+				D8EE8D8620331B430037E092 /* ClearCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				D8C49E4C2020C1800091E7B3 /* FastTimer.swift in Sources */,
 				D8C49E4E2020C8A30091E7B3 /* HeaderListCell.swift in Sources */,
 				4DC6AD26201B6C5F00078A34 /* SevenDayTitleCell.swift in Sources */,
+				D8EE8D8720331B430037E092 /* ClearCell.swift in Sources */,
 				D83E1DAE2032DB13001FBBF7 /* TriangleView.swift in Sources */,
 				4D3772F3200934C800C5C554 /* AppDelegate.swift in Sources */,
 				D83E1DAB2032D42A001FBBF7 /* Fast+CoreDataClass.swift in Sources */,
