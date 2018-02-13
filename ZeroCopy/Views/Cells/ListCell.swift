@@ -98,8 +98,7 @@ class ListCell: UITableViewCell {
             leftLabel.text = dateStringForCell
             let duration = fast.duration
             let (h,m) = secondsToHoursMinutes(seconds: Int(duration))
-            // Replace line below with this for hour to minutes: cell.rightLabel.text = "\(h)hrs \(m)min"
-            rightLabel.text = "\(duration)"
+            rightLabel.text = "\(h)hrs \(m)min"
         }
     }
     

@@ -200,16 +200,18 @@ extension HomeViewController: UITableViewDataSource, CellDelegate {
     func runTimer() {
         // TODO: Change timer to count time since start date and display
         fastTimer.runTimer()
+        homeHeaderView.startTiming()
     }
     
     func presentSaveFastViewContoller(closure: @escaping () -> Void) {
         let completeButtonPress = closure
         let (startDate, endDate) = fastTimer.getTimerDates()
-        let saveFastViewController = SaveFastViewController(startDate: startDate, endDate: endDate)
+        let saveFastViewController = SaveFastViewController(startDate: startDate, endDate: endDate) {
+            self.stopTiming()
+        }
         saveFastViewController.startDate = startDate
         saveFastViewController.endDate = endDate
         saveFastViewController.completeButtonPress = completeButtonPress
-        saveFastViewController.stopTimer = self.fastTimer.stopTimer()
         
         let transition = transitionManager.transitionUp()
         navigationController?.view.layer.add(transition, forKey: nil)
@@ -222,12 +224,17 @@ extension HomeViewController: UITableViewDataSource, CellDelegate {
         let fast = listOfFasts[index-4]
         let startDate = fast.startDate!
         let endDate = fast.endDate!
-        let saveFastViewController = SaveFastViewController(startDate: startDate, endDate: endDate)
+        let saveFastViewController = SaveFastViewController(startDate: startDate, endDate: endDate, completion: nil)
         saveFastViewController.fast = fast
         
         let transition = transitionManager.transitionUp()
         navigationController?.view.layer.add(transition, forKey: nil)
         navigationController?.pushViewController(saveFastViewController, animated: false)
+    }
+    
+    func stopTiming() {
+        fastTimer.stopTimer()
+        homeHeaderView.stopTiming()
     }
 }
 
@@ -249,7 +256,7 @@ extension HomeViewController: UITableViewDelegate {
         }
         
         // Expand the top view
-        if homeHeaderViewTopConstraint.constant < constraintRangeForHeaderView.upperBound && scrollView.contentOffset.y < 0{
+        if homeHeaderViewTopConstraint.constant < constraintRangeForHeaderView.upperBound && scrollView.contentOffset.y < 0 {
             homeHeaderViewTopConstraint.constant -= scrollView.contentOffset.y
             scrollView.contentOffset.y -= scrollView.contentOffset.y
         }
