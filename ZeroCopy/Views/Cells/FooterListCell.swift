@@ -32,10 +32,15 @@ class FooterListCell: ListCell {
             total += fast.duration
         }
         
-        let average = total / Int(fasts.count)
+        if fasts.count > 0 {
+            let average = total / Int(fasts.count)
+            let (h,m) = secondsToHoursMinutes(seconds: average)
+            rightLabel.text = "\(h)hrs \(m)min"
+        } else {
+            rightLabel.text = "TBD"
+        }
         
-        let (h,m) = secondsToHoursMinutes(seconds: average)
-        rightLabel.text = "\(h)hrs \(m)min"
+        
     }
     
     public func configForTotal(with fasts: [Fast]) {
@@ -47,8 +52,12 @@ class FooterListCell: ListCell {
             total += fast.duration
         }
         
-        let (h,m) = secondsToHoursMinutes(seconds: total)
-        rightLabel.text = "\(h)hrs \(m)min"
+        if total > 0 {
+            let (h,m) = secondsToHoursMinutes(seconds: total)
+            rightLabel.text = "\(h)hrs \(m)min"
+        } else {
+            rightLabel.text = "TBD"
+        }
     }
     
     private func secondsToHoursMinutes(seconds : Int) -> (Int, Int) {

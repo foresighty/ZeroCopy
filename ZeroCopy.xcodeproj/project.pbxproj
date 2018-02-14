@@ -24,6 +24,8 @@
 		D84DE51B202060F9005944D0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84DE51A202060F9005944D0 /* CoreDataManager.swift */; };
 		D887B669201F56A600A50CB7 /* ZeroCopy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D887B667201F56A600A50CB7 /* ZeroCopy.xcdatamodeld */; };
 		D88AFCC4201B2EDE009EBF8D /* StartStopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88AFCC3201B2EDE009EBF8D /* StartStopCell.swift */; };
+		D898BDCA203EBE8F0035B8FD /* HomeViewDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D898BDC9203EBE8F0035B8FD /* HomeViewDataManager.swift */; };
+		D898BDCC203EBF100035B8FD /* Presentables.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D898BDCB203EBF100035B8FD /* Presentables.framework */; };
 		D8A2F842201895FB0015E3E9 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A2F841201895FB0015E3E9 /* HomeHeaderView.swift */; };
 		D8BE1FD52023097500EF629E /* SaveFastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BE1FD42023097500EF629E /* SaveFastViewController.swift */; };
 		D8BE1FD720245E0000EF629E /* LabelAndTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BE1FD620245E0000EF629E /* LabelAndTimeCell.swift */; };
@@ -83,6 +85,8 @@
 		D84DE51A202060F9005944D0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D887B668201F56A600A50CB7 /* ZeroCopy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ZeroCopy.xcdatamodel; sourceTree = "<group>"; };
 		D88AFCC3201B2EDE009EBF8D /* StartStopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStopCell.swift; sourceTree = "<group>"; };
+		D898BDC9203EBE8F0035B8FD /* HomeViewDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewDataManager.swift; sourceTree = "<group>"; };
+		D898BDCB203EBF100035B8FD /* Presentables.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Presentables.framework; path = Carthage/Build/iOS/Presentables.framework; sourceTree = "<group>"; };
 		D8A2F841201895FB0015E3E9 /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
 		D8BE1FD42023097500EF629E /* SaveFastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFastViewController.swift; sourceTree = "<group>"; };
 		D8BE1FD620245E0000EF629E /* LabelAndTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelAndTimeCell.swift; sourceTree = "<group>"; };
@@ -103,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D898BDCC203EBF100035B8FD /* Presentables.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,6 +201,7 @@
 				4D3773042009357B00C5C554 /* SettingViewController.swift */,
 				4D3773062009358A00C5C554 /* ScienceViewController.swift */,
 				D8BE1FD42023097500EF629E /* SaveFastViewController.swift */,
+				D898BDC9203EBE8F0035B8FD /* HomeViewDataManager.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -246,6 +252,7 @@
 		D8EE876D202B476D00F53983 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D898BDCB203EBF100035B8FD /* Presentables.framework */,
 				D8EE876E202B476D00F53983 /* Nimble.framework */,
 				D8EE876F202B476D00F53983 /* Quick.framework */,
 			);
@@ -278,6 +285,7 @@
 				4D3772EB200934C800C5C554 /* Sources */,
 				4D3772EC200934C800C5C554 /* Frameworks */,
 				4D3772ED200934C800C5C554 /* Resources */,
+				D898BDCD203EBF200035B8FD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -366,6 +374,24 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D898BDCD203EBF200035B8FD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Presentables.framework",
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Presentables.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4D3772EB200934C800C5C554 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -380,6 +406,7 @@
 				4DC6AD26201B6C5F00078A34 /* SevenDayTitleCell.swift in Sources */,
 				D8EE8D8720331B430037E092 /* ClearCell.swift in Sources */,
 				D83E1DAE2032DB13001FBBF7 /* TriangleView.swift in Sources */,
+				D898BDCA203EBE8F0035B8FD /* HomeViewDataManager.swift in Sources */,
 				4D3772F3200934C800C5C554 /* AppDelegate.swift in Sources */,
 				D83E1DAB2032D42A001FBBF7 /* Fast+CoreDataClass.swift in Sources */,
 				4D3773052009357B00C5C554 /* SettingViewController.swift in Sources */,
@@ -540,6 +567,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = EYT7Q6838H;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = ZeroCopy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -556,6 +587,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = EYT7Q6838H;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = ZeroCopy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -32,20 +32,14 @@ class CoreDataManager {
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
-
-        print("Saved Fast = \(fast)")
     }
     
-    func updateFast(fast: Fast) {
-        let fast = fast
-        
+    func updateFast(fast: Fast) {        
         do {
             try managedContext.save()
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
-        
-        print("Saved Fast = \(fast)")
     }
     
     func retrieveFasts() -> [Fast]? {
@@ -55,8 +49,6 @@ class CoreDataManager {
         fetchRequest.sortDescriptors = [sort]
         fetchRequest.returnsObjectsAsFaults = false
         if let listOfFasts : [Fast] = try? managedContext.fetch(fetchRequest) as! [Fast] {
-            print("---------------ALL FASTS------------------")
-            print(listOfFasts)
             return listOfFasts
         }
         return [Fast]()
@@ -68,9 +60,17 @@ class CoreDataManager {
         fetchRequest.predicate = NSPredicate(format: "startDate = %@", fast.startDate! as NSDate)
         
         if let listOfFasts : [Fast] = try? managedContext.fetch(fetchRequest) as! [Fast] {
-            print("--------------FAST to DELETE------------------")
-            print(listOfFasts)
             managedContext.delete(listOfFasts[0])
+        }
+    }
+    
+    func deleteAllFasts() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Fast")
+        
+        if let listOfFasts : [Fast] = try? managedContext.fetch(fetchRequest) as! [Fast] {
+            for fast in listOfFasts {
+                managedContext.delete(fast)
+            }
         }
     }
 

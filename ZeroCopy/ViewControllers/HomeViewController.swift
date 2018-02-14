@@ -8,8 +8,9 @@
 
 import UIKit
 import CoreData
+import Presentables
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, CellDelegate {
     
     var homeHeaderView: HomeHeaderView!
     var tableView: UITableView!
@@ -24,6 +25,8 @@ class HomeViewController: UIViewController {
     var currentFast: Fast?
     var listOfFasts: [Fast]?
     
+    var tableManager: PresentableManager?
+    
     // MARK: Override Methods
     
     override func viewDidLoad() {
@@ -33,6 +36,8 @@ class HomeViewController: UIViewController {
         setupTableView()
         setupHeaderView()
         setupConstraints()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidReopen), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
 
     
@@ -42,6 +47,9 @@ class HomeViewController: UIViewController {
         UIApplication.shared.statusBarStyle = .lightContent
         updateCoreData()
         tableView.reloadData()
+        if let tableManager = tableManager as? HomeViewDataManager, let listOfFasts = listOfFasts {
+            tableManager.updateTable(with: listOfFasts)
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -75,19 +83,18 @@ class HomeViewController: UIViewController {
     
     private func setupTableView(){
         tableView = UITableView()
-        tableView.delegate = self
-        tableView.dataSource = self
+        if let listOfFasts = listOfFasts {
+            tableManager = HomeViewDataManager(with: listOfFasts, delegate: self)
+        }
+
+        tableView.bind(withPresentableManager: &tableManager!)
+
         tableView.frame = view.bounds
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.sectionHeaderHeight = 0
+        tableView.sectionFooterHeight = 0
+        tableView.delegate = self
         
-        tableView.register(StartStopCell.self, forCellReuseIdentifier: "StartStopCell")
-        tableView.register(SevenDayTitleCell.self, forCellReuseIdentifier: "SevenDayTitleCell")
-        tableView.register(GraphTableViewCell.self, forCellReuseIdentifier: "GraphTableViewCell")
-        tableView.register(ListCell.self, forCellReuseIdentifier: "ListCell")
-        tableView.register(WarningCell.self, forCellReuseIdentifier: "WarningCell")
-        tableView.register(HeaderListCell.self, forCellReuseIdentifier: "HeaderListCell")
-        tableView.register(FooterListCell.self, forCellReuseIdentifier: "FooterListCell")
-
         view.addSubview(tableView)
     }
     
@@ -117,88 +124,31 @@ class HomeViewController: UIViewController {
     
     // MARK: Button Methods
     
-    @objc func settingsPressed(){
+    @objc func settingsPressed() {
         let transition = transitionManager.transitionUp()
         navigationController!.view.layer.add(transition, forKey: nil)
         navigationController?.pushViewController(SettingViewController(), animated: false)
     }
     
-    @objc func sciencePressed(){
+    @objc func sciencePressed() {
         let transition = transitionManager.transitionUp()
         navigationController!.view.layer.add(transition, forKey: nil)
         navigationController?.pushViewController(ScienceViewController(), animated: false)
     }
-}
-
-
-// MARK: TableViewDataSource Methods:
-
-extension HomeViewController: UITableViewDataSource, CellDelegate {
     
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 14
-    }
-    
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "StartStopCell") as! StartStopCell
-            cell.delegate = self
-            return cell
+    // MARK: App State Methods
+
+    @objc func appDidReopen() {
+        if fastTimer.isRunning {
+            let (startDate, _) = fastTimer.getTimerDates()
+            let seconds = abs(Int(startDate.timeIntervalSinceNow))
+            homeHeaderView.updateTimerWith(newSeconds: seconds)
         }
-        
-        if indexPath.row == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SevenDayTitleCell") as! SevenDayTitleCell
-            return cell
-        }
-        
-        if indexPath.row == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "GraphTableViewCell") as! GraphTableViewCell
-            return cell
-        }
-        
-        if indexPath.row == 3 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderListCell") as! HeaderListCell
-            return cell
-        }
-        
-        if indexPath.row == 11 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "FooterListCell") as! FooterListCell
-            guard let listOfFasts = listOfFasts else { return cell }
-            cell.configForAverage(with: listOfFasts)
-            return cell
-        }
-        
-        if indexPath.row == 12 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "FooterListCell") as! FooterListCell
-            guard let listOfFasts = listOfFasts else { return cell }
-            cell.configForTotal(with: listOfFasts)
-            return cell
-        }
-        
-        if indexPath.row == 13 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "WarningCell") as! WarningCell
-            return cell
-        }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell") as! ListCell
-        guard let listOfFasts = listOfFasts else { return cell }
-        let numberOfCellsBeforeFasts = 4
-        
-        if indexPath.row - numberOfCellsBeforeFasts < listOfFasts.count {
-            let fast = listOfFasts[indexPath.row - numberOfCellsBeforeFasts]
-            cell.updateDisplay(with: fast)
-            cell.delegate = self
-            cell.index = indexPath.row
-        } else {
-            cell.isDefault()
-        }
-        return cell
     }
     
     // MARK: CellDelegate Methods
     
     func runTimer() {
-        // TODO: Change timer to count time since start date and display
         fastTimer.runTimer()
         homeHeaderView.startTiming()
     }
@@ -221,7 +171,7 @@ extension HomeViewController: UITableViewDataSource, CellDelegate {
     func presentFastDetailViewControllerForFast(at index: Int) {
         updateCoreData()
         guard let listOfFasts = listOfFasts else { return }
-        let fast = listOfFasts[index-4]
+        let fast = listOfFasts[index]
         let startDate = fast.startDate!
         let endDate = fast.endDate!
         let saveFastViewController = SaveFastViewController(startDate: startDate, endDate: endDate, completion: nil)
@@ -231,6 +181,8 @@ extension HomeViewController: UITableViewDataSource, CellDelegate {
         navigationController?.view.layer.add(transition, forKey: nil)
         navigationController?.pushViewController(saveFastViewController, animated: false)
     }
+    
+    // Method
     
     func stopTiming() {
         fastTimer.stopTimer()
