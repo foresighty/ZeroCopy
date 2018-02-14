@@ -12,11 +12,12 @@ import Presentables
 
 class HomeViewController: UIViewController, HomeViewDataManagerDelegate {
     
-    private var homeHeaderView: HomeHeaderView!
-    private var tableView: UITableView!
+    var homeHeaderView: HomeHeaderView!
+    var tableView: UITableView!
     private var tableManager: PresentableManager?
     private var transitionManager: TransitionManager = TransitionManager()
     
+    var homeHeaderViewTopConstraint: NSLayoutConstraint!
     private let constraintRangeForHeaderView = (CGFloat(-190)..<CGFloat(0))
     private let constraintRangeForHeaderTransparency = (CGFloat(-130)..<CGFloat(-30))
     
@@ -25,6 +26,7 @@ class HomeViewController: UIViewController, HomeViewDataManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         setupHeaderView()
         setupTableView()
         setupNavigationController()
@@ -38,7 +40,7 @@ class HomeViewController: UIViewController, HomeViewDataManagerDelegate {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewDidDisappear(animated)
         navigationController?.navigationBar.shadowImage = nil
         UIApplication.shared.statusBarStyle = .default
     }
@@ -131,9 +133,10 @@ class HomeViewController: UIViewController, HomeViewDataManagerDelegate {
 // MARK: TableViewDelegate Methods
 
 extension HomeViewController: UITableViewDelegate {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        let homeHeaderViewTopConstraint = view.constraints[0]
+        homeHeaderViewTopConstraint = view.constraints[0]
         
         // Compress the top view
         if homeHeaderViewTopConstraint.constant > constraintRangeForHeaderView.lowerBound && scrollView.contentOffset.y > 0 {

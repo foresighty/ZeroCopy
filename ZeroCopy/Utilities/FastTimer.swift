@@ -34,7 +34,7 @@ class FastTimer {
         }
     }
     
-    public func stopTimer(){
+    public func cancelTimer(){
         timer.invalidate()
         seconds = 0
         isRunning = false

@@ -14,6 +14,9 @@
 		4D3773072009358A00C5C554 /* ScienceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3773062009358A00C5C554 /* ScienceViewController.swift */; };
 		4D3773092009359400C5C554 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3773082009359400C5C554 /* HomeViewController.swift */; };
 		4D377313200A35FD00C5C554 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D377312200A35FD00C5C554 /* TransitionManager.swift */; };
+		4D4B3CBB2046AA4D0018BE07 /* LabelAndTimeCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B3CBA2046AA4D0018BE07 /* LabelAndTimeCellSpec.swift */; };
+		4D4B3CBD2046B5910018BE07 /* StartStopCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B3CBC2046B5910018BE07 /* StartStopCellSpec.swift */; };
+		4D4B3CC02046BA230018BE07 /* FastTimerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B3CBF2046BA230018BE07 /* FastTimerSpec.swift */; };
 		4D50C88E20440972004B29BB /* LoadDummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D50C88D20440972004B29BB /* LoadDummyData.swift */; };
 		4DC6AD26201B6C5F00078A34 /* SevenDayTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC6AD25201B6C5E00078A34 /* SevenDayTitleCell.swift */; };
 		4DC6AD28201B748D00078A34 /* GraphTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC6AD27201B748D00078A34 /* GraphTableViewCell.swift */; };
@@ -25,9 +28,11 @@
 		D84DE51B202060F9005944D0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84DE51A202060F9005944D0 /* CoreDataManager.swift */; };
 		D887B669201F56A600A50CB7 /* ZeroCopy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D887B667201F56A600A50CB7 /* ZeroCopy.xcdatamodeld */; };
 		D88AFCC4201B2EDE009EBF8D /* StartStopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88AFCC3201B2EDE009EBF8D /* StartStopCell.swift */; };
+		D88E2C7920348CA5001CE9B3 /* CoreDataManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88E2C7820348CA5001CE9B3 /* CoreDataManagerSpec.swift */; };
 		D898BDCA203EBE8F0035B8FD /* HomeViewDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D898BDC9203EBE8F0035B8FD /* HomeViewDataManager.swift */; };
 		D898BDCC203EBF100035B8FD /* Presentables.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D898BDCB203EBF100035B8FD /* Presentables.framework */; };
 		D8A2F842201895FB0015E3E9 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A2F841201895FB0015E3E9 /* HomeHeaderView.swift */; };
+		D8B4F4092035A07A0016D2B5 /* HomeViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B4F4082035A07A0016D2B5 /* HomeViewControllerSpec.swift */; };
 		D8BE1FD52023097500EF629E /* SaveFastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BE1FD42023097500EF629E /* SaveFastViewController.swift */; };
 		D8BE1FD720245E0000EF629E /* LabelAndTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BE1FD620245E0000EF629E /* LabelAndTimeCell.swift */; };
 		D8C49E4C2020C1800091E7B3 /* FastTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C49E4B2020C1800091E7B3 /* FastTimer.swift */; };
@@ -76,6 +81,9 @@
 		4D3773062009358A00C5C554 /* ScienceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScienceViewController.swift; sourceTree = "<group>"; };
 		4D3773082009359400C5C554 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		4D377312200A35FD00C5C554 /* TransitionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
+		4D4B3CBA2046AA4D0018BE07 /* LabelAndTimeCellSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelAndTimeCellSpec.swift; sourceTree = "<group>"; };
+		4D4B3CBC2046B5910018BE07 /* StartStopCellSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStopCellSpec.swift; sourceTree = "<group>"; };
+		4D4B3CBF2046BA230018BE07 /* FastTimerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastTimerSpec.swift; sourceTree = "<group>"; };
 		4D50C88D20440972004B29BB /* LoadDummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadDummyData.swift; sourceTree = "<group>"; };
 		4DC6AD25201B6C5E00078A34 /* SevenDayTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenDayTitleCell.swift; sourceTree = "<group>"; };
 		4DC6AD27201B748D00078A34 /* GraphTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphTableViewCell.swift; sourceTree = "<group>"; };
@@ -87,9 +95,11 @@
 		D84DE51A202060F9005944D0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D887B668201F56A600A50CB7 /* ZeroCopy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ZeroCopy.xcdatamodel; sourceTree = "<group>"; };
 		D88AFCC3201B2EDE009EBF8D /* StartStopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStopCell.swift; sourceTree = "<group>"; };
+		D88E2C7820348CA5001CE9B3 /* CoreDataManagerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerSpec.swift; sourceTree = "<group>"; };
 		D898BDC9203EBE8F0035B8FD /* HomeViewDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewDataManager.swift; sourceTree = "<group>"; };
 		D898BDCB203EBF100035B8FD /* Presentables.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Presentables.framework; path = Carthage/Build/iOS/Presentables.framework; sourceTree = "<group>"; };
 		D8A2F841201895FB0015E3E9 /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
+		D8B4F4082035A07A0016D2B5 /* HomeViewControllerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerSpec.swift; sourceTree = "<group>"; };
 		D8BE1FD42023097500EF629E /* SaveFastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFastViewController.swift; sourceTree = "<group>"; };
 		D8BE1FD620245E0000EF629E /* LabelAndTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelAndTimeCell.swift; sourceTree = "<group>"; };
 		D8C49E4B2020C1800091E7B3 /* FastTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastTimer.swift; sourceTree = "<group>"; };
@@ -162,6 +172,23 @@
 			path = ZeroCopy;
 			sourceTree = "<group>";
 		};
+		4D4B3CB92046AA340018BE07 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4D4B3CBA2046AA4D0018BE07 /* LabelAndTimeCellSpec.swift */,
+				4D4B3CBC2046B5910018BE07 /* StartStopCellSpec.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		4D4B3CBE2046B9010018BE07 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				4D4B3CBF2046BA230018BE07 /* FastTimerSpec.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		D8852E39201F170A00DAA366 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +221,14 @@
 				D8EE8D8620331B430037E092 /* ClearCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		D88E2C7720348C8E001CE9B3 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D88E2C7820348CA5001CE9B3 /* CoreDataManagerSpec.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		D8AF5A3F2019D3C8004E1FD4 /* ViewControllers */ = {
@@ -233,6 +268,14 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
+		D8B4F4072035A0630016D2B5 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D8B4F4082035A07A0016D2B5 /* HomeViewControllerSpec.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		D8C49E4A2020C1660091E7B3 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -245,8 +288,12 @@
 		D8EE8764202B468E00F53983 /* ZeroCopyTests */ = {
 			isa = PBXGroup;
 			children = (
+				4D4B3CBE2046B9010018BE07 /* Utilities */,
+				4D4B3CB92046AA340018BE07 /* Cells */,
 				D8EE87D1202C57D500F53983 /* TestsHelpers */,
 				D8EE8775202B486E00F53983 /* AnimationsTests */,
+				D88E2C7720348C8E001CE9B3 /* Data */,
+				D8B4F4072035A0630016D2B5 /* ViewControllers */,
 				D8EE8767202B468E00F53983 /* Info.plist */,
 			);
 			path = ZeroCopyTests;
@@ -432,6 +479,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8EE87D3202C57FD00F53983 /* CoreDataHelpers.swift in Sources */,
+				D88E2C7920348CA5001CE9B3 /* CoreDataManagerSpec.swift in Sources */,
+				4D4B3CC02046BA230018BE07 /* FastTimerSpec.swift in Sources */,
+				4D4B3CBB2046AA4D0018BE07 /* LabelAndTimeCellSpec.swift in Sources */,
+				D8B4F4092035A07A0016D2B5 /* HomeViewControllerSpec.swift in Sources */,
+				4D4B3CBD2046B5910018BE07 /* StartStopCellSpec.swift in Sources */,
 				D8EE8777202B487D00F53983 /* TransitionManagerSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
