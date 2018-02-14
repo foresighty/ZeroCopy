@@ -163,5 +163,9 @@ class HomeHeaderView: UIView {
         timer.invalidate()
         seconds = 0
     }
+    
+    public func updateTimerWith(newSeconds: Int) {
+        seconds = newSeconds
+    }
 }
 

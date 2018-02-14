@@ -19,6 +19,7 @@ class SettingViewController: UIViewController {
 
         tableView = UITableView()
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.frame = view.bounds
         tableView.contentInset.top = 15.0
         tableView.backgroundColor = UIColor(red: (235/255), green: (235/255), blue: (235/255), alpha: 1)
@@ -54,6 +55,7 @@ extension SettingViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let normalCell = UITableViewCell()
         normalCell.accessoryType = .disclosureIndicator
+        normalCell.selectionStyle = .none
         
         if indexPath.row == 0 {
             normalCell.textLabel?.text = "Fasting Type"
@@ -72,6 +74,7 @@ extension SettingViewController: UITableViewDataSource {
         
         if indexPath.row == 4 {
             normalCell.textLabel?.text = "Erase All Data"
+            normalCell.selectionStyle = .gray
             return normalCell
         }
         
@@ -96,10 +99,27 @@ extension SettingViewController: UITableViewDataSource {
             cell.accessoryType = .none
             cell.detailTextLabel?.text = "2.0.0"
             cell.detailTextLabel?.textColor = UIColor(red: (200/255), green: (200/255), blue: (200/255), alpha: 1)
+            cell.selectionStyle = .none
             return cell
         }
         
         let clearCell = tableView.dequeueReusableCell(withIdentifier: "ClearCell") as! ClearCell
         return clearCell
+    }
+}
+
+extension SettingViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 4 {
+            let alert = UIAlertController(title: "Are you sure?", message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction.init(title: "Yes", style: .destructive, handler: { (UIAlertAction) in
+                CoreDataManager.sharedInstance.deleteAllFasts()
+                self.tableView.deselectRow(at: indexPath, animated: false)
+            }))
+            alert.addAction(UIAlertAction.init(title: "No", style: .cancel, handler: {(UIAlertAction) in
+                self.tableView.deselectRow(at: indexPath, animated: false)
+            }))
+            present(alert, animated: true, completion: nil)
+        }
     }
 }

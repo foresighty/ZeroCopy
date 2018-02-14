@@ -33,6 +33,8 @@ class HomeViewController: UIViewController {
         setupTableView()
         setupHeaderView()
         setupConstraints()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidReopen), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
 
     
@@ -117,16 +119,26 @@ class HomeViewController: UIViewController {
     
     // MARK: Button Methods
     
-    @objc func settingsPressed(){
+    @objc func settingsPressed() {
         let transition = transitionManager.transitionUp()
         navigationController!.view.layer.add(transition, forKey: nil)
         navigationController?.pushViewController(SettingViewController(), animated: false)
     }
     
-    @objc func sciencePressed(){
+    @objc func sciencePressed() {
         let transition = transitionManager.transitionUp()
         navigationController!.view.layer.add(transition, forKey: nil)
         navigationController?.pushViewController(ScienceViewController(), animated: false)
+    }
+    
+    // MARK: App State Methods
+
+    @objc func appDidReopen() {
+        if fastTimer.isRunning {
+            let (startDate, _) = fastTimer.getTimerDates()
+            let seconds = abs(Int(startDate.timeIntervalSinceNow))
+            homeHeaderView.updateTimerWith(newSeconds: seconds)
+        }
     }
 }
 
@@ -198,7 +210,6 @@ extension HomeViewController: UITableViewDataSource, CellDelegate {
     // MARK: CellDelegate Methods
     
     func runTimer() {
-        // TODO: Change timer to count time since start date and display
         fastTimer.runTimer()
         homeHeaderView.startTiming()
     }

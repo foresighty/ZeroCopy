@@ -13,11 +13,13 @@ import Foundation
 class FastTimer {
     var seconds = 0
     var timer = Timer()
+    var isRunning = false
     var startDate = Date()
     var endDate = Date()
     
     public func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+        isRunning = true
         startDate = Date()
     }
     
@@ -29,6 +31,7 @@ class FastTimer {
         timer.invalidate()
         //let secondsToSend = seconds
         seconds = 0
+        isRunning = false
         //endDate = Date()
         //return (startDate, endDate)
         //return (startDate, endDate, secondsToSend)
