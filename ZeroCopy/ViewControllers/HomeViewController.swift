@@ -14,8 +14,9 @@ class HomeViewController: UIViewController, CellDelegate {
     
     var homeHeaderView: HomeHeaderView!
     var tableView: UITableView!
-    var transitionManager: TransitionManager!
-    var fastTimer = FastTimer()
+    
+    var transitionManager: TransitionManager = TransitionManager()
+    var fastTimer: FastTimer = FastTimer()
     
     let constraintRangeForHeaderView = (CGFloat(-190)..<CGFloat(0))
     let constraintRangeForHeaderTransparency = (CGFloat(-130)..<CGFloat(-30))
@@ -27,66 +28,62 @@ class HomeViewController: UIViewController, CellDelegate {
     
     var tableManager: PresentableManager?
     
+    
     // MARK: Override Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        transitionManager = TransitionManager()
-        updateCoreData()
         setupTableView()
         setupHeaderView()
+        setupNavigationController()
         setupConstraints()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(appDidReopen), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
-
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setupNavigationController()
+        styleNavigationController()
+        reloadTableData()
         UIApplication.shared.statusBarStyle = .lightContent
-        updateCoreData()
-        tableView.reloadData()
-        if let tableManager = tableManager as? HomeViewDataManager, let listOfFasts = listOfFasts {
-            tableManager.updateTable(with: listOfFasts)
-        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        navigationController?.navigationBar.shadowImage = defaultNavigationBarShadow
+        navigationController?.navigationBar.shadowImage = nil
         UIApplication.shared.statusBarStyle = .default
     }
     
+    
     // MARK: Setup
     
-    private func setupNavigationController(){
+    private func setupNavigationController() {
         guard let navigationController = navigationController  else {
             fatalError("navigationController does not exist")
         }
         
-        defaultNavigationBarShadow = navigationController.navigationBar.shadowImage
-        
         navigationController.navigationBar.topItem?.title = "Zero"
-        navigationController.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor  : UIColor.white]
-        navigationController.navigationBar.tintColor = .black
-        
-        navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController.navigationBar.shadowImage = UIImage()
-        navigationController.navigationBar.isTranslucent = true
-    
         let leftButton = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(settingsPressed))
         let rightButton = UIBarButtonItem(title: "Science", style: .plain, target: self, action: #selector(sciencePressed))
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
     }
     
-    private func setupTableView(){
-        tableView = UITableView()
-        if let listOfFasts = listOfFasts {
-            tableManager = HomeViewDataManager(with: listOfFasts, delegate: self)
+    private func styleNavigationController() {
+        guard let navigationController = navigationController  else {
+            fatalError("navigationController does not exist")
         }
 
+        navigationController.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor  : UIColor.white]
+        navigationController.navigationBar.tintColor = .black
+        navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController.navigationBar.shadowImage = UIImage()
+        navigationController.navigationBar.isTranslucent = true
+    }
+    
+    private func setupTableView() {
+        tableView = UITableView()
+        tableManager = HomeViewDataManager(delegate: self)
+    
         tableView.bind(withPresentableManager: &tableManager!)
 
         tableView.frame = view.bounds
@@ -96,6 +93,13 @@ class HomeViewController: UIViewController, CellDelegate {
         tableView.delegate = self
         
         view.addSubview(tableView)
+    }
+    
+    private func reloadTableData() {
+        updateCoreData()
+        if let tableManager = tableManager as? HomeViewDataManager, let listOfFasts = listOfFasts {
+            tableManager.updateTable(with: listOfFasts)
+        }
     }
     
     private func setupHeaderView(){

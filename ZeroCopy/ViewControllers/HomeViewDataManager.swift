@@ -18,11 +18,17 @@ class HomeViewDataManager: PresentableTableViewDataManager, CellDelegate {
     
     // MARK: Initialisation
     
-    init(with fasts: [Fast], delegate: CellDelegate) {
-        self.listOfFasts = fasts
+    init(delegate: CellDelegate) {
+        guard let coreDataFasts = CoreDataManager.sharedInstance.retrieveFasts() else { fatalError("Core Data Error") }
+        listOfFasts = coreDataFasts
         self.delegate = delegate
         
         super.init()
+        
+        populateTable()
+    }
+    
+    private func populateTable() {
         createHeaderCells()
         createFastCells()
         createFooterCells()
@@ -63,15 +69,11 @@ class HomeViewDataManager: PresentableTableViewDataManager, CellDelegate {
     
     
     // MARK: Public Methods
-    
     public func updateTable(with fasts: [Fast]) {
         data.removeAll()
         section.presentables.removeAll()
         listOfFasts = fasts
-        createHeaderCells()
-        createFastCells()
-        createFooterCells()
-        data.append(section)
+        populateTable()
     }
     
     // MARK: Cell Delegate Methods:
