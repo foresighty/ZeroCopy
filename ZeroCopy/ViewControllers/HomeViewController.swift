@@ -43,7 +43,6 @@ class HomeViewController: UIViewController, CellDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         styleNavigationController()
-        reloadTableData()
         UIApplication.shared.statusBarStyle = .lightContent
     }
     
@@ -93,13 +92,6 @@ class HomeViewController: UIViewController, CellDelegate {
         tableView.delegate = self
         
         view.addSubview(tableView)
-    }
-    
-    private func reloadTableData() {
-        updateCoreData()
-        if let tableManager = tableManager as? HomeViewDataManager, let listOfFasts = listOfFasts {
-            tableManager.updateTable(with: listOfFasts)
-        }
     }
     
     private func setupHeaderView(){

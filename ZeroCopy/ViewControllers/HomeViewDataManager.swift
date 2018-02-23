@@ -9,24 +9,29 @@
 
 import Foundation
 import Presentables
+import CoreData
 
-class HomeViewDataManager: PresentableTableViewDataManager, CellDelegate {
+class HomeViewDataManager: PresentableTableViewDataManager, CellDelegate, NSFetchedResultsControllerDelegate {
     
     private var listOfFasts: [Fast]
     private lazy var section = PresentableSection()
     public var delegate: CellDelegate?
+    var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
+    
     
     // MARK: Initialisation
     
     init(delegate: CellDelegate) {
         guard let coreDataFasts = CoreDataManager.sharedInstance.retrieveFasts() else { fatalError("Core Data Error") }
         listOfFasts = coreDataFasts
-        self.delegate = delegate
-        
         super.init()
-        
+        initializeFetchedResultsController()
+        self.delegate = delegate
         populateTable()
     }
+    
+    
+    // MARK: Table Setup
     
     private func populateTable() {
         createHeaderCells()
@@ -43,9 +48,15 @@ class HomeViewDataManager: PresentableTableViewDataManager, CellDelegate {
     }
     
     private func createFastCells() {
-        for (index, fast) in listOfFasts.enumerated() {
+        guard var fasts = fetchedResultsController.fetchedObjects else { return }
+        
+        if fasts.count > 7 {
+            fasts.removeSubrange(7..<fasts.count)
+        }
+     
+        for (index, fast) in fasts.enumerated() {
             section.presentables.append(Presentable<ListCell>.create({ (cell) in
-                cell.updateDisplay(with: fast)
+                cell.updateDisplay(with: fast as! Fast)
                 cell.delegate = self
                 cell.index = index
             }).cellSelected {
@@ -68,7 +79,26 @@ class HomeViewDataManager: PresentableTableViewDataManager, CellDelegate {
     }
     
     
+    // MARK: CoreData Link Up
+    
+    func initializeFetchedResultsController() {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Fast")
+        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(Fast.startDate), ascending: false)]
+        
+        guard let moc = CoreDataManager.sharedInstance.managedContext else { return }
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalError("Failed to initialize FetchedResultsController: \(error)")
+        }
+    }
+    
+    
     // MARK: Public Methods
+    
     public func updateTable(with fasts: [Fast]) {
         data.removeAll()
         section.presentables.removeAll()
@@ -76,7 +106,9 @@ class HomeViewDataManager: PresentableTableViewDataManager, CellDelegate {
         populateTable()
     }
     
-    // MARK: Cell Delegate Methods:
+    
+    // MARK: Cell Delegate Methods
+    
     func runTimer() {
         delegate?.runTimer()
     }
@@ -87,5 +119,12 @@ class HomeViewDataManager: PresentableTableViewDataManager, CellDelegate {
     
     func presentFastDetailViewControllerForFast(at index: Int) {
         delegate?.presentFastDetailViewControllerForFast(at: index)
+    }
+    
+    
+    // MARK: Delegate Methods
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        updateTable(with: controller.fetchedObjects as! [Fast])
     }
 }
