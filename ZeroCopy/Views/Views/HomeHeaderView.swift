@@ -22,14 +22,13 @@ class HomeHeaderView: UIView, TimerDelegate {
     var timerText: UILabel?
     var state: HomeHeaderState?
     var dateFormatter = DateFormatter()
-    var fastTimer: FastTimer!
+    var fastTimer = FastTimer()
+    var fastDates = FastDates()
     
     // MARK: Initialisers
-
-    init(with timer: FastTimer) {
-        super.init(frame: CGRect())
-        self.fastTimer = timer
-        self.fastTimer.delegate = self
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        fastTimer.delegate = self
         setup()
     }
     
@@ -154,12 +153,14 @@ class HomeHeaderView: UIView, TimerDelegate {
     }
     
     public func startTiming() {
+        fastTimer.runTimer()
         goalLabel.removeFromSuperview()
         tagline.removeFromSuperview()
         setupTimingView()
     }
     
     public func stopTiming() {
+        fastTimer.stopTimer()
         setupGoalLabel()
         setupTagLineLabel()
         setupConstraints()

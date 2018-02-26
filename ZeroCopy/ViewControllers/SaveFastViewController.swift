@@ -12,14 +12,14 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
 
     var tableView: UITableView!
     var saveButton: UIButton!
-    var fast: Fast?
+    private var fast: Fast?
     var transitionManager: TransitionManager!
     var dateFormatter: DateFormatter!
     let datePicker = UIDatePicker()
     let backgroundView = UIView()
     let triangleView = TriangleView()
     var completeButtonPress: (() -> Void)?
-    var stopTimer: (() -> Void)?
+    var homeHeaderView: HomeHeaderView?
     var startDate: Date!
     var endDate: Date!
     
@@ -32,11 +32,17 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
         return duration
     }
     
-    init(startDate: Date, endDate: Date, completion: (()-> Void)?){
+    init(startDate: Date, endDate: Date) {
         super.init(nibName: nil, bundle: nil)
         self.startDate = startDate
         self.endDate = endDate
-        self.stopTimer = completion
+    }
+    
+    init(with fast: Fast) {
+        super.init(nibName: nil, bundle: nil)
+        self.fast = fast
+        self.startDate = fast.startDate!
+        self.endDate = fast.endDate!
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -99,9 +105,9 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
                 CoreDataManager.sharedInstance.deleteFasts(fast: fast)
             }
             
-            if let completeButtonPress = self.completeButtonPress, let stopTimer = self.stopTimer {
+            if let completeButtonPress = self.completeButtonPress, let homeHeaderView = self.homeHeaderView {
                 completeButtonPress()
-                stopTimer()
+                homeHeaderView.stopTiming()
             }
             
             let transition = self.transitionManager.transitionDown()
@@ -127,9 +133,9 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
                 CoreDataManager.sharedInstance.recordFast(startDate: startDate, endDate: endDate)
             }
             
-            if let completeButtonPress = completeButtonPress, let stopTimer = stopTimer {
+            if let completeButtonPress = completeButtonPress, let homeHeaderView = homeHeaderView {
                 completeButtonPress()
-                stopTimer()
+                homeHeaderView.stopTiming()
             }
             let transition = transitionManager.transitionDown()
             navigationController?.view.layer.add(transition, forKey: nil)

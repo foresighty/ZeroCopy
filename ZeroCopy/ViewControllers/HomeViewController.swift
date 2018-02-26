@@ -12,24 +12,23 @@ import Presentables
 
 class HomeViewController: UIViewController, HomeViewDataManagerDelegate {
     
-    var homeHeaderView: HomeHeaderView!
-    var tableView: UITableView!
-    var tableManager: PresentableManager?
-    var transitionManager: TransitionManager = TransitionManager()
-    var fastTimer: FastTimer = FastTimer()
+    private var homeHeaderView: HomeHeaderView!
+    private var tableView: UITableView!
+    private var tableManager: PresentableManager?
+    private var transitionManager: TransitionManager = TransitionManager()
     
-    let constraintRangeForHeaderView = (CGFloat(-190)..<CGFloat(0))
-    let constraintRangeForHeaderTransparency = (CGFloat(-130)..<CGFloat(-30))
+    private let constraintRangeForHeaderView = (CGFloat(-190)..<CGFloat(0))
+    private let constraintRangeForHeaderTransparency = (CGFloat(-130)..<CGFloat(-30))
+    
     
     // MARK: Override Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
         setupHeaderView()
+        setupTableView()
         setupNavigationController()
         setupConstraints()
-        NotificationCenter.default.addObserver(self, selector: #selector(appDidReopen), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -73,8 +72,7 @@ class HomeViewController: UIViewController, HomeViewDataManagerDelegate {
     
     private func setupTableView() {
         tableView = UITableView()
-        tableManager = HomeViewDataManager(delegate: self)
-    
+        tableManager = HomeViewDataManager(delegate: self, homeHeaderView: homeHeaderView)
         tableView.bind(withPresentableManager: &tableManager!)
 
         tableView.frame = view.bounds
@@ -87,7 +85,7 @@ class HomeViewController: UIViewController, HomeViewDataManagerDelegate {
     }
     
     private func setupHeaderView(){
-        homeHeaderView = HomeHeaderView(with: fastTimer)
+        homeHeaderView = HomeHeaderView()
         view.addSubview(homeHeaderView)
     }
     
@@ -119,51 +117,16 @@ class HomeViewController: UIViewController, HomeViewDataManagerDelegate {
         navigationController?.pushViewController(ScienceViewController(), animated: false)
     }
     
-    
-    // MARK: App State Methods
 
-    @objc func appDidReopen() {
-        if fastTimer.isRunning {
-            let (startDate, _) = fastTimer.getTimerDates()
-            let seconds = abs(Int(startDate.timeIntervalSinceNow))
-            fastTimer.seconds = seconds
-        }
-    }
-    
-    
-    // MARK: CellDelegate Methods
-    
-    func runTimer() {
-        fastTimer.runTimer()
-        homeHeaderView.startTiming()
-    }
-    
-    func presentSaveFastViewContoller(closure: @escaping () -> Void) {
-        let completeButtonPress = closure
-        let (startDate, endDate) = fastTimer.getTimerDates()
-        let saveFastViewController = SaveFastViewController(startDate: startDate, endDate: endDate) {
-            self.stopTiming()
-        }
-        saveFastViewController.startDate = startDate
-        saveFastViewController.endDate = endDate
-        saveFastViewController.completeButtonPress = completeButtonPress
-        
-        let transition = transitionManager.transitionUp()
-        navigationController?.view.layer.add(transition, forKey: nil)
-        navigationController?.pushViewController(saveFastViewController, animated: false)
-    }
+    // MARK: HomeViewDataManagerDelegate Methods
     
     func present(_ saveFastViewController: SaveFastViewController) {
         let transition = transitionManager.transitionUp()
         navigationController?.view.layer.add(transition, forKey: nil)
         navigationController?.pushViewController(saveFastViewController, animated: false)
     }
-    
-    func stopTiming() {
-        fastTimer.stopTimer()
-        homeHeaderView.stopTiming()
-    }
 }
+
 
 // MARK: TableViewDelegate Methods
 

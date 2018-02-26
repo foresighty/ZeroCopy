@@ -22,6 +22,7 @@ class FastTimer {
     
     public func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
         isRunning = true
         startDate = Date()
     }

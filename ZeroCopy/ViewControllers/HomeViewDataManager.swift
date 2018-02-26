@@ -12,8 +12,6 @@ import Presentables
 import CoreData
 
 protocol HomeViewDataManagerDelegate {
-    func runTimer()
-    func presentSaveFastViewContoller(closure: @escaping () -> Void)
     func present(_ saveFastViewController: SaveFastViewController)
 }
 
@@ -21,19 +19,24 @@ class HomeViewDataManager: PresentableTableViewDataManager, StartStopCellDelegat
     
     private var listOfFasts: [Fast]
     private lazy var section = PresentableSection()
-    public var delegate: HomeViewDataManagerDelegate?
+    private var delegate: HomeViewDataManagerDelegate!
+    private var homeHeaderView: HomeHeaderView!
     var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
     
     
     // MARK: Initialisation
     
-    init(delegate: HomeViewDataManagerDelegate) {
+    init(delegate: HomeViewDataManagerDelegate, homeHeaderView: HomeHeaderView) {
         guard let coreDataFasts = CoreDataManager.sharedInstance.retrieveFasts() else { fatalError("Core Data Error") }
         listOfFasts = coreDataFasts
+        
         super.init()
         initializeFetchedResultsController()
+        
         self.delegate = delegate
+        self.homeHeaderView = homeHeaderView
         populateTable()
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidReopen), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
     
@@ -67,9 +70,7 @@ class HomeViewDataManager: PresentableTableViewDataManager, StartStopCellDelegat
                 cell.updateDisplay(with: fast as! Fast)
                 cell.delegate = self
                 cell.index = index
-            }).cellSelected {
-                print("selected")
-            })
+            }))
         }
     }
     
@@ -87,9 +88,9 @@ class HomeViewDataManager: PresentableTableViewDataManager, StartStopCellDelegat
     }
     
     
-    // MARK: CoreData Link Up
+    // MARK: CoreData Fetched Results Link Up
     
-    func initializeFetchedResultsController() {
+    private func initializeFetchedResultsController() {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Fast")
         request.sortDescriptors = [NSSortDescriptor(key: #keyPath(Fast.startDate), ascending: false)]
         
@@ -104,10 +105,16 @@ class HomeViewDataManager: PresentableTableViewDataManager, StartStopCellDelegat
         }
     }
     
+    // MARK: CoreData Fetched Results Delegate Methods
     
-    // MARK: Public Methods
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        updateTable(with: controller.fetchedObjects as! [Fast])
+    }
     
-    public func updateTable(with fasts: [Fast]) {
+    
+    // MARK: Update Table Method
+    
+    private func updateTable(with fasts: [Fast]) {
         data.removeAll()
         section.presentables.removeAll()
         listOfFasts = fasts
@@ -118,11 +125,17 @@ class HomeViewDataManager: PresentableTableViewDataManager, StartStopCellDelegat
     // MARK: Start Stop Cell Delegate Methods
     
     func runTimer() {
-        delegate?.runTimer()
+        homeHeaderView.startTiming()
     }
     
     func presentSaveFastViewContoller(closure: @escaping () -> Void) {
-        delegate?.presentSaveFastViewContoller(closure: closure)
+        let (startDate, endDate) = homeHeaderView.fastTimer.getTimerDates()
+        let saveFastViewController = SaveFastViewController(startDate: startDate, endDate: endDate)
+        saveFastViewController.startDate = startDate
+        saveFastViewController.endDate = endDate
+        saveFastViewController.completeButtonPress = closure
+        saveFastViewController.homeHeaderView = homeHeaderView
+        delegate?.present(saveFastViewController)
     }
     
     
@@ -130,18 +143,18 @@ class HomeViewDataManager: PresentableTableViewDataManager, StartStopCellDelegat
     
     func didTap(at index: Int) {
         let fast = listOfFasts[index]
-        let startDate = fast.startDate!
-        let endDate = fast.endDate!
-        let saveFastViewController = SaveFastViewController(startDate: startDate, endDate: endDate, completion: nil)
-        saveFastViewController.fast = fast
-        
+        let saveFastViewController = SaveFastViewController(with: fast)
         delegate?.present(saveFastViewController)
     }
     
     
-    // MARK: Delegate Methods
+    // MARK: App State Methods
     
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        updateTable(with: controller.fetchedObjects as! [Fast])
+    @objc func appDidReopen() {
+        if homeHeaderView.fastTimer.isRunning {
+            let (startDate, _) = homeHeaderView.fastTimer.getTimerDates()
+            let seconds = abs(Int(startDate.timeIntervalSinceNow))
+            homeHeaderView.fastTimer.seconds = seconds
+        }
     }
 }
