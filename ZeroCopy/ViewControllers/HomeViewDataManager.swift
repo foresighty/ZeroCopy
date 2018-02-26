@@ -21,7 +21,7 @@ class HomeViewDataManager: PresentableTableViewDataManager, StartStopCellDelegat
     private lazy var section = PresentableSection()
     private var delegate: HomeViewDataManagerDelegate!
     private var homeHeaderView: HomeHeaderView!
-    var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
+    private var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
     
     
     // MARK: Initialisation

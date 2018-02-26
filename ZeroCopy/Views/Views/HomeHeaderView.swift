@@ -23,7 +23,6 @@ class HomeHeaderView: UIView, TimerDelegate {
     var state: HomeHeaderState?
     var dateFormatter = DateFormatter()
     var fastTimer = FastTimer()
-    var fastDates = FastDates()
     
     // MARK: Initialisers
     override init(frame: CGRect) {
