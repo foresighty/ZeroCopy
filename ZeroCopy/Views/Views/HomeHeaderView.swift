@@ -13,7 +13,7 @@ enum HomeHeaderState {
     case fasting
 }
 
-class HomeHeaderView: UIView {
+class HomeHeaderView: UIView, TimerDelegate {
 
     private var backgroundImageView: UIImageView!
     private var goalLabel: UILabel!
@@ -22,17 +22,17 @@ class HomeHeaderView: UIView {
     var timerText: UILabel?
     var state: HomeHeaderState?
     var dateFormatter = DateFormatter()
-    
-    var timer = Timer()
-    var seconds = 0
+    var fastTimer: FastTimer!
     
     // MARK: Initialisers
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(with timer: FastTimer) {
+        super.init(frame: CGRect())
+        self.fastTimer = timer
+        self.fastTimer.delegate = self
         setup()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -126,11 +126,16 @@ class HomeHeaderView: UIView {
         
         NSLayoutConstraint.activate(constraints)
     }
-
-    @objc private func updateTimer(){
-        seconds += 1
+    
+    
+    // MARK: Timer Delegate Methods
+    
+    func updateView(with seconds: Int) {
         timerText?.text = stringFromTimeInterval(total: seconds)
     }
+    
+    
+    // MARK: Private Methods
     
     private func stringFromTimeInterval(total: Int) -> String {
         let seconds = total % 60
@@ -139,7 +144,7 @@ class HomeHeaderView: UIView {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
-    // Public methods
+    // MARK: Public methods
     
     public func updateLabelsAlpha(with alpha: CGFloat) {
         goalLabel.textColor = goalLabel.textColor.withAlphaComponent(alpha)
@@ -152,20 +157,12 @@ class HomeHeaderView: UIView {
         goalLabel.removeFromSuperview()
         tagline.removeFromSuperview()
         setupTimingView()
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
-        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
     }
     
     public func stopTiming() {
         setupGoalLabel()
         setupTagLineLabel()
         setupConstraints()
-        timer.invalidate()
-        seconds = 0
-    }
-    
-    public func updateTimerWith(newSeconds: Int) {
-        seconds = newSeconds
     }
 }
 

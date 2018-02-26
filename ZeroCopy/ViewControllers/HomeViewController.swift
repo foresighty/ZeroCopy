@@ -10,24 +10,16 @@ import UIKit
 import CoreData
 import Presentables
 
-class HomeViewController: UIViewController, CellDelegate {
+class HomeViewController: UIViewController, HomeViewDataManagerDelegate {
     
     var homeHeaderView: HomeHeaderView!
     var tableView: UITableView!
-    
+    var tableManager: PresentableManager?
     var transitionManager: TransitionManager = TransitionManager()
     var fastTimer: FastTimer = FastTimer()
     
     let constraintRangeForHeaderView = (CGFloat(-190)..<CGFloat(0))
     let constraintRangeForHeaderTransparency = (CGFloat(-130)..<CGFloat(-30))
-
-    var defaultNavigationBarShadow: UIImage!
-    
-    var currentFast: Fast?
-    var listOfFasts: [Fast]?
-    
-    var tableManager: PresentableManager?
-    
     
     // MARK: Override Methods
     
@@ -95,7 +87,7 @@ class HomeViewController: UIViewController, CellDelegate {
     }
     
     private func setupHeaderView(){
-        homeHeaderView = HomeHeaderView()
+        homeHeaderView = HomeHeaderView(with: fastTimer)
         view.addSubview(homeHeaderView)
     }
     
@@ -112,11 +104,6 @@ class HomeViewController: UIViewController, CellDelegate {
         NSLayoutConstraint.activate(constraints)
     }
     
-    // MARK: CoreData
-    
-    private func updateCoreData() {
-        listOfFasts = CoreDataManager.sharedInstance.retrieveFasts()
-    }
     
     // MARK: Button Methods
     
@@ -132,15 +119,17 @@ class HomeViewController: UIViewController, CellDelegate {
         navigationController?.pushViewController(ScienceViewController(), animated: false)
     }
     
+    
     // MARK: App State Methods
 
     @objc func appDidReopen() {
         if fastTimer.isRunning {
             let (startDate, _) = fastTimer.getTimerDates()
             let seconds = abs(Int(startDate.timeIntervalSinceNow))
-            homeHeaderView.updateTimerWith(newSeconds: seconds)
+            fastTimer.seconds = seconds
         }
     }
+    
     
     // MARK: CellDelegate Methods
     
@@ -164,21 +153,11 @@ class HomeViewController: UIViewController, CellDelegate {
         navigationController?.pushViewController(saveFastViewController, animated: false)
     }
     
-    func presentFastDetailViewControllerForFast(at index: Int) {
-        updateCoreData()
-        guard let listOfFasts = listOfFasts else { return }
-        let fast = listOfFasts[index]
-        let startDate = fast.startDate!
-        let endDate = fast.endDate!
-        let saveFastViewController = SaveFastViewController(startDate: startDate, endDate: endDate, completion: nil)
-        saveFastViewController.fast = fast
-        
+    func present(_ saveFastViewController: SaveFastViewController) {
         let transition = transitionManager.transitionUp()
         navigationController?.view.layer.add(transition, forKey: nil)
         navigationController?.pushViewController(saveFastViewController, animated: false)
     }
-    
-    // Method
     
     func stopTiming() {
         fastTimer.stopTimer()

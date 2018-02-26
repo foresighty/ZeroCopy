@@ -8,7 +8,9 @@
 
 import Foundation
 
-// TODO: Change timer to count time since start date and display
+protocol TimerDelegate {
+    func updateView(with seconds: Int)
+}
 
 class FastTimer {
     var seconds = 0
@@ -16,6 +18,7 @@ class FastTimer {
     var isRunning = false
     var startDate = Date()
     var endDate = Date()
+    var delegate: TimerDelegate?
     
     public func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
@@ -25,16 +28,15 @@ class FastTimer {
     
     @objc private func updateTimer(){
         seconds += 1
+        if let delegate = delegate {
+            delegate.updateView(with: seconds)
+        }
     }
     
     public func stopTimer(){
         timer.invalidate()
-        //let secondsToSend = seconds
         seconds = 0
         isRunning = false
-        //endDate = Date()
-        //return (startDate, endDate)
-        //return (startDate, endDate, secondsToSend)
     }
     
     public func getTimerDates() -> (Date, Date) {

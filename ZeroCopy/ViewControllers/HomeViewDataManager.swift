@@ -11,17 +11,23 @@ import Foundation
 import Presentables
 import CoreData
 
-class HomeViewDataManager: PresentableTableViewDataManager, CellDelegate, NSFetchedResultsControllerDelegate {
+protocol HomeViewDataManagerDelegate {
+    func runTimer()
+    func presentSaveFastViewContoller(closure: @escaping () -> Void)
+    func present(_ saveFastViewController: SaveFastViewController)
+}
+
+class HomeViewDataManager: PresentableTableViewDataManager, StartStopCellDelegate, ListCellDelegate, NSFetchedResultsControllerDelegate {
     
     private var listOfFasts: [Fast]
     private lazy var section = PresentableSection()
-    public var delegate: CellDelegate?
+    public var delegate: HomeViewDataManagerDelegate?
     var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
     
     
     // MARK: Initialisation
     
-    init(delegate: CellDelegate) {
+    init(delegate: HomeViewDataManagerDelegate) {
         guard let coreDataFasts = CoreDataManager.sharedInstance.retrieveFasts() else { fatalError("Core Data Error") }
         listOfFasts = coreDataFasts
         super.init()
@@ -41,7 +47,9 @@ class HomeViewDataManager: PresentableTableViewDataManager, CellDelegate, NSFetc
     }
 
     private func createHeaderCells() {
-        section.presentables.append(Presentable<StartStopCell>.create())
+        section.presentables.append(Presentable<StartStopCell>.create({ (cell) in
+            cell.delegate = self
+        }))
         section.presentables.append(Presentable<SevenDayTitleCell>.create())
         section.presentables.append(Presentable<GraphTableViewCell>.create())
         section.presentables.append(Presentable<HeaderListCell>.create())
@@ -107,7 +115,7 @@ class HomeViewDataManager: PresentableTableViewDataManager, CellDelegate, NSFetc
     }
     
     
-    // MARK: Cell Delegate Methods
+    // MARK: Start Stop Cell Delegate Methods
     
     func runTimer() {
         delegate?.runTimer()
@@ -117,8 +125,17 @@ class HomeViewDataManager: PresentableTableViewDataManager, CellDelegate, NSFetc
         delegate?.presentSaveFastViewContoller(closure: closure)
     }
     
-    func presentFastDetailViewControllerForFast(at index: Int) {
-        delegate?.presentFastDetailViewControllerForFast(at: index)
+    
+    // MARK: List Cell Delegate Methods
+    
+    func didTap(at index: Int) {
+        let fast = listOfFasts[index]
+        let startDate = fast.startDate!
+        let endDate = fast.endDate!
+        let saveFastViewController = SaveFastViewController(startDate: startDate, endDate: endDate, completion: nil)
+        saveFastViewController.fast = fast
+        
+        delegate?.present(saveFastViewController)
     }
     
     

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ListCellDelegate {
+    func didTap(at index: Int)
+}
+
 class ListCell: UITableViewCell {
     
     // Labels
@@ -15,7 +19,7 @@ class ListCell: UITableViewCell {
     var rightLabel: UILabel!
     var editButton: UIButton!
     var index: Int?
-    var delegate: CellDelegate?
+    var delegate: ListCellDelegate?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -86,7 +90,7 @@ class ListCell: UITableViewCell {
     
     @objc private func editPressed(){
         print("got pressed")
-        delegate?.presentFastDetailViewControllerForFast(at: index!)
+        delegate?.didTap(at: index!)
     }
     
     public func updateDisplay(with fast: Fast){
