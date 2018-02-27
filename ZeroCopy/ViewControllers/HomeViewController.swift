@@ -29,8 +29,6 @@ class HomeViewController: UIViewController, HomeViewDataManagerDelegate {
         setupTableView()
         setupNavigationController()
         setupConstraints()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(appDidReopen), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {

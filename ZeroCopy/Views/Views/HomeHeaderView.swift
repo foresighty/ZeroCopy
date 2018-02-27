@@ -164,9 +164,5 @@ class HomeHeaderView: UIView, TimerDelegate {
         setupTagLineLabel()
         setupConstraints()
     }
-    
-    public func updateTimerWith(newSeconds: Int) {
-        seconds = newSeconds
-    }
 }
 
