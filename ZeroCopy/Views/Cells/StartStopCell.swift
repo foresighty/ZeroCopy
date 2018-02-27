@@ -8,10 +8,9 @@
 
 import UIKit
 
-protocol CellDelegate {
+protocol StartStopCellDelegate {
     func runTimer()
     func presentSaveFastViewContoller(closure: @escaping () -> Void)
-    func presentFastDetailViewControllerForFast(at index: Int) 
 }
 
 class StartStopCell: UITableViewCell {
@@ -19,7 +18,7 @@ class StartStopCell: UITableViewCell {
     private var fastingButton: UIButton!
     private var lastSevenLabel: UILabel!
     private var fastTimer = FastTimer()
-    var delegate: CellDelegate?
+    var delegate: StartStopCellDelegate?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
