@@ -29,6 +29,8 @@ class HomeViewController: UIViewController, HomeViewDataManagerDelegate {
         setupTableView()
         setupNavigationController()
         setupConstraints()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidReopen), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -116,7 +118,7 @@ class HomeViewController: UIViewController, HomeViewDataManagerDelegate {
         navigationController!.view.layer.add(transition, forKey: nil)
         navigationController?.pushViewController(ScienceViewController(), animated: false)
     }
-    
+
 
     // MARK: HomeViewDataManagerDelegate Methods
     
