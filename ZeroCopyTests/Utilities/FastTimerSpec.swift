@@ -52,7 +52,7 @@ class FastTimerSpec: QuickSpec {
                 }
                 
                 it("should call delegate updateView method"){
-                    expect(mockDelegate.secondsReceived).toEventuallyNot(beNil())
+                    expect(mockDelegate.secondsReceived).toEventually(beGreaterThan(0), timeout: 1.1)
                 }
             }
             
@@ -94,7 +94,7 @@ class FastTimerSpec: QuickSpec {
 }
 
 fileprivate class MockTimerDelegate: TimerDelegate {
-    var secondsReceived: Int? = nil
+    var secondsReceived: Int = 0
     
     func updateView(with seconds: Int) {
         secondsReceived = seconds

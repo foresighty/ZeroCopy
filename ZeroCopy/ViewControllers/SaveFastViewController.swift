@@ -12,7 +12,7 @@ class SaveFastViewController: UIViewController, DatePickerProtocol {
 
     var tableView: UITableView!
     var saveButton: UIButton!
-    private var fast: Fast?
+    var fast: Fast?
     var transitionManager: TransitionManager!
     var dateFormatter: DateFormatter!
     let datePicker = UIDatePicker()

@@ -19,8 +19,8 @@ class HomeViewDataManager: PresentableTableViewDataManager, StartStopCellDelegat
     
     private var listOfFasts: [Fast]
     private lazy var section = PresentableSection()
-    private var delegate: HomeViewDataManagerDelegate!
-    private var homeHeaderView: HomeHeaderView!
+    var delegate: HomeViewDataManagerDelegate!
+    var homeHeaderView: HomeHeaderView!
     private var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
     
     

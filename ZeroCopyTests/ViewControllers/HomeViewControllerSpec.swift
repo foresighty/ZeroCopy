@@ -25,7 +25,6 @@ class HomeViewControllerSpec: QuickSpec {
         }
         
         context("when view did load") {
-        
             
             it("should setup the TableView") {
                 expect(subject.tableView).toNot(beNil())
@@ -133,6 +132,7 @@ class MockNavigationController: UINavigationController {
     var isSettingsViewController = false
     var isScienceViewController = false
     var isSaveFastViewController = false
+    var poppedViewController = false
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         pushedViewController = viewController
@@ -146,5 +146,11 @@ class MockNavigationController: UINavigationController {
             isSaveFastViewController = true
         }
         super.pushViewController(viewController, animated: animated)
+    }
+    
+    override func popViewController(animated: Bool) -> UIViewController? {
+        poppedViewController = true
+        super.popViewController(animated: animated)
+        return nil
     }
 }

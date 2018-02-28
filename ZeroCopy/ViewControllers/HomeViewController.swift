@@ -26,7 +26,6 @@ class HomeViewController: UIViewController, HomeViewDataManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupHeaderView()
         setupTableView()
         setupNavigationController()
