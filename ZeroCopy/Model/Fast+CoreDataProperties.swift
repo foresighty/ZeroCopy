@@ -17,7 +17,6 @@ extension Fast {
         return NSFetchRequest<Fast>(entityName: "Fast")
     }
 
-    //@NSManaged public var duration: Int32
     @NSManaged public var endDate: Date?
     @NSManaged public var startDate: Date?
     

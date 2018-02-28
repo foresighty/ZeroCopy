@@ -15,7 +15,7 @@ protocol StartStopCellDelegate {
 
 class StartStopCell: UITableViewCell {
 
-    private var fastingButton: UIButton!
+    var fastingButton: UIButton!
     private var lastSevenLabel: UILabel!
     private var fastTimer = FastTimer()
     var delegate: StartStopCellDelegate?

@@ -159,7 +159,7 @@ class HomeHeaderView: UIView, TimerDelegate {
     }
     
     public func stopTiming() {
-        fastTimer.stopTimer()
+        fastTimer.cancelTimer()
         setupGoalLabel()
         setupTagLineLabel()
         setupConstraints()

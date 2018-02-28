@@ -9,9 +9,7 @@
 import UIKit
 
 class ClearCell: UITableViewCell {
-    
-    var label: UILabel?
-    
+        
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()

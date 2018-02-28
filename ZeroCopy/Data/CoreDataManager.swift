@@ -13,7 +13,7 @@ class CoreDataManager {
     static let sharedInstance = CoreDataManager()
 
     private let appDelegate: AppDelegate?
-    private(set) var managedContext: NSManagedObjectContext!
+    public var managedContext: NSManagedObjectContext!
     
     private init() {
         appDelegate = UIApplication.shared.delegate as? AppDelegate
