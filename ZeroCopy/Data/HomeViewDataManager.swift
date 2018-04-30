@@ -50,12 +50,12 @@ class HomeViewDataManager: PresentableTableViewDataManager, StartStopCellDelegat
     }
 
     private func createHeaderCells() {
-        section.presentables.append(Presentable<StartStopCell>.create({ (cell) in
+        section.append(Presentable<StartStopCell>.create({ (cell) in
             cell.delegate = self
         }))
-        section.presentables.append(Presentable<SevenDayTitleCell>.create())
-        section.presentables.append(Presentable<GraphTableViewCell>.create())
-        section.presentables.append(Presentable<HeaderListCell>.create())
+        section.append(Presentable<SevenDayTitleCell>.create())
+        section.append(Presentable<GraphTableViewCell>.create())
+        section.append(Presentable<HeaderListCell>.create())
     }
     
     private func createFastCells() {
@@ -66,7 +66,7 @@ class HomeViewDataManager: PresentableTableViewDataManager, StartStopCellDelegat
         }
      
         for (index, fast) in fasts.enumerated() {
-            section.presentables.append(Presentable<ListCell>.create({ (cell) in
+            section.append(Presentable<ListCell>.create({ (cell) in
                 cell.updateDisplay(with: fast as! Fast)
                 cell.delegate = self
                 cell.index = index
@@ -82,9 +82,9 @@ class HomeViewDataManager: PresentableTableViewDataManager, StartStopCellDelegat
             cell.configForTotal(with: self.listOfFasts)
         }
 
-        section.presentables.append(footerListCellAverage)
-        section.presentables.append(footerListCellTotal)
-        section.presentables.append(Presentable<WarningCell>.create())
+        section.append(footerListCellAverage)
+        section.append(footerListCellTotal)
+        section.append(Presentable<WarningCell>.create())
     }
     
     
@@ -116,7 +116,7 @@ class HomeViewDataManager: PresentableTableViewDataManager, StartStopCellDelegat
     
     private func updateTable(with fasts: [Fast]) {
         data.removeAll()
-        section.presentables.removeAll()
+        section.removeAll()
         listOfFasts = fasts
         populateTable()
     }
